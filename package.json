@@ -2,7 +2,7 @@
   "name": "warriorjs-engine",
   "version": "0.0.1",
   "description": "The bowels of WarriorJS",
-  "main": "index.js",
+  "main": "lib/Engine.js",
   "scripts": {
     "compile": "babel src --out-dir lib",
     "prepublish": "npm run compile",
