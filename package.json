@@ -1,0 +1,46 @@
+{
+  "name": "warriorjs-engine",
+  "version": "0.0.1",
+  "description": "The bowels of WarriorJS",
+  "main": "index.js",
+  "scripts": {
+    "compile": "babel src --out-dir lib",
+    "prepublish": "npm run compile",
+    "test": "mocha --compilers js:babel/register --ui bdd --reporter spec --recursive",
+    "lint": "eslint . --ext .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olistic/warriorjs-engine.git"
+  },
+  "keywords": [
+    "es6",
+    "es7",
+    "es2015",
+    "es2016",
+    "warriorjs",
+    "core",
+    "engine",
+    "play",
+    "game",
+    "fun",
+    "teach",
+    "learn",
+    "ai"
+  ],
+  "author": "Matias Olivera <m@matioli.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olistic/warriorjs-engine/issues"
+  },
+  "homepage": "https://github.com/olistic/warriorjs-engine#readme",
+  "devDependencies": {
+    "babel": "^5.8.29",
+    "babel-eslint": "^4.1.3",
+    "chai": "^3.4.0",
+    "eslint": "^1.8.0",
+    "eslint-config-airbnb": "^0.1.0",
+    "mocha": "^2.3.3",
+    "sinon": "^1.17.2"
+  }
+}
