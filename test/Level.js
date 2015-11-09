@@ -14,6 +14,7 @@ describe('Level', function () {
     this.level = new Level();
     this.level.setFloor(this.floor);
     this.sinon.stub(this.level, 'failed').returns(false);
+    this.sinon.stub(this.level, 'getWarrior').returns({ getScore: () => null });
   });
 
   it('should consider passed when warrior is on stairs', function () {

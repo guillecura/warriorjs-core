@@ -1,8 +1,10 @@
 import RelativeDirections from '../constants/RelativeDirections';
+import UnitTypes from '../constants/UnitTypes';
 import Ranged from './Ranged';
 
 class Wizard extends Ranged {
   _name = 'Wizard';
+  _type = UnitTypes.wizard;
   _shootPower = 11;
   _maxHealth = 3;
 

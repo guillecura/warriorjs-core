@@ -71,6 +71,15 @@ class Floor {
   isOutOfBounds(x, y) {
     return x < 0 || y < 0 || x > this._width - 1 || y > this._height - 1;
   }
+
+  toViewObject() {
+    return {
+      width: this.getWidth(),
+      height: this.getHeight(),
+      units: this.getUnits().map((unit) => unit.toViewObject()),
+      stairsLocation: this.getStairsLocation(),
+    };
+  }
 }
 
 export default Floor;

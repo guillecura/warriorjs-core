@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import chai from 'chai';
 import chaiAlive from '../helpers/chaiAlive';
 import Base from '../../src/units/Base';
@@ -142,7 +141,7 @@ describe('Base', function () {
     it('should explode when time reaches 0', function () {
       this.unit.setHealth(10);
       this.unit.getActions().explode.setTime(3);
-      _.times(2, () => {
+      new Array(2).forEach(() => {
         this.unit.prepareTurn();
         this.unit.performTurn();
       });

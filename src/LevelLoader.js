@@ -1,5 +1,5 @@
 import Floor from './Floor';
-import Units from './constants/Units';
+import UnitTypes from './constants/UnitTypes';
 import Archer from './units/Archer';
 import Captive from './units/Captive';
 import Sludge from './units/Sludge';
@@ -16,16 +16,18 @@ class LevelLoader {
     this._level.setFloor(this._floor);
   }
 
-  load(levelConfig) {
-    this._level.setTimeBonus(levelConfig.timeBonus);
+  load(config, warrior) {
+    this._level.setTimeBonus(config.timeBonus);
 
-    this._floor.setWidth(levelConfig.size.width);
-    this._floor.setHeight(levelConfig.size.height);
-    this._floor.placeStairs(levelConfig.stairs.x, levelConfig.stairs.y);
+    this._floor.setWidth(config.size.width);
+    this._floor.setHeight(config.size.height);
+    this._floor.placeStairs(config.stairs.x, config.stairs.y);
 
-    this.placeWarrior(levelConfig.warrior.x, levelConfig.warrior.y, levelConfig.warrior.facing, levelConfig.warrior.abilities.actions, levelConfig.warrior.abilities.senses);
+    const actions = config.warrior.abilities.actions.concat(warrior.abilities.actions);
+    const senses = config.warrior.abilities.senses.concat(warrior.abilities.senses);
+    this.placeWarrior(warrior.name, warrior.playerCode, config.warrior.x, config.warrior.y, config.warrior.facing, actions, senses);
 
-    levelConfig.units.forEach((unit) => {
+    config.units.forEach((unit) => {
       const newUnit = this.placeUnit(unit.type, unit.x, unit.y, unit.facing);
 
       if (unit.explode) {
@@ -35,34 +37,34 @@ class LevelLoader {
     });
   }
 
-  placeUnit(type, x, y, facing, actions, senses) {
+  placeUnit(type, x, y, facing, actions = [], senses = []) {
     let unit;
-    if (type === Units.archer) {
+    if (type === UnitTypes.archer) {
       unit = new Archer();
-    } else if (type === Units.captive) {
+    } else if (type === UnitTypes.captive) {
       unit = new Captive();
-    } else if (type === Units.sludge) {
+    } else if (type === UnitTypes.sludge) {
       unit = new Sludge();
-    } else if (type === Units.thickSludge) {
+    } else if (type === UnitTypes.thickSludge) {
       unit = new ThickSludge();
-    } else if (type === Units.warrior) {
+    } else if (type === UnitTypes.warrior) {
       unit = new Warrior();
-    } else if (type === Units.wizard) {
+    } else if (type === UnitTypes.wizard) {
       unit = new Wizard();
     } else {
-      throw new Error(`Unknown unit type '${type}'`);
+      throw new Error(`Unknown unit type '${type}'.`);
     }
 
     this._floor.addUnit(unit, x, y, facing);
-
-    if (actions) unit.addActions(actions);
-    if (senses) unit.addSenses(senses);
-
+    if (actions.length) unit.addActions(actions);
+    if (senses.length) unit.addSenses(senses);
     return unit;
   }
 
-  placeWarrior(x, y, facing, actions, senses) {
-    const warrior = this.placeUnit(Units.warrior, x, y, facing, actions, senses);
+  placeWarrior(name, playerCode, x, y, facing, actions, senses) {
+    const warrior = this.placeUnit(UnitTypes.warrior, x, y, facing, actions, senses);
+    warrior.setName(name);
+    warrior.setPlayerCode(playerCode);
     this._level.setWarrior(warrior);
   }
 }

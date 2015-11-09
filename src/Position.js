@@ -104,6 +104,14 @@ class Position {
   getRelativeDirectionOfStairs() {
     return this.getRelativeDirectionOf(this.getFloor().getStairsSpace());
   }
+
+  toViewObject() {
+    return {
+      x: this._x,
+      y: this._y,
+      facing: this.getDirection(),
+    };
+  }
 }
 
 export default Position;

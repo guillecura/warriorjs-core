@@ -20,6 +20,7 @@ import Walk from '../abilities/Walk';
 
 class Base {
   _name = 'Base';
+  _type = null;
   _position = null;
   _attackPower = 0;
   _shootPower = 0;
@@ -27,9 +28,14 @@ class Base {
   _health = null;
   _actions = {};
   _senses = {};
+  _currentTurn = null;
 
   getName() {
     return this._name;
+  }
+
+  getType() {
+    return this._type;
   }
 
   getPosition() {
@@ -90,8 +96,8 @@ class Base {
     this._bound = true;
   }
 
-  say(message) {
-    // TODO `${this.getName()} ${message}`
+  say(message) { // eslint-disable-line no-unused-vars
+    // TODO: `${this.getName()} ${message}`
   }
 
   takeDamage(amount) {
@@ -102,7 +108,7 @@ class Base {
     if (this.getHealth()) {
       const revisedAmount = this.getHealth() - amount < 0 ? this.getHealth() : amount;
       this._health -= revisedAmount;
-      this.say(`takes ${revisedAmount} damage, ${this.getHealth()} health power left`);
+      this.say(`takes ${amount} damage, ${this.getHealth()} health power left`);
       if (!this.getHealth()) {
         this.setPosition(null);
         this.say('dies');
@@ -132,7 +138,7 @@ class Base {
       } else if (actionName === Actions.walk) {
         action = new Walk(this);
       } else {
-        throw new Error(`Unknown action '${action}'`);
+        throw new Error(`Unknown action '${action}'.`);
       }
 
       this._actions[actionName] = action;
@@ -157,7 +163,7 @@ class Base {
       } else if (senseName === Senses.look) {
         sense = new Look(this);
       } else {
-        throw new Error(`Unknown sense '${sense}'`);
+        throw new Error(`Unknown sense '${sense}'.`);
       }
 
       this._senses[senseName] = sense;
@@ -168,7 +174,7 @@ class Base {
     return new Turn(this.getActions(), this.getSenses());
   }
 
-  playTurn() {
+  playTurn(turn) { // eslint-disable-line no-unused-vars
     // To be overriden by subclass
   }
 
@@ -187,8 +193,16 @@ class Base {
     }
   }
 
-  earnPoints() {
+  earnPoints(points) { // eslint-disable-line no-unused-vars
     // To be overriden by subclass
+  }
+
+  toViewObject() {
+    return {
+      name: this.getName(),
+      type: this.getType(),
+      position: this.getPosition().toViewObject(),
+    };
   }
 
   toString() {

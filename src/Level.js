@@ -1,6 +1,10 @@
 import LevelLoader from './LevelLoader';
 
+const MAX_TURNS = 1000;
+
 class Level {
+  _warrior = null;
+  _floor = null;
   _timeBonus = 0;
 
   getWarrior() {
@@ -35,14 +39,12 @@ class Level {
     return 0;
   }
 
-  loadLevel(config) {
-    new LevelLoader(this).load(config);
+  loadLevel(config, warrior) {
+    new LevelLoader(this).load(config, warrior);
   }
 
-  setupWarrior(warriorName, actions, senses) {
-    this._warrior.setName(warriorName);
-    this._warrior.addActions(actions);
-    this._warrior.addSenses(senses);
+  loadPlayer() {
+    this.getWarrior().loadPlayer();
   }
 
   passed() {
@@ -53,13 +55,30 @@ class Level {
     return !this.getFloor().getUnits().includes(this.getWarrior());
   }
 
-  play(turns = 1000) {
+  play(turns = MAX_TURNS) {
+    const trace = [];
     for (let n = 0; n < turns; n++) {
-      if (this.passed() || this.failed()) return;
-      this.getFloor().getUnits().forEach(unit => unit.prepareTurn());
-      this.getFloor().getUnits().forEach(unit => unit.performTurn());
+      if (this.passed() || this.failed()) break;
+      this.getFloor().getUnits().forEach((unit) => unit.prepareTurn());
+      this.getFloor().getUnits().forEach((unit) => { // eslint-disable-line no-loop-func
+        unit.performTurn();
+        trace.push({
+          floor: this.getFloor().toViewObject(),
+          log: '',
+        });
+      });
       if (this.getTimeBonus()) this._timeBonus -= 1;
     }
+
+    return {
+      trace,
+      passed: this.passed(),
+      points: {
+        levelScore: this.getWarrior().getScore(),
+        timeBonus: this.getTimeBonus(),
+        clearBonus: this.getClearBonus(),
+      },
+    };
   }
 }
 

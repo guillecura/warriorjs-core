@@ -1,8 +1,10 @@
 import RelativeDirections from '../constants/RelativeDirections';
+import UnitTypes from '../constants/UnitTypes';
 import Melee from './Melee';
 
 class Sludge extends Melee {
   _name = 'Sludge';
+  _type = UnitTypes.sludge;
   _attackPower = 3;
   _maxHealth = 12;
 
