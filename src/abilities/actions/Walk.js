@@ -1,7 +1,7 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import Base from './Base';
+import RelativeDirections from '../../constants/RelativeDirections';
+import Ability from '../Ability';
 
-class Walk extends Base {
+class Walk extends Ability {
   _description = 'Move in the given direction (forward by default).';
 
   perform(direction = RelativeDirections.forward) {

@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiOutOfBounds from './helpers/chaiOutOfBounds';
 import Floor from '../src/Floor';
 import Space from '../src/Space';
-import Base from '../src/units/Base';
+import Unit from '../src/units/Unit';
 import Warrior from '../src/units/Warrior';
 
 chai.should();
@@ -17,20 +17,20 @@ describe('Floor', function () {
     });
 
     it('should be able to add a unit and fetch it at that position', function () {
-      const unit = new Base();
+      const unit = new Unit();
       this.floor.addUnit(unit, 0, 1, 'north');
       this.floor.getUnitAt(0, 1).should.equal(unit);
     });
 
     it('should not consider unit on floor if no position', function () {
-      const unit = new Base();
+      const unit = new Unit();
       this.floor.addUnit(unit, 0, 1, 'north');
       unit.setPosition(null);
       this.floor.getUnits().should.not.include(unit);
     });
 
     it('should fetch other units not warrior', function () {
-      const unit = new Base();
+      const unit = new Unit();
       const warrior = new Warrior();
       this.floor.addUnit(unit, 0, 0, 'north');
       this.floor.addUnit(warrior, 1, 0, 'north');
@@ -70,9 +70,9 @@ describe('Floor', function () {
     });
 
     it('should return unique units', function () {
-      const unit = new Base();
+      const unit = new Unit();
       this.floor.addUnit(unit, 0, 0);
-      this.floor.addUnit(new Base(), 1, 0);
+      this.floor.addUnit(new Unit(), 1, 0);
       this.floor.getUniqueUnits().should.eql([unit]);
     });
   });

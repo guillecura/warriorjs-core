@@ -1,5 +1,5 @@
 import chai from 'chai';
-import DistanceOf from '../../src/abilities/DistanceOf';
+import DistanceOf from '../../src/abilities/senses/DistanceOf';
 
 chai.should();
 

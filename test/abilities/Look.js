@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Look from '../../src/abilities/Look';
+import Look from '../../src/abilities/senses/Look';
 
 chai.should();
 

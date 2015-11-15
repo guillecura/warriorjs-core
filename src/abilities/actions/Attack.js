@@ -1,7 +1,7 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import Base from './Base';
+import RelativeDirections from '../../constants/RelativeDirections';
+import Ability from '../Ability';
 
-class Attack extends Base {
+class Attack extends Ability {
   _description = 'Attacks a unit in given direction (forward by default).';
 
   perform(direction = RelativeDirections.forward) {

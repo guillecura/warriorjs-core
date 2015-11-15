@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiPassed from './helpers/chaiPassed';
 import Floor from '../src/Floor';
 import Level from '../src/Level';
-import Base from '../src/units/Base';
+import Unit from '../src/units/Unit';
 import Warrior from '../src/units/Warrior';
 
 chai.should();
@@ -29,21 +29,21 @@ describe('Level', function () {
   });
 
   describe('playing', function () {
-    it('should call prepareTurn and playTurn on each object specified number of times', function () {
-      const object = new Base();
-      const mock = this.sinon.mock(object);
+    it('should call prepareTurn and playTurn on each unit specified number of times', function () {
+      const unit = new Unit();
+      const mock = this.sinon.mock(unit);
       const expectationOne = mock.expects('prepareTurn').twice();
       const expectationTwo = mock.expects('performTurn').twice();
-      this.floor.addUnit(object, 0, 0, 'north');
+      this.floor.addUnit(unit, 0, 0, 'north');
       this.level.play(2);
       expectationOne.verify();
       expectationTwo.verify();
     });
 
     it('should return immediately when passed', function () {
-      const object = new Base();
-      const expectation = this.sinon.mock(object).expects('performTurn').never();
-      this.floor.addUnit(object, 0, 0, 'north');
+      const unit = new Unit();
+      const expectation = this.sinon.mock(unit).expects('performTurn').never();
+      this.floor.addUnit(unit, 0, 0, 'north');
       this.sinon.stub(this.level, 'passed').returns(true);
       this.level.play(2);
       expectation.verify();

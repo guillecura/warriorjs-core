@@ -1,7 +1,7 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import Base from './Base';
+import RelativeDirections from '../../constants/RelativeDirections';
+import Ability from '../Ability';
 
-class Shoot extends Base {
+class Shoot extends Ability {
   _description = 'Shoot your bow & arrow in given direction (forward by default).';
 
   perform(direction = RelativeDirections.forward) {

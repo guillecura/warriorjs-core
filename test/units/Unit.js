@@ -1,15 +1,15 @@
 import chai from 'chai';
 import chaiAlive from '../helpers/chaiAlive';
-import Base from '../../src/units/Base';
-import Walk from '../../src/abilities/Walk';
+import Unit from '../../src/units/Unit';
+import Walk from '../../src/abilities/actions/Walk';
 import Floor from '../../src/Floor';
 
 const should = chai.should();
 chai.use(chaiAlive);
 
-describe('Base', function () {
+describe('Unit', function () {
   beforeEach(function () {
-    this.unit = new Base();
+    this.unit = new Unit();
   });
 
   it('should have an attack power which defaults to zero', function () {
@@ -67,8 +67,8 @@ describe('Base', function () {
   });
 
   it('should return name in toString', function () {
-    this.unit.getName().should.equal('Base');
-    this.unit.toString().should.equal('Base');
+    this.unit.getName().should.equal('Unit');
+    this.unit.toString().should.equal('Unit');
   });
 
   it('should prepare turn by calling playTurn with next turn object', function () {

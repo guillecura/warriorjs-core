@@ -1,11 +1,11 @@
 import chai from 'chai';
-import Base from '../../src/abilities/Base';
+import Ability from '../../src/abilities/Ability';
 
 const should = chai.should();
 
-describe('Base', function () {
+describe('Ability', function () {
   beforeEach(function () {
-    this.ability = new Base();
+    this.ability = new Ability();
   });
 
   it('should have offset for directions', function () {

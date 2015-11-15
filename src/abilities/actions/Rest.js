@@ -1,6 +1,6 @@
-import Base from './Base';
+import Ability from '../Ability';
 
-class Rest extends Base {
+class Rest extends Ability {
   _description = 'Gain 10% of max health back, but do nothing more.';
 
   perform() {

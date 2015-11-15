@@ -1,6 +1,6 @@
 import chai from 'chai';
-import Detonate from '../../src/abilities/Detonate';
-import Base from '../../src/units/Base';
+import Detonate from '../../src/abilities/actions/Detonate';
+import Unit from '../../src/units/Unit';
 import Warrior from '../../src/units/Warrior';
 import Captive from '../../src/units/Captive';
 import Floor from '../../src/Floor';
@@ -18,9 +18,9 @@ describe('Detonate', function () {
   });
 
   it('should subtract 8 from forward unit and 4 from surrounding units', function () {
-    const targetUnit = new Base();
+    const targetUnit = new Unit();
     targetUnit.setHealth(15);
-    const secondUnit = new Base();
+    const secondUnit = new Unit();
     secondUnit.setHealth(15);
     this.floor.addUnit(targetUnit, 0, 1);
     this.floor.addUnit(secondUnit, 1, 1);
@@ -30,9 +30,9 @@ describe('Detonate', function () {
   });
 
   it('should subtract 8 from forward unit and 4 from surrounding units', function () {
-    const targetUnit = new Base();
+    const targetUnit = new Unit();
     targetUnit.setHealth(15);
-    const secondUnit = new Base();
+    const secondUnit = new Unit();
     secondUnit.setHealth(15);
     this.floor.addUnit(targetUnit, 1, 0);
     this.floor.addUnit(secondUnit, 1, 1);

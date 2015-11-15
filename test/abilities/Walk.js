@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Walk from '../../src/abilities/Walk';
+import Walk from '../../src/abilities/actions/Walk';
 
 chai.should();
 

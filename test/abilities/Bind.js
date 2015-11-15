@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiBound from '../helpers/chaiBound';
-import Bind from '../../src/abilities/Bind';
-import Base from '../../src/units/Base';
+import Bind from '../../src/abilities/actions/Bind';
+import Unit from '../../src/units/Unit';
 
 chai.should();
 chai.use(chaiBound);
@@ -12,7 +12,7 @@ describe('Bind', function () {
   });
 
   it('should bind receiver', function () {
-    const receiver = new Base();
+    const receiver = new Unit();
     this.sinon.stub(this.bind, 'getUnit').returns(receiver);
     this.bind.perform();
     receiver.should.be.bound;

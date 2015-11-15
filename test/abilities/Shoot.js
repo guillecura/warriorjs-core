@@ -1,6 +1,6 @@
 import chai from 'chai';
 import sinon from 'sinon';
-import Shoot from '../../src/abilities/Shoot';
+import Shoot from '../../src/abilities/actions/Shoot';
 
 chai.should();
 

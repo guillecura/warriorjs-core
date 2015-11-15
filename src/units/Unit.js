@@ -1,26 +1,10 @@
 import Turn from '../Turn';
 import Logger from '../Logger';
-import Actions from '../constants/Actions';
-import Senses from '../constants/Senses';
-import Attack from '../abilities/Attack';
-import Bind from '../abilities/Bind';
-import Detonate from '../abilities/Detonate';
-import DirectionOf from '../abilities/DirectionOf';
-import DirectionOfStairs from '../abilities/DirectionOfStairs';
-import DistanceOf from '../abilities/DistanceOf';
-import Explode from '../abilities/Explode';
-import Feel from '../abilities/Feel';
-import Health from '../abilities/Health';
-import Listen from '../abilities/Listen';
-import Look from '../abilities/Look';
-import Pivot from '../abilities/Pivot';
-import Rescue from '../abilities/Rescue';
-import Rest from '../abilities/Rest';
-import Shoot from '../abilities/Shoot';
-import Walk from '../abilities/Walk';
+import Actions from '../abilities/actions';
+import Senses from '../abilities/senses';
 
-class Base {
-  _name = 'Base';
+class Unit {
+  _name = 'Unit';
   _type = null;
   _position = null;
   _attackPower = 0;
@@ -119,55 +103,23 @@ class Base {
 
   addActions(newActions) {
     newActions.forEach(actionName => {
-      let action;
-      if (actionName === Actions.attack) {
-        action = new Attack(this);
-      } else if (actionName === Actions.bind) {
-        action = new Bind(this);
-      } else if (actionName === Actions.detonate) {
-        action = new Detonate(this);
-      } else if (actionName === Actions.explode) {
-        action = new Explode(this);
-      } else if (actionName === Actions.pivot) {
-        action = new Pivot(this);
-      } else if (actionName === Actions.rescue) {
-        action = new Rescue(this);
-      } else if (actionName === Actions.rest) {
-        action = new Rest(this);
-      } else if (actionName === Actions.shoot) {
-        action = new Shoot(this);
-      } else if (actionName === Actions.walk) {
-        action = new Walk(this);
-      } else {
-        throw new Error(`Unknown action '${action}'.`);
+      if (!Actions.hasOwnProperty(actionName)) {
+        throw new Error(`Unknown action '${actionName}'.`);
       }
 
-      this._actions[actionName] = action;
+      const Action = Actions[actionName];
+      this._actions[actionName] = new Action(this);
     });
   }
 
   addSenses(newSenses) {
     newSenses.forEach(senseName => {
-      let sense;
-      if (senseName === Senses.directionOf) {
-        sense = new DirectionOf(this);
-      } else if (senseName === Senses.directionOfStairs) {
-        sense = new DirectionOfStairs(this);
-      } else if (senseName === Senses.distanceOf) {
-        sense = new DistanceOf(this);
-      } else if (senseName === Senses.feel) {
-        sense = new Feel(this);
-      } else if (senseName === Senses.health) {
-        sense = new Health(this);
-      } else if (senseName === Senses.listen) {
-        sense = new Listen(this);
-      } else if (senseName === Senses.look) {
-        sense = new Look(this);
-      } else {
-        throw new Error(`Unknown sense '${sense}'.`);
+      if (!Senses.hasOwnProperty(senseName)) {
+        throw new Error(`Unknown sense '${senseName}'.`);
       }
 
-      this._senses[senseName] = sense;
+      const Sense = Senses[senseName];
+      this._senses[senseName] = new Sense(this);
     });
   }
 
@@ -211,4 +163,4 @@ class Base {
   }
 }
 
-export default Base;
+export default Unit;

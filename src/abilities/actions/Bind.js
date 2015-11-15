@@ -1,7 +1,7 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import Base from './Base';
+import RelativeDirections from '../../constants/RelativeDirections';
+import Ability from '../Ability';
 
-class Bind extends Base {
+class Bind extends Ability {
   _description = 'Binds a unit in given direction to keep him from moving (forward by default).';
 
   perform(direction = RelativeDirections.forward) {

@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Feel from '../../src/abilities/Feel';
+import Feel from '../../src/abilities/senses/Feel';
 
 chai.should();
 

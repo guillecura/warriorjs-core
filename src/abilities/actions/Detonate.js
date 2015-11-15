@@ -1,5 +1,5 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import Base from './Base';
+import RelativeDirections from '../../constants/RelativeDirections';
+import Ability from '../Ability';
 
 const TARGET_DAMAGE_AMOUNT = 8;
 const SURROUNDING_DAMAGE_AMOUNT = 4;
@@ -10,7 +10,7 @@ const SURROUNDINGS = [
   [0, 0],
 ];
 
-class Detonate extends Base {
+class Detonate extends Ability {
   _description = 'Detonate a bomb in a given direction (forward by default) which damages that space and surrounding 4 spaces (including yourself).';
 
   perform(direction = RelativeDirections.forward) {

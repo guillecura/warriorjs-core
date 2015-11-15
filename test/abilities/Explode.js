@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import chai from 'chai';
-import Explode from '../../src/abilities/Explode';
-import Base from '../../src/units/Base';
+import Explode from '../../src/abilities/actions/Explode';
+import Unit from '../../src/units/Unit';
 import Captive from '../../src/units/Captive';
 import Floor from '../../src/Floor';
 
@@ -18,7 +18,7 @@ describe('Explode', function () {
   });
 
   it('should subtract 100 health from each unit on the floor', function () {
-    const unit = new Base();
+    const unit = new Unit();
     unit.setHealth(101);
     this.floor.addUnit(unit, 0, 1);
     this.captive.setHealth(10);

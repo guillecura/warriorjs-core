@@ -1,6 +1,6 @@
 import RelativeDirections from '../constants/RelativeDirections';
 
-class Base {
+class Ability {
   _unit;
   _description;
 
@@ -55,4 +55,4 @@ class Base {
   }
 }
 
-export default Base;
+export default Ability;

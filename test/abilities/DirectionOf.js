@@ -1,5 +1,5 @@
 import chai from 'chai';
-import DirectionOf from '../../src/abilities/DirectionOf';
+import DirectionOf from '../../src/abilities/senses/DirectionOf';
 
 chai.should();
 

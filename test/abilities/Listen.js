@@ -1,6 +1,6 @@
 import chai from 'chai';
-import Listen from '../../src/abilities/Listen';
-import Base from '../../src/units/Base';
+import Listen from '../../src/abilities/senses/Listen';
+import Unit from '../../src/units/Unit';
 import Warrior from '../../src/units/Warrior';
 import Floor from '../../src/Floor';
 
@@ -17,7 +17,7 @@ describe('Listen', function () {
   });
 
   it('should return an array of spaces which have units on them besides main unit', function () {
-    this.floor.addUnit(new Base(), 0, 1);
+    this.floor.addUnit(new Unit(), 0, 1);
     this.listen.perform().should.have.length(1);
   });
 });

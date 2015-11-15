@@ -1,6 +1,6 @@
 import chai from 'chai';
 import Turn from '../src/Turn';
-import Feel from '../src/abilities/Feel';
+import Feel from '../src/abilities/senses/Feel';
 
 const should = chai.should();
 

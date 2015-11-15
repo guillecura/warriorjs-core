@@ -1,7 +1,7 @@
 import UnitTypes from '../constants/UnitTypes';
-import Base from './Base';
+import Unit from './Unit';
 
-class Captive extends Base {
+class Captive extends Unit {
   _name = 'Captive';
   _type = UnitTypes.captive;
   _maxHealth = 1;

@@ -1,9 +1,9 @@
 import chai from 'chai';
 import chaiBound from '../helpers/chaiBound';
-import Rescue from '../../src/abilities/Rescue';
+import Rescue from '../../src/abilities/actions/Rescue';
 import Warrior from '../../src/units/Warrior';
 import Captive from '../../src/units/Captive';
-import Base from '../../src/units/Base';
+import Unit from '../../src/units/Unit';
 
 const should = chai.should();
 chai.use(chaiBound);
@@ -26,7 +26,7 @@ describe('Rescue', function () {
   });
 
   it('should do nothing to other unit if not bound', function () {
-    const unit = new Base();
+    const unit = new Unit();
     unit.setPosition({});
     this.sinon.mock(this.rescue).expects('getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(false) });
     this.sinon.mock(this.rescue).expects('getUnit').withArgs('forward').never();
@@ -37,7 +37,7 @@ describe('Rescue', function () {
   });
 
   it('should release other unit when bound', function () {
-    const unit = new Base();
+    const unit = new Unit();
     unit.bind();
     unit.setPosition({});
     this.sinon.mock(this.rescue).expects('getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(true) });

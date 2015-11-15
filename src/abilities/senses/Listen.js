@@ -1,6 +1,6 @@
-import Base from './Base';
+import Ability from '../Ability';
 
-class Listen extends Base {
+class Listen extends Ability {
   _description = 'Returns an array of all spaces which have units in them.';
 
   perform() {

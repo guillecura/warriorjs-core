@@ -1,5 +1,5 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import Base from './Base';
+import RelativeDirections from '../../constants/RelativeDirections';
+import Ability from '../Ability';
 
 const ROTATION_DIRECTIONS = [
   RelativeDirections.forward,
@@ -8,7 +8,7 @@ const ROTATION_DIRECTIONS = [
   RelativeDirections.left,
 ];
 
-class Pivot extends Base {
+class Pivot extends Ability {
   _description = 'Rotate left, right or backward (default).';
 
   perform(direction = RelativeDirections.backward) {

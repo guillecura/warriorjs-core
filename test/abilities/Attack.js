@@ -1,6 +1,6 @@
 import chai from 'chai';
-import Attack from '../../src/abilities/Attack';
-import Base from '../../src/units/Base';
+import Attack from '../../src/abilities/actions/Attack';
+import Unit from '../../src/units/Unit';
 
 chai.should();
 
@@ -16,7 +16,7 @@ describe('Attack', function () {
   });
 
   it('should subtract attack power amount from health', function () {
-    const receiver = new Base();
+    const receiver = new Unit();
     this.sinon.stub(receiver, 'isAlive').returns(true);
     receiver.setHealth(5);
     this.sinon.stub(this.attack, 'getUnit').returns(receiver);
@@ -60,7 +60,7 @@ describe('Attack', function () {
   });
 
   it('should reduce attack power when attacking backward', function () {
-    const receiver = new Base();
+    const receiver = new Unit();
     this.sinon.stub(receiver, 'isAlive').returns(true);
     receiver.setHealth(5);
     this.sinon.stub(this.attack, 'getUnit').returns(receiver);

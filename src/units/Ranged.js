@@ -1,8 +1,8 @@
 import Actions from '../constants/Actions';
 import Senses from '../constants/Senses';
-import Base from './Base';
+import Unit from './Unit';
 
-class Ranged extends Base {
+class Ranged extends Unit {
   constructor() {
     super();
 

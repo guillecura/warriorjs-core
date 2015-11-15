@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Health from '../../src/abilities/Health';
+import Health from '../../src/abilities/senses/Health';
 import Warrior from '../../src/units/Warrior';
 
 chai.should();

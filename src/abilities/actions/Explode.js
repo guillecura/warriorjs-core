@@ -1,6 +1,6 @@
-import Base from './Base';
+import Ability from '../Ability';
 
-class Explode extends Base {
+class Explode extends Ability {
   _description = 'Kills you and all surrounding units. You probably don\'t want to do this intentionally.';
   _time;
 

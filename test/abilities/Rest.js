@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Rest from '../../src/abilities/Rest';
+import Rest from '../../src/abilities/actions/Rest';
 import Warrior from '../../src/units/Warrior';
 
 chai.should();

@@ -1,5 +1,5 @@
 import chai from 'chai';
-import DirectionOfStairs from '../../src/abilities/DirectionOfStairs';
+import DirectionOfStairs from '../../src/abilities/senses/DirectionOfStairs';
 
 chai.should();
 

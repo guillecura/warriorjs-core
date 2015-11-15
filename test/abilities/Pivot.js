@@ -1,5 +1,5 @@
 import chai from 'chai';
-import Pivot from '../../src/abilities/Pivot';
+import Pivot from '../../src/abilities/actions/Pivot';
 
 chai.should();
 

@@ -1,7 +1,7 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import Base from './Base';
+import RelativeDirections from '../../constants/RelativeDirections';
+import Ability from '../Ability';
 
-class Look extends Base {
+class Look extends Ability {
   _description = 'Returns an array of up to three Spaces in the given direction (forward by default).';
 
   perform(direction = RelativeDirections.forward) {

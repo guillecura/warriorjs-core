@@ -1,8 +1,8 @@
 import { transform } from 'babel';
 import UnitTypes from '../constants/UnitTypes';
-import Base from './Base';
+import Unit from './Unit';
 
-class Warrior extends Base {
+class Warrior extends Unit {
   _name = 'Warrior';
   _type = UnitTypes.warrior;
   _attackPower = 5;
