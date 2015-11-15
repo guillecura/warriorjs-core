@@ -1,4 +1,4 @@
-const Units = {
+const UnitTypes = {
   archer: 'archer',
   captive: 'captive',
   sludge: 'sludge',
@@ -7,4 +7,4 @@ const Units = {
   wizard: 'wizard',
 };
 
-export default Units;
+export default UnitTypes;

@@ -1,21 +1,19 @@
-import Ability from '../Ability';
+import Action from './Action';
 
-class Explode extends Ability {
+class Explode extends Action {
   _description = 'Kills you and all surrounding units. You probably don\'t want to do this intentionally.';
   _time;
 
-  getTime() {
-    return this._time;
-  }
+  constructor(unit, time) {
+    super(unit);
 
-  setTime(time) {
     this._time = time;
   }
 
   perform() {
     if (this._unit.getPosition()) {
       this._unit.say(`explodes, collapsing the ceiling and damaging every unit.`);
-      this._unit.getPosition().getFloor().getUnits().forEach(unit => unit.takeDamage(100));
+      this._unit.getPosition().getFloor().getUnits().forEach((unit) => unit.takeDamage(100));
     }
   }
 

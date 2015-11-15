@@ -9,10 +9,10 @@ describe('Ranged', function () {
   });
 
   it('should have look sense', function () {
-    this.rangedUnit.getSenses().should.include.key('look');
+    this.rangedUnit.getAbilities().should.include.key('look');
   });
 
   it('should have shoot action', function () {
-    this.rangedUnit.getActions().should.include.key('shoot');
+    this.rangedUnit.getAbilities().should.include.key('shoot');
   });
 });

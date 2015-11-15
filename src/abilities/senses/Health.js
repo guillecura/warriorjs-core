@@ -1,6 +1,6 @@
-import Ability from '../Ability';
+import Sense from './Sense';
 
-class Health extends Ability {
+class Health extends Sense {
   _description = 'Returns an integer representing your health.';
 
   perform() {

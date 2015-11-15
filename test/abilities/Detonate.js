@@ -44,7 +44,7 @@ describe('Detonate', function () {
   it('should detonate an explosive if any unit has one', function () {
     const captive = new Captive();
     captive.setHealth(1);
-    captive.addActions(['explode']);
+    captive.addAbilities({ explode: [] });
     this.floor.addUnit(captive, 1, 1);
     this.detonate.perform();
     captive.getHealth().should.equal(0);

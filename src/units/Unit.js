@@ -1,7 +1,6 @@
 import Turn from '../Turn';
 import Logger from '../Logger';
-import Actions from '../abilities/actions';
-import Senses from '../abilities/senses';
+import Abilities from '../abilities';
 
 class Unit {
   _name = 'Unit';
@@ -11,8 +10,7 @@ class Unit {
   _shootPower = 0;
   _maxHealth = 0;
   _health = null;
-  _actions = {};
-  _senses = {};
+  _abilities = {};
   _currentTurn = null;
 
   getName() {
@@ -52,16 +50,8 @@ class Unit {
     this._health = health;
   }
 
-  getActions() {
-    return this._actions;
-  }
-
-  getSenses() {
-    return this._senses;
-  }
-
   getAbilities() {
-    return Object.assign({}, this.getActions(), this.getSenses());
+    return this._abilities;
   }
 
   isAlive() {
@@ -101,30 +91,19 @@ class Unit {
     }
   }
 
-  addActions(newActions) {
-    newActions.forEach(actionName => {
-      if (!Actions.hasOwnProperty(actionName)) {
-        throw new Error(`Unknown action '${actionName}'.`);
+  addAbilities(newAbilities) {
+    Object.entries(newAbilities).forEach(([name, args]) => {
+      if (!Abilities.hasOwnProperty(name)) {
+        throw new Error(`Unknown ability '${name}'.`);
       }
 
-      const Action = Actions[actionName];
-      this._actions[actionName] = new Action(this);
-    });
-  }
-
-  addSenses(newSenses) {
-    newSenses.forEach(senseName => {
-      if (!Senses.hasOwnProperty(senseName)) {
-        throw new Error(`Unknown sense '${senseName}'.`);
-      }
-
-      const Sense = Senses[senseName];
-      this._senses[senseName] = new Sense(this);
+      const Ability = Abilities[name];
+      this._abilities[name] = new Ability(this, ...args);
     });
   }
 
   getNextTurn() {
-    return new Turn(this.getActions(), this.getSenses());
+    return new Turn(this.getAbilities());
   }
 
   playTurn(turn) { // eslint-disable-line no-unused-vars
@@ -141,7 +120,7 @@ class Unit {
       Object.values(this.getAbilities()).forEach((ability) => ability.passTurn());
       if (this._currentTurn.getAction() && !this.isBound()) {
         const [name, args] = this._currentTurn.getAction();
-        this.getActions()[name].perform(...args);
+        this.getAbilities()[name].perform(...args);
       }
     }
   }

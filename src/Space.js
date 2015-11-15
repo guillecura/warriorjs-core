@@ -63,7 +63,7 @@ class Space {
   }
 
   isTicking() {
-    return this.getUnit() && Object.keys(this.getUnit().getActions()).includes('explode');
+    return this.getUnit() && this.getUnit().getAbilities().hasOwnProperty('explode');
   }
 
   toString() {

@@ -1,7 +1,7 @@
 import RelativeDirections from '../../constants/RelativeDirections';
-import Ability from '../Ability';
+import Action from './Action';
 
-class Rescue extends Ability {
+class Rescue extends Action {
   _description = 'Rescue a captive from his chains (earning 20 points) in given direction (forward by default).';
 
   perform(direction = RelativeDirections.forward) {

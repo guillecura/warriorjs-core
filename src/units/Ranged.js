@@ -1,13 +1,14 @@
-import Actions from '../constants/Actions';
-import Senses from '../constants/Senses';
+import Abilities from '../constants/Abilities';
 import Unit from './Unit';
 
 class Ranged extends Unit {
   constructor() {
     super();
 
-    this.addActions([Actions.shoot]);
-    this.addSenses([Senses.look]);
+    this.addAbilities({
+      [Abilities.look]: [],
+      [Abilities.shoot]: [],
+    });
   }
 
   isPlayerInSight(turn, direction) {

@@ -1,5 +1,5 @@
 import RelativeDirections from '../../constants/RelativeDirections';
-import Ability from '../Ability';
+import Action from './Action';
 
 const TARGET_DAMAGE_AMOUNT = 8;
 const SURROUNDING_DAMAGE_AMOUNT = 4;
@@ -10,7 +10,7 @@ const SURROUNDINGS = [
   [0, 0],
 ];
 
-class Detonate extends Ability {
+class Detonate extends Action {
   _description = 'Detonate a bomb in a given direction (forward by default) which damages that space and surrounding 4 spaces (including yourself).';
 
   perform(direction = RelativeDirections.forward) {
@@ -26,9 +26,9 @@ class Detonate extends Ability {
     if (this._unit.getPosition()) {
       const receiver = this.getSpace(direction, x, y).getUnit();
       if (receiver) {
-        if (receiver.getActions().explode) {
+        if (receiver.getAbilities().explode) {
           receiver.say('caught in bomb\'s flames which detonates ticking explosive');
-          receiver.getActions().explode.perform();
+          receiver.getAbilities().explode.perform();
         } else {
           this.damage(receiver, damageAmount);
         }

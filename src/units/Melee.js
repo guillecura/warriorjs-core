@@ -1,13 +1,14 @@
-import Actions from '../constants/Actions';
-import Senses from '../constants/Senses';
+import Abilities from '../constants/Abilities';
 import Unit from './Unit';
 
 class Melee extends Unit {
   constructor() {
     super();
 
-    this.addActions([Actions.attack]);
-    this.addSenses([Senses.feel]);
+    this.addAbilities({
+      [Abilities.attack]: [],
+      [Abilities.feel]: [],
+    });
   }
 
   isPlayerReachable(turn, direction) {

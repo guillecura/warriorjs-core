@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import chai from 'chai';
 import Explode from '../../src/abilities/actions/Explode';
 import Unit from '../../src/units/Unit';
@@ -14,7 +13,7 @@ describe('Explode', function () {
     this.floor.setHeight(3);
     this.captive = new Captive();
     this.floor.addUnit(this.captive, 0, 0);
-    this.explode = new Explode(this.captive);
+    this.explode = new Explode(this.captive, 3);
   });
 
   it('should subtract 100 health from each unit on the floor', function () {
@@ -29,8 +28,7 @@ describe('Explode', function () {
 
   it('should explode when bomb time reaches zero', function () {
     this.captive.setHealth(10);
-    this.explode.setTime(3);
-    _.times(2, () => this.explode.passTurn());
+    Array.apply(null, Array(2)).forEach(() => this.explode.passTurn());
     this.captive.getHealth().should.equal(10);
     this.explode.passTurn();
     this.captive.getHealth().should.equal(0);

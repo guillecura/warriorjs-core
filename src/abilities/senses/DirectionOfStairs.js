@@ -1,7 +1,7 @@
 import RelativeDirections from '../../constants/RelativeDirections';
-import Ability from '../Ability';
+import Sense from './Sense';
 
-class DirectionOfStairs extends Ability {
+class DirectionOfStairs extends Sense {
   _description = `Returns the direction (${Object.values(RelativeDirections).join(', ')}) the stairs are from your location.`;
 
   perform() {

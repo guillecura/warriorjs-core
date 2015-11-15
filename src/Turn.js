@@ -1,3 +1,5 @@
+import Sense from './abilities/senses/Sense';
+
 const ALLOWED_MEMBERS = [
   'attack',
   'bind',
@@ -21,9 +23,14 @@ class Turn {
   _action = null;
   _senses = {};
 
-  constructor(actions, senses) {
-    Object.keys(actions).forEach(name => this.addAction(name));
-    Object.keys(senses).forEach(name => this.addSense(name, senses[name]));
+  constructor(abilities) {
+    Object.entries(abilities).forEach(([name, ability]) => {
+      if (ability instanceof Sense) {
+        this.addSense(name, ability);
+      } else {
+        this.addAction(name);
+      }
+    });
   }
 
   getAction() {

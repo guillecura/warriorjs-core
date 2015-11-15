@@ -17,7 +17,7 @@ Engine.play(config, warrior) // => { passed, points, trace }
 ```javascript
 const config = {
   timeBonus: 15,
-  
+
   size: {
     width: 8,
     height: 1
@@ -26,18 +26,14 @@ const config = {
     x: 7,
     y: 0
   },
-  
+
   warrior: {
     x: 0,
     y: 0,
     facing: 'east',
     abilities: {
-      actions: [
-        'attack'
-      ],
-      senses: [
-        'feel'
-      ]
+      'attack': [],
+      'feel': []
     }
   },
 

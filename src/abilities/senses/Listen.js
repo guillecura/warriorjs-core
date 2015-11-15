@@ -1,6 +1,6 @@
-import Ability from '../Ability';
+import Sense from './Sense';
 
-class Listen extends Ability {
+class Listen extends Sense {
   _description = 'Returns an array of all spaces which have units in them.';
 
   perform() {

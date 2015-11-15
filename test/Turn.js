@@ -11,7 +11,6 @@ describe('Turn', function () {
     this.turn = new Turn({
       'walk': null,
       'attack': null,
-    }, {
       'feel': this.feel,
     });
   });
