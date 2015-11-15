@@ -1,4 +1,5 @@
 import LevelLoader from './LevelLoader';
+import Logger from './Logger';
 
 const MAX_TURNS = 1000;
 
@@ -59,14 +60,19 @@ class Level {
     const trace = [];
     for (let n = 0; n < turns; n++) {
       if (this.passed() || this.failed()) break;
+
+      const floor = this.getFloor().toViewObject();
+
+      Logger.clear();
       this.getFloor().getUnits().forEach((unit) => unit.prepareTurn());
-      this.getFloor().getUnits().forEach((unit) => { // eslint-disable-line no-loop-func
-        unit.performTurn();
-        trace.push({
-          floor: this.getFloor().toViewObject(),
-          log: '',
-        });
+      this.getFloor().getUnits().forEach((unit) => unit.performTurn());
+
+      trace.push({
+        floor,
+        log: Logger.getLog(),
+        turnNumber: n + 1,
       });
+
       if (this.getTimeBonus()) this._timeBonus -= 1;
     }
 

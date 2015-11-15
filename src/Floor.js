@@ -5,8 +5,8 @@ import Warrior from './units/Warrior';
 class Floor {
   _width = 0;
   _height = 0;
-  _units = [];
   _stairsLocation = [-1, -1];
+  _units = [];
 
   getWidth() {
     return this._width;
@@ -22,6 +22,10 @@ class Floor {
 
   setHeight(height) {
     this._height = height;
+  }
+
+  getStairsLocation() {
+    return this._stairsLocation;
   }
 
   getUnits() {
@@ -54,10 +58,6 @@ class Floor {
   addUnit(unit, x, y, direction) {
     unit.setPosition(new Position(this, x, y, direction));
     this._units.push(unit);
-  }
-
-  getStairsLocation() {
-    return this._stairsLocation;
   }
 
   placeStairs(x, y) {

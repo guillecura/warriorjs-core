@@ -141,7 +141,7 @@ describe('Base', function () {
     it('should explode when time reaches 0', function () {
       this.unit.setHealth(10);
       this.unit.getActions().explode.setTime(3);
-      new Array(2).forEach(() => {
+      Array.apply(null, Array(2)).forEach(() => {
         this.unit.prepareTurn();
         this.unit.performTurn();
       });

@@ -1,4 +1,5 @@
 import Turn from '../Turn';
+import Logger from '../Logger';
 import Actions from '../constants/Actions';
 import Senses from '../constants/Senses';
 import Attack from '../abilities/Attack';
@@ -96,8 +97,8 @@ class Base {
     this._bound = true;
   }
 
-  say(message) { // eslint-disable-line no-unused-vars
-    // TODO: `${this.getName()} ${message}`
+  say(message) {
+    Logger.log(this.getType(), `${this.getName()} ${message}`);
   }
 
   takeDamage(amount) {
@@ -185,7 +186,7 @@ class Base {
 
   performTurn() {
     if (this.getPosition()) {
-      Object.values(this.getAbilities()).forEach(ability => ability.passTurn());
+      Object.values(this.getAbilities()).forEach((ability) => ability.passTurn());
       if (this._currentTurn.getAction() && !this.isBound()) {
         const [name, args] = this._currentTurn.getAction();
         this.getActions()[name].perform(...args);
