@@ -12,12 +12,3 @@ node_js:
   - '0.12'
 
 script: npm run-script test-travis
-
-deploy:
-  provider: npm
-  email: m@matioli.me
-  api_key:
-    secure: uD96fSe3TgUhfO6KMid2RK3iWOGwL96/Hk3GK0vLl1a2Pr3yZBa9fySP9hV9hpEUBy/ycprk+Z4wQt0d+gRkaSKXjIbWVjI4R/1ujBDL0uNKmU73AYCuvgMq16j1Wk96LAu5vh9PSgSn7T/19UPaSrD1/jIl7kuZK8Q74nCLd4VqwHlFOMg+XVVl2tPwKJapahkhAQ7FvXvtpkh1E96O6XoUOVvlk+76ZPMtNW0dUpcgl5/ikCrBFuhL+ucEVQqYlSfGyrpSJNSpljvokLXTKPOkI8Jxr6nVUoKP38FC5s0fm2Qc2TY0xt+ina9gL4zysdKoijCUcNVDDXNmnXYg6k1ShrOVSlMewlulNbtYTH5qYZkw2eQlgo/WMkz4MlR+vgZhDM1Cv59nVF1BXV0Ff9zyH8GbDf9ew2FjhUvJGW794LUwLGgIzlH6SoLVk+LumgrWQdF6rejmxzUsH7MoW82RshovUX8N+8d49QOpGp0JXchHdaWBDZ1xORm5fKv2WShVE0rw11CjziJlRUGBv1gMvfoobdeQDIvtoCu21mC4kkcku6CqI+xMCHjYgYmx4O1oGf0Aler8kNwICcestb7PhacqrSzFSaEN5UJu3V+777K/+dn8oTzSq23UZ8WXXEm2aq5g+o67MlKKpRc47ltEG4zOYrbssjPvq1177dg=
-  on:
-    tags: true
-    branch: master
