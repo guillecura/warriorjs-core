@@ -7,6 +7,7 @@
     "compile": "babel src --out-dir lib",
     "prepublish": "npm run compile",
     "test": "mocha --compilers js:babel/register --ui bdd --reporter spec --recursive",
+    "test-travis": "echo \"No ES5 tests yet\" && exit 0",
     "lint": "eslint . --ext .js"
   },
   "repository": {
