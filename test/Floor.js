@@ -11,9 +11,7 @@ chai.use(chaiOutOfBounds);
 describe('Floor', function () {
   describe('2x3', function () {
     beforeEach(function () {
-      this.floor = new Floor();
-      this.floor.setWidth(2);
-      this.floor.setHeight(3);
+      this.floor = new Floor(2, 3);
     });
 
     it('should be able to add a unit and fetch it at that position', function () {
@@ -25,8 +23,8 @@ describe('Floor', function () {
     it('should not consider unit on floor if no position', function () {
       const unit = new Unit();
       this.floor.addUnit(unit, 0, 1, 'north');
-      unit.setPosition(null);
-      this.floor.getUnits().should.not.include(unit);
+      unit.position = null;
+      this.floor.units.should.not.include(unit);
     });
 
     it('should fetch other units not warrior', function () {
@@ -34,8 +32,8 @@ describe('Floor', function () {
       const warrior = new Warrior();
       this.floor.addUnit(unit, 0, 0, 'north');
       this.floor.addUnit(warrior, 1, 0, 'north');
-      this.floor.getOtherUnits().should.include(unit);
-      this.floor.getOtherUnits().should.not.include(warrior);
+      this.floor.otherUnits.should.include(unit);
+      this.floor.otherUnits.should.not.include(warrior);
     });
 
     it('should not consider corners out of bounds', function () {
@@ -58,22 +56,20 @@ describe('Floor', function () {
 
     it('should place stairs and be able to fetch the location', function () {
       this.floor.placeStairs(1, 2);
-      this.floor.getStairsLocation().should.eql([1, 2]);
+      this.floor.stairsLocation.should.eql([1, 2]);
     });
   });
 
   describe('3x1', function () {
     beforeEach(function () {
-      this.floor = new Floor();
-      this.floor.setWidth(3);
-      this.floor.setHeight(1);
+      this.floor = new Floor(3, 1);
     });
 
     it('should return unique units', function () {
       const unit = new Unit();
       this.floor.addUnit(unit, 0, 0);
       this.floor.addUnit(new Unit(), 1, 0);
-      this.floor.getUniqueUnits().should.eql([unit]);
+      this.floor.uniqueUnits.should.eql([unit]);
     });
   });
 });

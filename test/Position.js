@@ -7,26 +7,24 @@ const should = chai.should();
 describe('Position', function () {
   beforeEach(function () {
     this.unit = new Unit();
-    this.floor = new Floor();
-    this.floor.setWidth(6);
-    this.floor.setHeight(5);
+    this.floor = new Floor(6, 5);
     this.floor.addUnit(this.unit, 1, 2, 'north');
-    this.position = this.unit.getPosition();
+    this.position = this.unit.position;
   });
 
   it('should rotate clockwise', function () {
-    this.position.getDirection().should.equal('north');
-    ['east', 'south', 'west', 'north', 'east'].forEach(direction => {
+    this.position.direction.should.equal('north');
+    ['east', 'south', 'west', 'north', 'east'].forEach((direction) => {
       this.position.rotate(1);
-      this.position.getDirection().should.equal(direction);
+      this.position.direction.should.equal(direction);
     });
   });
 
   it('should rotate counterclockwise', function () {
-    this.position.getDirection().should.equal('north');
-    ['west', 'south', 'east', 'north', 'west'].forEach(direction => {
+    this.position.direction.should.equal('north');
+    ['west', 'south', 'east', 'north', 'west'].forEach((direction) => {
       this.position.rotate(-1);
-      this.position.getDirection().should.equal(direction);
+      this.position.direction.should.equal(direction);
     });
   });
 
@@ -98,7 +96,7 @@ describe('Position', function () {
   });
 
   it('should return a space at the same location as position', function () {
-    this.position.getSpace().getLocation().should.eql([1, 2]);
+    this.position.space.location.should.eql([1, 2]);
   });
 
   it('should return distance of given space', function () {

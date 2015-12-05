@@ -3,41 +3,39 @@ import Logger from './Logger';
 
 const MAX_TURNS = 1000;
 
-class Level {
+export default class Level {
   _warrior = null;
   _floor = null;
   _timeBonus = 0;
 
-  getWarrior() {
+  get warrior() {
     return this._warrior;
   }
 
-  setWarrior(warrior) {
+  set warrior(warrior) {
     this._warrior = warrior;
   }
 
-  getFloor() {
+  get floor() {
     return this._floor;
   }
 
-  setFloor(floor) {
+  set floor(floor) {
     this._floor = floor;
   }
 
-  getTimeBonus() {
+  get timeBonus() {
     return this._timeBonus;
   }
 
-  setTimeBonus(timeBonus) {
+  set timeBonus(timeBonus) {
     this._timeBonus = timeBonus;
   }
 
-  getClearBonus() {
-    if (!this.getFloor().getOtherUnits().length) {
-      return Math.round((this.getWarrior().getScore() + this.getTimeBonus()) * 0.2);
-    }
-
-    return 0;
+  get clearBonus() {
+    return this.floor.otherUnits.length ?
+      0 :
+      Math.round((this.warrior.score + this.timeBonus) * 0.2);
   }
 
   loadLevel(config, warrior) {
@@ -45,47 +43,52 @@ class Level {
   }
 
   loadPlayer() {
-    this.getWarrior().loadPlayer();
-  }
-
-  passed() {
-    return this.getFloor().getStairsSpace().isWarrior();
-  }
-
-  failed() {
-    return !this.getFloor().getUnits().includes(this.getWarrior());
+    this.warrior.loadPlayer();
   }
 
   play(turns = MAX_TURNS) {
     const trace = [];
-    for (let n = 0; n < turns; n++) {
-      if (this.passed() || this.failed()) break;
+    for (let n = 1; n <= turns; n++) {
+      if (this._passed() || this._failed()) {
+        break;
+      }
 
-      const floor = this.getFloor().toViewObject();
-
+      const floor = this.floor.toViewObject();
       Logger.clear();
-      this.getFloor().getUnits().forEach((unit) => unit.prepareTurn());
-      this.getFloor().getUnits().forEach((unit) => unit.performTurn());
+
+      this.floor.units.forEach((unit) => unit.prepareTurn());
+      this.floor.units.forEach((unit) => unit.performTurn());
+      this._decTimeBonus();
 
       trace.push({
         floor,
-        log: Logger.getLog(),
-        turnNumber: n + 1,
+        logEntries: Logger.entries,
+        turnNumber: n,
       });
-
-      if (this.getTimeBonus()) this._timeBonus -= 1;
     }
 
     return {
       trace,
-      passed: this.passed(),
+      passed: this._passed(),
       points: {
-        levelScore: this.getWarrior().getScore(),
-        timeBonus: this.getTimeBonus(),
-        clearBonus: this.getClearBonus(),
+        levelScore: this.warrior.score,
+        timeBonus: this.timeBonus,
+        clearBonus: this.clearBonus,
       },
     };
   }
-}
 
-export default Level;
+  _passed() {
+    return this.floor.stairsSpace.isWarrior();
+  }
+
+  _failed() {
+    return !this.floor.units.includes(this.warrior);
+  }
+
+  _decTimeBonus() {
+    if (this.timeBonus) {
+      this.timeBonus -= 1;
+    }
+  }
+}

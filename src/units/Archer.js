@@ -1,21 +1,16 @@
-import RelativeDirections from '../constants/RelativeDirections';
-import UnitTypes from '../constants/UnitTypes';
+import { ORDERED_RELATIVE_DIRECTIONS } from '../constants/relativeDirections';
 import Ranged from './Ranged';
 
-class Archer extends Ranged {
-  _name = 'Archer';
-  _type = UnitTypes.archer;
+export default class Archer extends Ranged {
   _shootPower = 3;
   _maxHealth = 7;
 
   playTurn(turn) {
-    Object.values(RelativeDirections).some(direction => {
-      if (this.isPlayerInSight(turn, direction)) {
+    ORDERED_RELATIVE_DIRECTIONS.some((direction) => {
+      if (this._isPlayerWithinReach(turn, direction)) {
         turn.shoot(direction);
         return true;
       }
     });
   }
 }
-
-export default Archer;

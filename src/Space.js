@@ -1,6 +1,7 @@
+import { playerObject } from './decorators/playerObject';
 import Warrior from './units/Warrior';
 
-const ALLOWED_MEMBERS = [
+const allowedMembers = [
   'isWall',
   'isWarrior',
   'isPlayer',
@@ -11,9 +12,8 @@ const ALLOWED_MEMBERS = [
   'isTicking',
 ];
 
-const originalInstances = new WeakMap();
-
-class Space {
+@playerObject(allowedMembers)
+export default class Space {
   _floor;
   _x;
   _y;
@@ -24,20 +24,20 @@ class Space {
     this._y = y;
   }
 
-  getLocation() {
+  get location() {
     return [this._x, this._y];
   }
 
-  getUnit() {
-    return this._floor.getUnitAt(...this.getLocation());
+  get unit() {
+    return this._floor.getUnitAt(...this.location);
   }
 
   isWall() {
-    return this._floor.isOutOfBounds(...this.getLocation());
+    return this._floor.isOutOfBounds(...this.location);
   }
 
   isWarrior() {
-    return this.getUnit() instanceof Warrior;
+    return this.unit instanceof Warrior;
   }
 
   isPlayer() {
@@ -45,58 +45,36 @@ class Space {
   }
 
   isEnemy() {
-    return this.getUnit() && !this.isPlayer() && !this.isCaptive();
+    return this.unit && !this.isPlayer() && !this.isCaptive();
   }
 
   isCaptive() {
-    return this.getUnit() && this.getUnit().isBound();
-  }
-
-  isEmpty() {
-    return !this.getUnit() && !this.isWall();
-  }
-
-  isStairs() {
-    const [stairsX, stairsY] = this._floor.getStairsLocation();
-    const [x, y] = this.getLocation();
-    return stairsX === x && stairsY === y;
+    return this.unit && this.unit.isBound();
   }
 
   isTicking() {
-    return this.getUnit() && this.getUnit().getAbilities().hasOwnProperty('explode');
+    return this.unit && 'explode' in this.unit.abilities;
+  }
+
+  isEmpty() {
+    return !this.unit && !this.isWall();
+  }
+
+  isStairs() {
+    const [stairsX, stairsY] = this._floor.stairsLocation;
+    const [x, y] = this.location;
+    return stairsX === x && stairsY === y;
   }
 
   toString() {
-    if (this.getUnit()) {
-      return this.getUnit().toString();
-    } else if (this.isWall()) {
+    if (this.unit) {
+      return this.unit.toString();
+    }
+
+    if (this.isWall()) {
       return 'wall';
     }
 
     return 'nothing';
   }
-
-  /**
-   * Make a new object that acts like a proxy of the Space, preventing the player
-   * to access methods that don't belong to the Player API
-   */
-  getPlayerObject(allowedMembers = ALLOWED_MEMBERS) {
-    const playerObject = {};
-
-    // Add allowed members to the player object and bind them to the original instance
-    allowedMembers
-      .filter(id => typeof this[id] === 'function')
-      .forEach(id => playerObject[id] = this[id].bind(this));
-
-    // Add a flag to the object indicating it is a proxy
-    playerObject.isPlayerObject = true;
-
-    // Reference the original instance to the player object
-    originalInstances.set(playerObject, this);
-
-    return playerObject;
-  }
 }
-
-export default Space;
-export { originalInstances as originalSpaces };

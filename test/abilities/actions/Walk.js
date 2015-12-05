@@ -1,22 +1,24 @@
 import chai from 'chai';
-import Walk from '../../src/abilities/actions/Walk';
+import Walk from '../../../src/abilities/actions/Walk';
 
 chai.should();
 
 describe('Walk', function () {
   beforeEach(function () {
     this.space = {
-      isEmpty: this.sinon.stub().returns(true),
-      getUnit: this.sinon.stub().returns(null),
+      unit: null,
+      isEmpty: () => true,
     };
     this.position = {
       getRelativeSpace: () => this.space,
       move: () => null,
     };
-    this.walk = new Walk({
-      getPosition: () => this.position,
+    const unit = {
+      position: this.position,
+      isAlive: () => true,
       say: () => null,
-    });
+    };
+    this.walk = new Walk(unit);
   });
 
   it('should move position forward when calling perform', function () {
@@ -33,7 +35,7 @@ describe('Walk', function () {
 
   it('should keep position if something is in the way', function () {
     const expectation = this.sinon.mock(this.position).expects('move').never();
-    this.space.isEmpty.returns(false);
+    this.space.isEmpty = () => false;
     this.walk.perform.bind(this.walk, 'right').should.not.throw(Error);
     expectation.verify();
   });

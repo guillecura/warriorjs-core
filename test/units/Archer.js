@@ -14,10 +14,10 @@ describe('Archer', function () {
   });
 
   it('should have shoot power of 3', function () {
-    this.archer.getShootPower().should.equal(3);
+    this.archer.shootPower.should.equal(3);
   });
 
   it('should have 7 max health', function () {
-    this.archer.getMaxHealth().should.equal(7);
+    this.archer.maxHealth.should.equal(7);
   });
 });

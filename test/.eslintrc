@@ -1,7 +1,6 @@
 {
   "rules": {
     "func-names": [0],
-    "no-unused-expressions": [0],
-    "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}]
+    "no-unused-expressions": [0]
   }
 }

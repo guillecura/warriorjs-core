@@ -3,7 +3,7 @@ function chaiPassed(chai) {
 
   Assertion.addProperty('passed', function getter() {
     this.assert(
-      this._obj.passed(),
+      this._obj._passed(),
       'expected #{this} to be passed',
       'expected #{this} not to be passed'
     );

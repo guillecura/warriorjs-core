@@ -1,19 +1,21 @@
-import RelativeDirections from '../../constants/RelativeDirections';
+import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
 import Action from './Action';
 
-class Bind extends Action {
-  _description = 'Binds a unit in given direction to keep him from moving (forward by default).';
+const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
 
-  perform(direction = RelativeDirections.forward) {
-    this.verifyDirection(direction);
-    const receiver = this.getUnit(direction);
+export default class Bind extends Action {
+  _description = `Bind a unit in the given direction to keep him from moving (${DEFAULT_DIRECTION} by default).`;
+
+  perform(direction = DEFAULT_DIRECTION) {
+    this._verifyDirection(direction);
+
+    const receiver = this._getUnit(direction);
     if (receiver) {
       this._unit.say(`binds ${direction} and restricts ${receiver}`);
+
       receiver.bind();
     } else {
       this._unit.say(`binds ${direction} and restricts nothing`);
     }
   }
 }
-
-export default Bind;

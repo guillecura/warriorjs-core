@@ -1,19 +1,15 @@
-import Abilities from '../constants/Abilities';
 import Unit from './Unit';
 
-class Melee extends Unit {
+export default class Melee extends Unit {
   constructor() {
     super();
-
     this.addAbilities({
-      [Abilities.attack]: [],
-      [Abilities.feel]: [],
+      attack: [],
+      feel: [],
     });
   }
 
-  isPlayerReachable(turn, direction) {
+  _isPlayerWithinReach(turn, direction) {
     return turn.feel(direction).isPlayer();
   }
 }
-
-export default Melee;

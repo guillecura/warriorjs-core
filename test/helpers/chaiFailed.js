@@ -3,7 +3,7 @@ function chaiFailed(chai) {
 
   Assertion.addProperty('failed', function getter() {
     this.assert(
-      this._obj.failed(),
+      this._obj._failed(),
       'expected #{this} to be failed',
       'expected #{this} not to be failed'
     );

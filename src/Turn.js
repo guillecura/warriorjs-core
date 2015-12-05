@@ -1,6 +1,7 @@
 import Sense from './abilities/senses/Sense';
+import { playerObject } from './decorators/playerObject';
 
-const ALLOWED_MEMBERS = [
+const allowedMembers = [
   'attack',
   'bind',
   'detonate',
@@ -19,28 +20,29 @@ const ALLOWED_MEMBERS = [
   'walk',
 ];
 
-class Turn {
+@playerObject(allowedMembers)
+export default class Turn {
   _action = null;
   _senses = {};
 
   constructor(abilities) {
     Object.entries(abilities).forEach(([name, ability]) => {
       if (ability instanceof Sense) {
-        this.addSense(name, ability);
+        this._addSense(name, ability);
       } else {
-        this.addAction(name);
+        this._addAction(name);
       }
     });
   }
 
-  getAction() {
+  get action() {
     return this._action;
   }
 
-  addAction(name) {
+  _addAction(name) {
     Object.defineProperty(this, name, {
       value: (...args) => {
-        if (this._action) {
+        if (this.action) {
           throw new Error('Only one action can be performed per turn.');
         }
 
@@ -49,30 +51,10 @@ class Turn {
     });
   }
 
-  addSense(name, sense) {
+  _addSense(name, sense) {
     this._senses[name] = sense;
     Object.defineProperty(this, name, {
       value: (...args) => this._senses[name].perform(...args),
     });
   }
-
-  /**
-   * Make a new object that acts like a proxy of the Turn, preventing the player
-   * to access methods that don't belong to the Player API
-   */
-  getPlayerObject(allowedMembers = ALLOWED_MEMBERS) {
-    const playerObject = {};
-
-    // Add allowed members to the player object and bind them to the original instance
-    allowedMembers
-      .filter(id => typeof this[id] === 'function')
-      .forEach(id => playerObject[id] = this[id].bind(this));
-
-    // Add a flag to the object indicating it is a proxy
-    playerObject.isPlayerObject = true;
-
-    return playerObject;
-  }
 }
-
-export default Turn;

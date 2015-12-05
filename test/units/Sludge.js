@@ -14,10 +14,10 @@ describe('Sludge', function () {
   });
 
   it('should have attack power of 3', function () {
-    this.sludge.getAttackPower().should.equal(3);
+    this.sludge.attackPower.should.equal(3);
   });
 
   it('should have 12 max health', function () {
-    this.sludge.getMaxHealth().should.equal(12);
+    this.sludge.maxHealth.should.equal(12);
   });
 });

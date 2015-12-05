@@ -1,10 +1,5 @@
-import UnitTypes from '../constants/UnitTypes';
 import Sludge from './Sludge';
 
-class ThickSludge extends Sludge {
-  _name = 'Thick Sludge';
-  _type = UnitTypes.thickSludge;
+export default class ThickSludge extends Sludge {
   _maxHealth = 24;
 }
-
-export default ThickSludge;

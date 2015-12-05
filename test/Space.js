@@ -22,9 +22,7 @@ chai.use(chaiTicking);
 
 describe('Space', function () {
   beforeEach(function () {
-    this.floor = new Floor();
-    this.floor.setWidth(2);
-    this.floor.setHeight(3);
+    this.floor = new Floor(2, 3);
   });
 
   describe('with empty space', function () {
@@ -106,7 +104,7 @@ describe('Space', function () {
     });
 
     it('should know what unit is on that space', function () {
-      this.space.getUnit().should.be.instanceOf(Warrior);
+      this.space.unit.should.be.instanceOf(Warrior);
     });
   });
 
@@ -134,7 +132,7 @@ describe('Space', function () {
 
     describe('bound', function () {
       beforeEach(function () {
-        this.space.getUnit().bind();
+        this.space.unit.bind();
       });
 
       it('should be captive', function () {
@@ -169,6 +167,13 @@ describe('Space', function () {
 
     it('should not be ticking if captive does not have time bomb', function () {
       this.space.should.not.be.ticking;
+    });
+  });
+
+  describe('player object', function () {
+    beforeEach(function () {
+      this.space = this.floor.getSpaceAt(0, 0);
+      this.playerObject = this.space.toPlayerObject();
     });
   });
 });

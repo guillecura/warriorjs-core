@@ -1,16 +1,16 @@
 import chai from 'chai';
-import Pivot from '../../src/abilities/actions/Pivot';
+import Pivot from '../../../src/abilities/actions/Pivot';
 
 chai.should();
 
 describe('Pivot', function () {
   beforeEach(function () {
     this.position = {
-      getRelativeSpace: () => this.space,
+      getRelativeSpace: () => null,
       rotate: () => null,
     };
     this.pivot = new Pivot({
-      getPosition: () => this.position,
+      position: this.position,
       say: () => null,
     });
   });

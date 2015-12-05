@@ -1,23 +1,27 @@
-import RelativeDirections from '../../constants/RelativeDirections';
+import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
 import Action from './Action';
 
-class Shoot extends Action {
-  _description = 'Shoot your bow & arrow in given direction (forward by default).';
+const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
 
-  perform(direction = RelativeDirections.forward) {
-    this.verifyDirection(direction);
-    const receiver = this.getUnits(direction, [1, 2, 3]).shift();
+export default class Shoot extends Action {
+  _description = `Shoot your bow & arrow in given direction (${DEFAULT_DIRECTION} by default).`;
+
+  perform(direction = DEFAULT_DIRECTION) {
+    this._verifyDirection(direction);
+
+    const receiver = this._getUnits(direction, [1, 2, 3])[0];
     if (receiver) {
       this._unit.say(`shoots ${direction} and hits ${receiver}`);
-      this.damage(receiver, this._unit.getShootPower());
+
+      this._damage(receiver, this._unit.shootPower);
     } else {
       this._unit.say(`shoots ${direction} and hits nothing`);
     }
   }
 
-  getUnits(direction, range) {
-    return range.map(offset => this.getUnit(direction, offset)).filter(unit => unit);
+  _getUnits(direction, offsets) {
+    return offsets
+      .map((offset) => this._getUnit(direction, offset))
+      .filter((unit) => unit);
   }
 }
-
-export default Shoot;

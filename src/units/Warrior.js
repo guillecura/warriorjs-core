@@ -1,48 +1,50 @@
 import { transform } from 'babel';
-import UnitTypes from '../constants/UnitTypes';
 import Unit from './Unit';
 
-class Warrior extends Unit {
-  _name = 'Warrior';
-  _type = UnitTypes.warrior;
+export default class Warrior extends Unit {
+  _name = null;
+  _score = 0;
   _attackPower = 5;
   _shootPower = 3;
   _maxHealth = 20;
   _playerCode = null;
   _player = null;
-  _score = 0;
 
-  setName(name) {
-    this._name = name || 'Warrior';
+  get name() {
+    return this._name || 'Warrior';
   }
 
-  getPlayerCode() {
-    return this._playerCode;
+  set name(name) {
+    this._name = name;
   }
 
-  setPlayerCode(playerCode) {
-    this._playerCode = playerCode;
-  }
-
-  getPlayer() {
-    return this._player;
-  }
-
-  getScore() {
+  get score() {
     return this._score;
   }
 
+  get playerCode() {
+    return this._playerCode;
+  }
+
+  set playerCode(playerCode) {
+    this._playerCode = playerCode;
+  }
+
+  get player() {
+    return this._player;
+  }
+
   loadPlayer() {
-    const Player = eval(`(() => { ${transform(this.getPlayerCode(), { stage: 0 }).code} return Player; })()`); // eslint-disable-line no-eval
+    const Player = eval(`(function() { ${transform(this.playerCode, { stage: 0 }).code} return Player; })()`); // eslint-disable-line no-eval
     this._player = new Player();
   }
 
   playTurn(turn) {
-    this.getPlayer().playTurn(turn.getPlayerObject());
+    this.player.playTurn(turn.toPlayerObject());
   }
 
   performTurn() {
-    if (!this._currentTurn.getAction()) {
+    if (!this._currentTurn.action) {
       this.say('does nothing');
     }
 
@@ -51,8 +53,7 @@ class Warrior extends Unit {
 
   earnPoints(points) {
     this._score += points;
+
     this.say(`earns ${points} points`);
   }
 }
-
-export default Warrior;

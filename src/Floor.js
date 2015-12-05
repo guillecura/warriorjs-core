@@ -1,45 +1,63 @@
+import { viewObject } from './decorators/viewObject';
 import Position from './Position';
 import Space from './Space';
 import Warrior from './units/Warrior';
 
-class Floor {
-  _width = 0;
-  _height = 0;
+const viewProperties = {
+  width: 'width',
+  height: 'height',
+  stairsLocation: 'stairsLocation',
+  units: 'units',
+};
+
+@viewObject(viewProperties)
+export default class Floor {
+  _width;
+  _height;
   _stairsLocation = [-1, -1];
   _units = [];
 
-  getWidth() {
-    return this._width;
-  }
-
-  setWidth(width) {
+  constructor(width, height) {
     this._width = width;
-  }
-
-  getHeight() {
-    return this._height;
-  }
-
-  setHeight(height) {
     this._height = height;
   }
 
-  getStairsLocation() {
+  get width() {
+    return this._width;
+  }
+
+  set width(width) {
+    this._width = width;
+  }
+
+  get height() {
+    return this._height;
+  }
+
+  set height(height) {
+    this._height = height;
+  }
+
+  get stairsLocation() {
     return this._stairsLocation;
   }
 
-  getUnits() {
-    return this._units.filter(unit => unit.getPosition());
+  get stairsSpace() {
+    return this.getSpaceAt(...this.stairsLocation);
   }
 
-  getOtherUnits() {
-    return this.getUnits().filter(unit => !(unit instanceof Warrior));
+  get units() {
+    return this._units.filter((unit) => unit.position);
   }
 
-  getUniqueUnits() {
+  get otherUnits() {
+    return this.units.filter((unit) => !(unit instanceof Warrior));
+  }
+
+  get uniqueUnits() {
     const uniqueUnits = [];
-    this.getUnits().forEach(unit => {
-      if (!uniqueUnits.map(uniqueUnit => uniqueUnit.constructor).includes(unit.constructor)) {
+    this.units.forEach((unit) => {
+      if (!uniqueUnits.map((uniqueUnit) => uniqueUnit.constructor).includes(unit.constructor)) {
         uniqueUnits.push(unit);
       }
     });
@@ -47,39 +65,24 @@ class Floor {
     return uniqueUnits;
   }
 
+  placeStairs(x, y) {
+    this._stairsLocation = [x, y];
+  }
+
+  addUnit(unit, x, y, direction) {
+    unit.position = new Position(this, x, y, direction);
+    this._units.push(unit);
+  }
+
   getSpaceAt(x, y) {
     return new Space(this, x, y);
   }
 
   getUnitAt(x, y) {
-    return this.getUnits().find(unit => unit.getPosition().isAt(x, y));
-  }
-
-  addUnit(unit, x, y, direction) {
-    unit.setPosition(new Position(this, x, y, direction));
-    this._units.push(unit);
-  }
-
-  placeStairs(x, y) {
-    this._stairsLocation = [x, y];
-  }
-
-  getStairsSpace() {
-    return this.getSpaceAt(...this.getStairsLocation());
+    return this.units.find((unit) => unit.position.isAt(x, y));
   }
 
   isOutOfBounds(x, y) {
-    return x < 0 || y < 0 || x > this._width - 1 || y > this._height - 1;
-  }
-
-  toViewObject() {
-    return {
-      width: this.getWidth(),
-      height: this.getHeight(),
-      units: this.getUnits().map((unit) => unit.toViewObject()),
-      stairsLocation: this.getStairsLocation(),
-    };
+    return x < 0 || y < 0 || x > this.width - 1 || y > this.height - 1;
   }
 }
-
-export default Floor;

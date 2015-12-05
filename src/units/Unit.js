@@ -1,10 +1,18 @@
+import camelCase from 'lodash.camelcase';
+import startCase from 'lodash.startcase';
+import { ABILITIES } from '../constants/abilities';
+import { viewObject } from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
-import Abilities from '../abilities';
 
-class Unit {
-  _name = 'Unit';
-  _type = null;
+const viewProperties = {
+  name: 'name',
+  type: 'type',
+  position: 'position',
+};
+
+@viewObject(viewProperties)
+export default class Unit {
   _position = null;
   _attackPower = 0;
   _shootPower = 0;
@@ -13,49 +21,49 @@ class Unit {
   _abilities = {};
   _currentTurn = null;
 
-  getName() {
-    return this._name;
+  get name() {
+    return startCase(this.constructor.name);
   }
 
-  getType() {
-    return this._type;
+  get type() {
+    return camelCase(this.constructor.name);
   }
 
-  getPosition() {
+  get position() {
     return this._position;
   }
 
-  setPosition(position) {
+  set position(position) {
     this._position = position;
   }
 
-  getAttackPower() {
+  get attackPower() {
     return this._attackPower;
   }
 
-  getShootPower() {
+  get shootPower() {
     return this._shootPower;
   }
 
-  getMaxHealth() {
+  get maxHealth() {
     return this._maxHealth;
   }
 
-  getHealth() {
-    this._health = this._health !== null ? this._health : this.getMaxHealth();
+  get health() {
+    this._health = this._health === null ? this._maxHealth : this._health;
     return this._health;
   }
 
-  setHealth(health) {
+  set health(health) {
     this._health = health;
   }
 
-  getAbilities() {
+  get abilities() {
     return this._abilities;
   }
 
   isAlive() {
-    return this.getPosition() !== null;
+    return this.position !== null;
   }
 
   isBound() {
@@ -72,7 +80,7 @@ class Unit {
   }
 
   say(message) {
-    Logger.log(this.getType(), `${this.getName()} ${message}`);
+    Logger.log(this.type, `${this.name} ${message}`);
   }
 
   takeDamage(amount) {
@@ -80,12 +88,15 @@ class Unit {
       this.unbind();
     }
 
-    if (this.getHealth()) {
-      const revisedAmount = this.getHealth() - amount < 0 ? this.getHealth() : amount;
-      this._health -= revisedAmount;
-      this.say(`takes ${amount} damage, ${this.getHealth()} health power left`);
-      if (!this.getHealth()) {
-        this.setPosition(null);
+    if (this.health) {
+      const revisedAmount = this.health - amount < 0 ? this.health : amount;
+      this.health -= revisedAmount;
+
+      this.say(`takes ${amount} damage, ${this.health} health power left`);
+
+      if (!this.health) {
+        this.position = null;
+
         this.say('dies');
       }
     }
@@ -93,17 +104,12 @@ class Unit {
 
   addAbilities(newAbilities) {
     Object.entries(newAbilities).forEach(([name, args]) => {
-      if (!Abilities.hasOwnProperty(name)) {
+      if (!(name in ABILITIES)) {
         throw new Error(`Unknown ability '${name}'.`);
       }
 
-      const Ability = Abilities[name];
-      this._abilities[name] = new Ability(this, ...args);
+      this._abilities[name] = new ABILITIES[name](this, ...args);
     });
-  }
-
-  getNextTurn() {
-    return new Turn(this.getAbilities());
   }
 
   playTurn(turn) { // eslint-disable-line no-unused-vars
@@ -111,16 +117,16 @@ class Unit {
   }
 
   prepareTurn() {
-    this._currentTurn = this.getNextTurn();
+    this._currentTurn = this._nextTurn();
     this.playTurn(this._currentTurn);
   }
 
   performTurn() {
-    if (this.getPosition()) {
-      Object.values(this.getAbilities()).forEach((ability) => ability.passTurn());
-      if (this._currentTurn.getAction() && !this.isBound()) {
-        const [name, args] = this._currentTurn.getAction();
-        this.getAbilities()[name].perform(...args);
+    if (this.isAlive()) {
+      Object.values(this.abilities).forEach((ability) => ability.passTurn());
+      if (this._currentTurn.action && !this.isBound()) {
+        const [name, args] = this._currentTurn.action;
+        this.abilities[name].perform(...args);
       }
     }
   }
@@ -129,17 +135,11 @@ class Unit {
     // To be overriden by subclass
   }
 
-  toViewObject() {
-    return {
-      name: this.getName(),
-      type: this.getType(),
-      position: this.getPosition().toViewObject(),
-    };
+  toString() {
+    return this.name;
   }
 
-  toString() {
-    return this.getName();
+  _nextTurn() {
+    return new Turn(this.abilities);
   }
 }
-
-export default Unit;

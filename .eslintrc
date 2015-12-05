@@ -6,6 +6,7 @@
   },
 
   "rules": {
-    "id-length": [2, {"min": 2, "properties": "never", "exceptions": ["n", "x", "y"]}]
+    "id-length": [2, {"min": 2, "properties": "never", "exceptions": ["n", "x", "y"]}],
+    "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}]
   }
 }

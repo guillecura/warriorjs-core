@@ -1,22 +1,24 @@
-import RelativeDirections from '../../constants/RelativeDirections';
+import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
 import Action from './Action';
 
-class Attack extends Action {
-  _description = 'Attacks a unit in given direction (forward by default).';
+const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
 
-  perform(direction = RelativeDirections.forward) {
-    this.verifyDirection(direction);
-    const receiver = this.getUnit(direction);
+export default class Attack extends Action {
+  _description = `Attack a unit in the given direction (${DEFAULT_DIRECTION} by default).`;
+
+  perform(direction = DEFAULT_DIRECTION) {
+    this._verifyDirection(direction);
+
+    const receiver = this._getUnit(direction);
     if (receiver) {
       this._unit.say(`attacks ${direction} and hits ${receiver}`);
-      const power = direction === RelativeDirections.backward ?
-        Math.ceil(this._unit.getAttackPower() / 2.0) :
-        this._unit.getAttackPower();
-      this.damage(receiver, power);
+
+      const power = direction === RELATIVE_DIRECTIONS.backward ?
+        Math.ceil(this._unit.attackPower / 2.0) :
+        this._unit.attackPower;
+      this._damage(receiver, power);
     } else {
       this._unit.say(`attacks ${direction} and hits nothing`);
     }
   }
 }
-
-export default Attack;

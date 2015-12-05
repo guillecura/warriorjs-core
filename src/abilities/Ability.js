@@ -1,4 +1,4 @@
-import RelativeDirections from '../constants/RelativeDirections';
+import { RELATIVE_DIRECTIONS, ORDERED_RELATIVE_DIRECTIONS } from '../constants/relativeDirections';
 
 class Ability {
   _unit;
@@ -8,49 +8,46 @@ class Ability {
     this._unit = unit;
   }
 
-  getDescription() {
+  get description() {
     return this._description;
-  }
-
-  offset(direction, forward = 1, right = 0) {
-    switch (direction) {
-    case RelativeDirections.forward:
-      return [forward, -right];
-    case RelativeDirections.backward:
-      return [-forward, right];
-    case RelativeDirections.right:
-      return [right, forward];
-    case RelativeDirections.left:
-      return [-right, -forward];
-    default:
-      throw new Error(`Unknown direction '${direction}'`);
-    }
-  }
-
-  getSpace(direction, forward = 1, right = 0) {
-    const [forwardOffset, rightOffset] = this.offset(direction, forward, right);
-    return this._unit.getPosition().getRelativeSpace(forwardOffset, rightOffset);
-  }
-
-  getUnit(direction, forward = 1, right = 0) {
-    return this.getSpace(direction, forward, right).getUnit();
-  }
-
-  damage(receiver, amount) {
-    receiver.takeDamage(amount);
-    if (!receiver.isAlive()) {
-      this._unit.earnPoints(receiver.getMaxHealth());
-    }
   }
 
   passTurn() {
     // Callback which is triggered every turn
   }
 
-  verifyDirection(direction) {
-    const directions = Object.values(RelativeDirections);
-    if (!directions.includes(direction)) {
-      throw new Error(`Unknown direction '${direction}'. Should be one of: ${directions.join(', ')}.`);
+  perform() {
+    // To be overriden by subclass
+  }
+
+  _offset(direction, forward = 1, right = 0) {
+    if (direction === RELATIVE_DIRECTIONS.forward) {
+      return [forward, -right];
+    } else if (direction === RELATIVE_DIRECTIONS.backward) {
+      return [-forward, right];
+    } else if (direction === RELATIVE_DIRECTIONS.right) {
+      return [right, forward];
+    } else if (direction === RELATIVE_DIRECTIONS.left) {
+      return [-right, -forward];
+    }
+
+    throw new Error(`Unknown direction '${direction}'.`);
+  }
+
+  _getSpace(direction, forward = 1, right = 0) {
+    return this._unit.position.getRelativeSpace(...this._offset(direction, forward, right));
+  }
+
+  _getUnit(direction, forward = 1, right = 0) {
+    return this._getSpace(direction, forward, right).unit;
+  }
+
+  _verifyDirection(direction) {
+    if (!ORDERED_RELATIVE_DIRECTIONS.includes(direction)) {
+      const validDirections = ORDERED_RELATIVE_DIRECTIONS
+        .map((validDirection) => `'${validDirection}'`)
+        .join(', ');
+      throw new Error(`Unknown direction '${direction}'. Should be one of: ${validDirections}.`);
     }
   }
 }

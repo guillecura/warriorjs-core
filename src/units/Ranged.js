@@ -1,20 +1,16 @@
-import Abilities from '../constants/Abilities';
 import Unit from './Unit';
 
-class Ranged extends Unit {
+export default class Ranged extends Unit {
   constructor() {
     super();
-
     this.addAbilities({
-      [Abilities.look]: [],
-      [Abilities.shoot]: [],
+      look: [],
+      shoot: [],
     });
   }
 
-  isPlayerInSight(turn, direction) {
-    const unit = turn.look(direction).find(space => !space.isEmpty());
-    return unit && unit.isPlayer();
+  _isPlayerWithinReach(turn, direction) {
+    const unitSpace = turn.look(direction).find((space) => !space.isEmpty());
+    return unitSpace && unitSpace.isPlayer();
   }
 }
-
-export default Ranged;

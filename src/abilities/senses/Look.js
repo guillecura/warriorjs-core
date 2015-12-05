@@ -1,13 +1,16 @@
-import RelativeDirections from '../../constants/RelativeDirections';
+import range from 'lodash.range';
+import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
 import Sense from './Sense';
 
-class Look extends Sense {
-  _description = 'Returns an array of up to three Spaces in the given direction (forward by default).';
+const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
+const VISION_RANGE = 3;
 
-  perform(direction = RelativeDirections.forward) {
-    this.verifyDirection(direction);
-    return [1, 2, 3].map(amount => this.getSpace(direction, amount).getPlayerObject());
+export default class Look extends Sense {
+  _description = `Returns an array of up to ${VISION_RANGE} spaces in the given direction (${DEFAULT_DIRECTION} by default).`;
+
+  perform(direction = DEFAULT_DIRECTION) {
+    this._verifyDirection(direction);
+
+    return range(1, VISION_RANGE + 1).map((offset) => this._getSpace(direction, offset).toPlayerObject());
   }
 }
-
-export default Look;

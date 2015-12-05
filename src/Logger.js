@@ -1,20 +1,18 @@
-class Logger {
-  static _log;
+export default class Logger {
+  static _entries = [];
 
-  static getLog() {
-    return Logger._log;
+  static get entries() {
+    return Logger._entries;
   }
 
   static log(unitType, message) {
-    Logger._log.push({
+    Logger._entries.push({
       unitType,
       message,
     });
   }
 
   static clear() {
-    Logger._log = [];
+    Logger._entries = [];
   }
 }
-
-export default Logger;

@@ -1,8 +1,13 @@
-const Directions = {
+export const DIRECTIONS = {
   north: 'north',
   east: 'east',
   south: 'south',
   west: 'west',
 };
 
-export default Directions;
+export const ORDERED_DIRECTIONS = [
+  DIRECTIONS.north,
+  DIRECTIONS.east,
+  DIRECTIONS.south,
+  DIRECTIONS.west,
+];

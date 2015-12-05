@@ -1,20 +1,21 @@
-import RelativeDirections from '../../constants/RelativeDirections';
+import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
 import Action from './Action';
 
-class Walk extends Action {
-  _description = 'Move in the given direction (forward by default).';
+const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
 
-  perform(direction = RelativeDirections.forward) {
-    this.verifyDirection(direction);
-    if (this._unit.getPosition()) {
+export default class Walk extends Action {
+  _description = `Move in the given direction (${DEFAULT_DIRECTION} by default).`;
+
+  perform(direction = DEFAULT_DIRECTION) {
+    this._verifyDirection(direction);
+    if (this._unit.isAlive()) {
       this._unit.say(`walks ${direction}`);
-      if (this.getSpace(direction).isEmpty()) {
-        this._unit.getPosition().move(...this.offset(direction));
+
+      if (this._getSpace(direction).isEmpty()) {
+        this._unit.position.move(...this._offset(direction));
       } else {
-        this._unit.say(`bumps into ${this.getSpace(direction)}`);
+        this._unit.say(`bumps into ${this._getSpace(direction)}`);
       }
     }
   }
 }
-
-export default Walk;

@@ -1,12 +1,10 @@
-import RelativeDirections from '../../constants/RelativeDirections';
+import { ORDERED_RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
 import Sense from './Sense';
 
-class DirectionOfStairs extends Sense {
-  _description = `Returns the direction (${Object.values(RelativeDirections).join(', ')}) the stairs are from your location.`;
+export default class DirectionOfStairs extends Sense {
+  _description = `Return the direction (${ORDERED_RELATIVE_DIRECTIONS.join(', ')}) the stairs are from your location.`;
 
   perform() {
-    return this._unit.getPosition().getRelativeDirectionOfStairs();
+    return this._unit.position.getRelativeDirectionOfStairs();
   }
 }
-
-export default DirectionOfStairs;

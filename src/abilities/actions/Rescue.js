@@ -1,23 +1,28 @@
-import RelativeDirections from '../../constants/RelativeDirections';
+import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
 import Action from './Action';
 
-class Rescue extends Action {
-  _description = 'Rescue a captive from his chains (earning 20 points) in given direction (forward by default).';
+const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
+const RESCUING_BONUS = 20;
 
-  perform(direction = RelativeDirections.forward) {
-    this.verifyDirection(direction);
-    if (this.getSpace(direction).isCaptive()) {
-      const recipient = this.getUnit(direction);
+export default class Rescue extends Action {
+  _description = `Rescue a captive from his chains (earning ${RESCUING_BONUS} points) in the given direction (${DEFAULT_DIRECTION} by default).`;
+
+  perform(direction = DEFAULT_DIRECTION) {
+    this._verifyDirection(direction);
+
+    if (this._getSpace(direction).isCaptive()) {
+      const recipient = this._getUnit(direction);
+
       this._unit.say(`unbinds ${direction} and rescues ${recipient}`);
+
       recipient.unbind();
-      if (recipient.constructor.name === 'Captive') {
-        recipient.setPosition(null);
-        this._unit.earnPoints(20);
+      if (recipient.type === 'captive') {
+        recipient.position = null;
+
+        this._unit.earnPoints(RESCUING_BONUS);
       }
     } else {
       this._unit.say(`unbinds ${direction} and rescues nothing`);
     }
   }
 }
-
-export default Rescue;

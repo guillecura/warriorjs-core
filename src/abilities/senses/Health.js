@@ -1,11 +1,9 @@
 import Sense from './Sense';
 
-class Health extends Sense {
-  _description = 'Returns an integer representing your health.';
+export default class Health extends Sense {
+  _description = 'Return an integer representing your health.';
 
   perform() {
-    return this._unit.getHealth();
+    return this._unit.health;
   }
 }
-
-export default Health;

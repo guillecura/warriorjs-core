@@ -11,7 +11,7 @@ describe('Captive', function () {
   });
 
   it('should have 1 max health', function () {
-    this.captive.getMaxHealth().should.equal(1);
+    this.captive.maxHealth.should.equal(1);
   });
 
   it('should be bound by default', function () {

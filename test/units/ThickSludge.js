@@ -14,10 +14,10 @@ describe('ThickSludge', function () {
   });
 
   it('should have 24 max health', function () {
-    this.thickSludge.getMaxHealth().should.equal(24);
+    this.thickSludge.maxHealth.should.equal(24);
   });
 
   it('should have the name of \'Thick Sludge\'', function () {
-    this.thickSludge.getName().should.equal('Thick Sludge');
+    this.thickSludge.name.should.equal('Thick Sludge');
   });
 });

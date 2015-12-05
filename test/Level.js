@@ -10,11 +10,11 @@ chai.use(chaiPassed);
 
 describe('Level', function () {
   beforeEach(function () {
-    this.floor = new Floor();
+    this.floor = new Floor(0, 0);
     this.level = new Level();
-    this.level.setFloor(this.floor);
-    this.sinon.stub(this.level, 'failed').returns(false);
-    this.sinon.stub(this.level, 'getWarrior').returns({ getScore: () => null });
+    this.level.floor = this.floor;
+    this.sinon.stub(this.level, '_failed').returns(false);
+    this.level.warrior = { score: () => null };
   });
 
   it('should consider passed when warrior is on stairs', function () {
@@ -25,7 +25,7 @@ describe('Level', function () {
   });
 
   it('should default time bonus to zero', function () {
-    this.level.getTimeBonus().should.equal(0);
+    this.level.timeBonus.should.equal(0);
   });
 
   describe('playing', function () {
@@ -44,21 +44,21 @@ describe('Level', function () {
       const unit = new Unit();
       const expectation = this.sinon.mock(unit).expects('performTurn').never();
       this.floor.addUnit(unit, 0, 0, 'north');
-      this.sinon.stub(this.level, 'passed').returns(true);
+      this.sinon.stub(this.level, '_passed').returns(true);
       this.level.play(2);
       expectation.verify();
     });
 
     it('should count down time bonus once each turn', function () {
-      this.level.setTimeBonus(10);
+      this.level.timeBonus = 10;
       this.level.play(3);
-      this.level.getTimeBonus().should.equal(7);
+      this.level.timeBonus.should.equal(7);
     });
 
     it('should not count down time bonus below 0', function () {
-      this.level.setTimeBonus(2);
+      this.level.timeBonus = 2;
       this.level.play(5);
-      this.level.getTimeBonus().should.equal(0);
+      this.level.timeBonus.should.equal(0);
     });
   });
 });

@@ -14,10 +14,10 @@ describe('Wizard', function () {
   });
 
   it('should have shoot power of 11', function () {
-    this.wizard.getShootPower().should.equal(11);
+    this.wizard.shootPower.should.equal(11);
   });
 
   it('should have 3 max health', function () {
-    this.wizard.getMaxHealth().should.equal(3);
+    this.wizard.maxHealth.should.equal(3);
   });
 });

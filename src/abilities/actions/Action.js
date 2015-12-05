@@ -1,5 +1,10 @@
 import Ability from '../Ability';
 
-class Action extends Ability { }
-
-export default Action;
+export default class Action extends Ability {
+  _damage(receiver, amount) {
+    receiver.takeDamage(amount);
+    if (!receiver.isAlive()) {
+      this._unit.earnPoints(receiver.maxHealth);
+    }
+  }
+}

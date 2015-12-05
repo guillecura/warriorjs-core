@@ -1,4 +1,5 @@
 import chai from 'chai';
+import times from 'lodash.times';
 import chaiAlive from '../helpers/chaiAlive';
 import Unit from '../../src/units/Unit';
 import Walk from '../../src/abilities/actions/Walk';
@@ -13,20 +14,20 @@ describe('Unit', function () {
   });
 
   it('should have an attack power which defaults to zero', function () {
-    this.unit.getAttackPower().should.equal(0);
+    this.unit.attackPower.should.equal(0);
   });
 
   it('should have a shoot power which defaults to zero', function () {
-    this.unit.getShootPower().should.equal(0);
+    this.unit.shootPower.should.equal(0);
   });
 
   it('should consider itself dead when no position', function () {
-    should.equal(this.unit.getPosition(), null);
+    should.equal(this.unit.position, null);
     this.unit.should.not.be.alive;
   });
 
   it('should consider itself alive with position', function () {
-    this.unit.setPosition({});
+    this.unit.position = {};
     this.unit.should.be.alive;
   });
 
@@ -35,24 +36,24 @@ describe('Unit', function () {
   });
 
   it('should default max health to 0', function () {
-    this.unit.getMaxHealth().should.equal(0);
+    this.unit.maxHealth.should.equal(0);
   });
 
   it('should default health to max health', function () {
-    this.sinon.stub(this.unit, 'getMaxHealth').returns(10);
-    this.unit.getHealth().should.equal(this.unit.getMaxHealth());
+    this.unit._maxHealth = 10;
+    this.unit.health.should.equal(this.unit.maxHealth);
   });
 
   it('should subtract health when taking damage', function () {
-    this.sinon.stub(this.unit, 'getMaxHealth').returns(10);
+    this.unit._maxHealth = 10;
     this.unit.takeDamage(3);
-    this.unit.getHealth().should.equal(7);
+    this.unit.health.should.equal(7);
   });
 
   it('should not go under zero health when taking damage', function () {
-    this.sinon.stub(this.unit, 'getMaxHealth').returns(10);
+    this.unit._maxHealth = 10;
     this.unit.takeDamage(11);
-    this.unit.getHealth().should.equal(0);
+    this.unit.health.should.equal(0);
   });
 
   it('should do nothing when taking damage if health isn\'t set', function () {
@@ -60,41 +61,45 @@ describe('Unit', function () {
   });
 
   it('should set position to null when running out of health', function () {
-    this.unit.setPosition({});
-    this.sinon.stub(this.unit, 'getMaxHealth').returns(10);
+    this.unit.position = {};
+    this.unit._maxHealth = 10;
     this.unit.takeDamage(10);
-    should.equal(this.unit.getPosition(), null);
+    should.equal(this.unit.position, null);
   });
 
   it('should return name in toString', function () {
-    this.unit.getName().should.equal('Unit');
+    this.unit.name.should.equal('Unit');
     this.unit.toString().should.equal('Unit');
   });
 
   it('should prepare turn by calling playTurn with next turn object', function () {
-    this.sinon.stub(this.unit, 'getNextTurn').returns('nextTurn');
+    this.sinon.stub(this.unit, '_nextTurn').returns('nextTurn');
     const expectation = this.sinon.mock(this.unit).expects('playTurn').withArgs('nextTurn');
     this.unit.prepareTurn();
     expectation.verify();
   });
 
   it('should perform action when calling perform on turn', function () {
-    this.unit.setPosition({});
+    this.unit.position = {};
     const expectation = this.sinon.mock(Walk.prototype).expects('perform').withArgs('backward');
     this.unit.addAbilities({ walk: [] });
-    const turn = { getAction: this.sinon.stub().returns(['walk', ['backward']])};
-    this.sinon.stub(this.unit, 'getNextTurn').returns(turn);
+    const turn = {
+      action: ['walk', ['backward']],
+    };
+    this.sinon.stub(this.unit, '_nextTurn').returns(turn);
     this.unit.prepareTurn();
     this.unit.performTurn();
     expectation.verify();
   });
 
   it('should not perform action when dead (no position)', function () {
-    this.unit.setPosition(null);
+    this.unit.position = null;
     this.sinon.stub(Walk.prototype, 'perform').throws('action should not be called');
     this.unit.addAbilities({ walk: [] });
-    const turn = { getAction: this.sinon.stub().returns(['walk', ['backward']])};
-    this.sinon.stub(this.unit, 'getNextTurn').returns(turn);
+    const turn = {
+      action: ['walk', ['backward']],
+    };
+    this.sinon.stub(this.unit, '_nextTurn').returns(turn);
     this.unit.prepareTurn();
     this.unit.performTurn();
   });
@@ -105,7 +110,7 @@ describe('Unit', function () {
   });
 
   it('should be released from bonds when taking damage', function () {
-    this.sinon.stub(this.unit, 'getMaxHealth').returns(10);
+    this.unit._maxHealth = 10;
     this.unit.bind();
     this.unit.should.be.bound;
     this.unit.takeDamage(2);
@@ -119,35 +124,35 @@ describe('Unit', function () {
   });
 
   it('should not perform action when bound', function () {
-    this.unit.setPosition({});
+    this.unit.position = {};
     this.unit.bind();
     this.sinon.stub(Walk.prototype, 'perform').throws('action should not be called');
     this.unit.addAbilities({ walk: [] });
-    const turn = { getAction: this.sinon.stub().returns(['walk', ['backward']])};
-    this.sinon.stub(this.unit, 'getNextTurn').returns(turn);
+    const turn = {
+      action: ['walk', ['backward']],
+    };
+    this.sinon.stub(this.unit, '_nextTurn').returns(turn);
     this.unit.prepareTurn();
     this.unit.performTurn();
   });
 
   describe('with explosive', function () {
     beforeEach(function () {
-      this.floor = new Floor();
-      this.floor.setWidth(2);
-      this.floor.setHeight(3);
+      this.floor = new Floor(2, 3);
       this.floor.addUnit(this.unit, 0, 0);
       this.unit.addAbilities({ explode: [3] });
     });
 
     it('should explode when time reaches 0', function () {
-      this.unit.setHealth(10);
-      Array.apply(null, Array(2)).forEach(() => {
+      this.unit.health = 10;
+      times(2, () => {
         this.unit.prepareTurn();
         this.unit.performTurn();
       });
-      this.unit.getHealth().should.equal(10);
+      this.unit.health.should.equal(10);
       this.unit.prepareTurn();
       this.unit.performTurn();
-      this.unit.getHealth().should.equal(0);
+      this.unit.health.should.equal(0);
     });
   });
 });
