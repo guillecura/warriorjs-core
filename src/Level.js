@@ -33,9 +33,9 @@ export default class Level {
   }
 
   get clearBonus() {
-    return this.floor.otherUnits.length ?
-      0 :
-      Math.round((this.warrior.score + this.timeBonus) * 0.2);
+    return !this.floor.otherUnits.length ?
+      Math.round((this.warrior.score + this.timeBonus) * 0.2) :
+      0;
   }
 
   loadLevel(config, warrior) {
@@ -48,23 +48,18 @@ export default class Level {
 
   play(turns = MAX_TURNS) {
     const trace = [];
-    for (let n = 1; n <= turns; n++) {
-      if (this._passed() || this._failed()) {
-        break;
-      }
+    for (let n = 0; n < turns; n++) {
+      if (this._passed() || this._failed()) break;
 
       const floor = this.floor.toViewObject();
       Logger.clear();
 
       this.floor.units.forEach((unit) => unit.prepareTurn());
       this.floor.units.forEach((unit) => unit.performTurn());
-      this._decTimeBonus();
 
-      trace.push({
-        floor,
-        logEntries: Logger.entries,
-        turnNumber: n,
-      });
+      if (this.timeBonus) this.timeBonus -= 1;
+
+      trace.push({ floor, log: Logger.entries });
     }
 
     return {
@@ -84,11 +79,5 @@ export default class Level {
 
   _failed() {
     return !this.floor.units.includes(this.warrior);
-  }
-
-  _decTimeBonus() {
-    if (this.timeBonus) {
-      this.timeBonus -= 1;
-    }
   }
 }

@@ -32,8 +32,8 @@ const config = {
     y: 0,
     facing: 'east',
     abilities: {
-      'attack': [],
-      'feel': []
+      attack: [],
+      feel: []
     }
   },
 
@@ -49,7 +49,10 @@ const config = {
 
 const warrior = {
   name: 'Spartacus',
-  playerCode: 'class Player { ... }'
+  playerCode: 'class Player { ... }',
+  abilities: {
+    walk: []
+  }
 };
 
 const result = Engine.play(config, warrior);
