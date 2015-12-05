@@ -15,14 +15,14 @@ describe('Explode', function () {
     this.explode = new Explode(this.captive, 3);
   });
 
-  it('should subtract 100 health from each unit on the floor', function () {
+  it('should kill every unit on the floor', function () {
     const unit = new Unit();
     unit.health = 101;
     this.floor.addUnit(unit, 0, 1);
     this.captive.health = 10;
     this.explode.perform();
     this.captive.health.should.equal(0);
-    unit.health.should.equal(1);
+    unit.health.should.equal(0);
   });
 
   it('should explode when bomb time reaches zero', function () {

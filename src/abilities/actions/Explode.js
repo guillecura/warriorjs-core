@@ -11,9 +11,9 @@ export default class Explode extends Action {
 
   perform() {
     if (this._unit.isAlive()) {
-      this._unit.say(`explodes, collapsing the ceiling and damaging every unit`);
+      this._unit.say(`explodes, collapsing the ceiling and killing every unit`);
 
-      this._unit.position.floor.units.forEach((unit) => unit.takeDamage(100));
+      this._unit.position.floor.units.forEach((unit) => unit.takeDamage(Infinity));
     }
   }
 

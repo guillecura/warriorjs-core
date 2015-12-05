@@ -7,14 +7,14 @@ export default class Rest extends Action {
 
   perform() {
     if (this._unit.health < this._unit.maxHealth) {
-      let amount = Math.round(this._unit.maxHealth * HEALTH_GAIN);
-      if (this._unit.health + amount > this._unit.maxHealth) {
-        amount = this._unit.maxHealth - this._unit.health;
-      }
+      const amount = Math.round(this._unit.maxHealth * HEALTH_GAIN);
+      const revisedAmount = this._unit.health + amount > this._unit.maxHealth ?
+        this._unit.maxHealth - this._unit.health :
+        amount;
 
-      this._unit.health += amount;
+      this._unit.health += revisedAmount;
 
-      this._unit.say(`receives ${amount} health from resting, up to ${this._unit.health} health`);
+      this._unit.say(`receives ${revisedAmount} health from resting, up to ${this._unit.health} health`);
     } else {
       this._unit.say('is already fit as a fiddle');
     }

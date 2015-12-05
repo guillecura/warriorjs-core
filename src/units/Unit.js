@@ -72,6 +72,7 @@ export default class Unit {
 
   unbind() {
     this._bound = false;
+
     this.say('released from bonds');
   }
 
@@ -92,7 +93,7 @@ export default class Unit {
       const revisedAmount = this.health - amount < 0 ? this.health : amount;
       this.health -= revisedAmount;
 
-      this.say(`takes ${amount} damage, ${this.health} health power left`);
+      this.say(`takes ${revisedAmount} damage, ${this.health} health power left`);
 
       if (!this.health) {
         this.position = null;
