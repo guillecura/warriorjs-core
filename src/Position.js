@@ -1,14 +1,6 @@
 import { DIRECTIONS, ORDERED_DIRECTIONS } from './constants/directions';
 import { ORDERED_RELATIVE_DIRECTIONS } from './constants/relativeDirections';
-import { viewObject } from './decorators/viewObject';
 
-const viewProperties = {
-  x: '_x',
-  y: '_y',
-  facing: 'direction',
-};
-
-@viewObject(viewProperties)
 export default class Position {
   _floor;
   _x;
@@ -26,8 +18,16 @@ export default class Position {
     return this._floor;
   }
 
+  get x() {
+    return this._x;
+  }
+
+  get y() {
+    return this._y;
+  }
+
   get space() {
-    return this.floor.getSpaceAt(this._x, this._y);
+    return this.floor.getSpaceAt(this.x, this.y);
   }
 
   get direction() {
@@ -35,7 +35,7 @@ export default class Position {
   }
 
   isAt(x, y) {
-    return this._x === x && this._y === y;
+    return this.x === x && this.y === y;
   }
 
   move(forward, right = 0) {
@@ -55,7 +55,7 @@ export default class Position {
 
   getDistanceOf(space) {
     const [x, y] = space.location;
-    return Math.abs(this._x - x) + Math.abs(this._y - y);
+    return Math.abs(this.x - x) + Math.abs(this.y - y);
   }
 
   getDistanceFromStairs() {
@@ -64,11 +64,11 @@ export default class Position {
 
   getDirectionOf(space) {
     const [x, y] = space.location;
-    if (Math.abs(this._x - x) > Math.abs(this._y - y)) {
-      return x > this._x ? DIRECTIONS.east : DIRECTIONS.west;
+    if (Math.abs(this.x - x) > Math.abs(this.y - y)) {
+      return x > this.x ? DIRECTIONS.east : DIRECTIONS.west;
     }
 
-    return y > this._y ? DIRECTIONS.south : DIRECTIONS.north;
+    return y > this.y ? DIRECTIONS.south : DIRECTIONS.north;
   }
 
   getRelativeDirection(direction) {
@@ -88,13 +88,13 @@ export default class Position {
 
   _translateOffset(forward, right) {
     if (this.direction === DIRECTIONS.north) {
-      return [this._x + right, this._y - forward];
+      return [this.x + right, this.y - forward];
     } else if (this.direction === DIRECTIONS.east) {
-      return [this._x + forward, this._y + right];
+      return [this.x + forward, this.y + right];
     } else if (this.direction === DIRECTIONS.south) {
-      return [this._x - right, this._y + forward];
+      return [this.x - right, this.y + forward];
     } else if (this.direction === DIRECTIONS.west) {
-      return [this._x - forward, this._y - right];
+      return [this.x - forward, this.y - right];
     }
   }
 }

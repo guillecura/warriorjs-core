@@ -4,21 +4,29 @@ function getViewObject(object) {
     object;
 }
 
-export function viewObject(viewProperties = {}) {
+export function viewObject(viewObjectShape = {}) {
   return (target) => {
     Object.defineProperty(target.prototype, 'toViewObject', {
-      value: function () {
-        const result = {};
+      value() {
+        const applyShape = (shape) => {
+          const result = {};
 
-        Object.entries(viewProperties).forEach(([viewId, id]) => {
-          const value = this[id];
+          Object.keys(shape).forEach((key) => {
+            if (typeof shape[key] === 'function') {
+              const viewProperty = shape[key].call(this);
 
-          result[viewId] = Array.isArray(value) ?
-            value.map(getViewObject) :
-            getViewObject(value);
-        });
+              result[key] = Array.isArray(viewProperty) ?
+                viewProperty.map(getViewObject) :
+                getViewObject(viewProperty);
+            } else {
+              result[key] = applyShape(shape[key]);
+            }
+          });
 
-        return result;
+          return result;
+        };
+
+        return applyShape(viewObjectShape);
       },
     });
   };

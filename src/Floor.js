@@ -3,14 +3,29 @@ import Position from './Position';
 import Space from './Space';
 import Warrior from './units/Warrior';
 
-const viewProperties = {
-  width: 'width',
-  height: 'height',
-  stairsLocation: 'stairsLocation',
-  units: 'units',
+const viewObjectShape = {
+  size: {
+    width() {
+      return this.width;
+    },
+    height() {
+      return this.height;
+    },
+  },
+  stairs: {
+    x() {
+      return this.stairsLocation[0];
+    },
+    y() {
+      return this.stairsLocation[1];
+    },
+  },
+  units() {
+    return this.units;
+  },
 };
 
-@viewObject(viewProperties)
+@viewObject(viewObjectShape)
 export default class Floor {
   _width;
   _height;

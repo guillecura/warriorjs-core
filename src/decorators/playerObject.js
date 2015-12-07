@@ -3,7 +3,7 @@ export const originalObject = Symbol();
 export function playerObject(allowedProperties = []) {
   return (target) => {
     Object.defineProperty(target.prototype, 'toPlayerObject', {
-      value: function () {
+      value() {
         const result = {};
 
         allowedProperties

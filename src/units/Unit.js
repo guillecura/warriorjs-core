@@ -5,13 +5,25 @@ import { viewObject } from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
 
-const viewProperties = {
-  name: 'name',
-  type: 'type',
-  position: 'position',
+const viewObjectShape = {
+  name() {
+    return this.name;
+  },
+  type() {
+    return this.type;
+  },
+  x() {
+    return this.position.x;
+  },
+  y() {
+    return this.position.y;
+  },
+  facing() {
+    return this.position.direction;
+  },
 };
 
-@viewObject(viewProperties)
+@viewObject(viewObjectShape)
 export default class Unit {
   _position = null;
   _attackPower = 0;
