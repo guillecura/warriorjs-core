@@ -51,15 +51,25 @@ export default class Level {
     for (let n = 0; n < turns; n++) {
       if (this._passed() || this._failed()) break;
 
-      const floor = this.floor.toViewObject();
-      Logger.clear();
+      const steps = [];
 
       this.floor.units.forEach((unit) => unit.prepareTurn());
-      this.floor.units.forEach((unit) => unit.performTurn());
+      this.floor.units.forEach((unit) => { // eslint-disable-line no-loop-func
+        const initialFloor = this.floor.toViewObject();
+
+        unit.performTurn();
+
+        const finalFloor = this.floor.toViewObject();
+
+        const log = Logger.entries;
+        Logger.clear();
+
+        steps.push({ initialFloor, finalFloor, log });
+      });
 
       if (this.timeBonus) this.timeBonus -= 1;
 
-      trace.push({ floor, log: Logger.entries });
+      trace.push(steps);
     }
 
     return {
