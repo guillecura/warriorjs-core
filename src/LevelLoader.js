@@ -8,24 +8,24 @@ export default class LevelLoader {
     this._level = level;
   }
 
-  load(config, warrior) {
+  load(config, profile) {
     this._level.timeBonus = config.timeBonus;
 
-    // Floor
-
-    const { width, height } = config.size;
+    const { width, height } = config.floor.size;
     this._level.floor = new Floor(width, height);
-    const { x, y } = config.stairs;
+
+    const { x, y } = config.floor.stairs;
     this._level.floor.placeStairs(x, y);
 
-    // Warrior
-
-    const abilities = Object.assign({}, config.warrior.abilities, warrior.abilities);
-    this._placeWarrior(warrior.name, warrior.playerCode, config.warrior.x, config.warrior.y, config.warrior.facing, abilities);
-
-    // Other units
-
-    config.units.forEach((unit) => this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities));
+    config.floor.units.forEach((unit) => {
+      if (unit.type === 'warrior') {
+        const { warriorName, playerCode } = profile;
+        const abilities = Object.assign({}, unit.abilities, profile.abilities);
+        this._placeWarrior(warriorName, playerCode, unit.x, unit.y, unit.facing, abilities);
+      } else {
+        this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities);
+      }
+    });
   }
 
   _placeUnit(type, x, y, facing, abilities = {}) {

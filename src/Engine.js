@@ -1,13 +1,11 @@
 import 'babel/polyfill';
 import Level from './Level';
 
-const Engine = {
-  playLevel(config, warrior) {
+export default {
+  playLevel(config, profile) {
     const level = new Level();
-    level.loadLevel(config, warrior);
+    level.loadLevel(config, profile);
     level.loadPlayer();
     return level.play();
   },
 };
-
-export default Engine;
