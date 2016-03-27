@@ -4,12 +4,12 @@
 import Engine from 'warriorjs-engine';
 ```
 
-## Engine.play(config, profile)
+## Engine.playLevel(config, profile)
 
 Plays the level defined in the passed in `config` with the passed in `profile`. Returning an object with the result (whether it passed the level or not), the points earned and the level trace.
 
 ```javascript
-Engine.play(config, profile) // => { passed, points, trace }
+Engine.playLevel(config, profile) // => { passed, points, trace }
 ```
 
 **Example**
@@ -66,8 +66,5 @@ const profile = {
   }
 };
 
-const result = Engine.play(config, profile);
-result.passed;
-result.points;
-result.trace;
+const { passed, points, trace } = Engine.playLevel(config, profile);
 ```
