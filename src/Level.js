@@ -1,8 +1,6 @@
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
 
-const MAX_TURNS = 1000;
-
 export default class Level {
   _warrior = null;
   _floor = null;
@@ -46,7 +44,7 @@ export default class Level {
     this.warrior.loadPlayer();
   }
 
-  play(turns = MAX_TURNS) {
+  play(turns) {
     const trace = [];
     for (let n = 0; n < turns; n++) {
       if (this._passed() || this._failed()) break;
