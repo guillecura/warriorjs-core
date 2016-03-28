@@ -1,6 +1,6 @@
 {
   "name": "warriorjs-engine",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "The bowels of WarriorJS",
   "main": "index.js",
   "scripts": {
