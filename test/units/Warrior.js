@@ -11,6 +11,7 @@ class Player {
 describe('Warrior', function () {
   beforeEach(function () {
     this.warrior = new Warrior();
+    this.sinon.stub(this.warrior, 'say', () => null);
   });
 
   it('should default name to Warrior', function () {

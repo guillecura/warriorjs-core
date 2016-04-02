@@ -6,10 +6,10 @@ import Engine from 'warriorjs-engine';
 
 ## Engine.playLevel(config, profile, maxTurns)
 
-Plays the level defined in the passed in `config` with the passed in `profile`, allowing `maxTurns` to complete the level (1000 by default). Returning an object with the result (whether it passed the level or not), the points earned and the level trace.
+Plays the level defined in the passed in `config` with the passed in `profile`, allowing `maxTurns` to complete the level (1000 by default). Returning an object with the result (whether it passed the level or not), the points earned and the sequence of events that took place during the play.
 
 ```javascript
-Engine.playLevel(config, profile, maxTurns) // => { passed, points, trace }
+Engine.playLevel(config, profile, maxTurns) // => { passed, score, events }
 ```
 
 **Example**
@@ -68,5 +68,5 @@ const profile = {
 
 const MAX_TURNS = 120;
 
-const { passed, points, trace } = Engine.playLevel(config, profile, MAX_TURNS);
+const { passed, score, events } = Engine.playLevel(config, profile, MAX_TURNS);
 ```

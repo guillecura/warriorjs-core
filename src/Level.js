@@ -1,5 +1,6 @@
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
+import { TURN_CHANGED, FLOOR_CHANGED } from './constants/eventTypes';
 
 export default class Level {
   _warrior = null;
@@ -45,38 +46,30 @@ export default class Level {
   }
 
   play(turns) {
-    const initialFloor = this.floor.toViewObject();
-    const trace = [
-      [{ floor: initialFloor, log: [] }],
-    ];
-
     for (let n = 0; n < turns; n++) {
       if (this._passed() || this._failed()) break;
 
-      const steps = [];
+      Logger.log(TURN_CHANGED, { turn: n + 1 });
 
       this.floor.units.forEach((unit) => unit.prepareTurn());
       this.floor.units.forEach((unit) => { // eslint-disable-line no-loop-func
         unit.performTurn();
 
         const floor = this.floor.toViewObject();
-
-        const log = Logger.entries;
-        Logger.clear();
-
-        steps.push({ floor, log });
+        Logger.log(FLOOR_CHANGED, { floor });
       });
 
       if (this.timeBonus) this.timeBonus -= 1;
-
-      trace.push(steps);
     }
 
+    const events = Logger.events;
+    Logger.clear();
+
     return {
-      trace,
+      events,
       passed: this._passed(),
-      points: {
-        levelScore: this.warrior.score,
+      score: {
+        level: this.warrior.score,
         timeBonus: this.timeBonus,
         clearBonus: this.clearBonus,
       },

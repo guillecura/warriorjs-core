@@ -11,11 +11,13 @@ chai.use(chaiBound);
 describe('Rescue', function () {
   beforeEach(function () {
     this.warrior = new Warrior();
+    this.sinon.stub(this.warrior, 'say', () => null);
     this.rescue = new Rescue(this.warrior);
   });
 
   it('should rescue captive', function () {
     const captive = new Captive();
+    this.sinon.stub(captive, 'say', () => null);
     captive.position = {};
     this.sinon.mock(this.rescue).expects('_getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(true) });
     this.sinon.mock(this.rescue).expects('_getUnit').withArgs('forward').returns(captive);
@@ -27,6 +29,7 @@ describe('Rescue', function () {
 
   it('should do nothing to other unit if not bound', function () {
     const unit = new Unit();
+    this.sinon.stub(unit, 'say', () => null);
     unit.position = {};
     this.sinon.mock(this.rescue).expects('_getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(false) });
     this.sinon.mock(this.rescue).expects('_getUnit').withArgs('forward').never();
@@ -38,6 +41,7 @@ describe('Rescue', function () {
 
   it('should release other unit when bound', function () {
     const unit = new Unit();
+    this.sinon.stub(unit, 'say', () => null);
     unit.bind();
     unit.position = {};
     this.sinon.mock(this.rescue).expects('_getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(true) });

@@ -11,6 +11,7 @@ chai.use(chaiAlive);
 describe('Unit', function () {
   beforeEach(function () {
     this.unit = new Unit();
+    this.sinon.stub(this.unit, 'say', () => null);
   });
 
   it('should have an attack power which defaults to zero', function () {

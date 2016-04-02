@@ -4,6 +4,7 @@ import { ABILITIES } from '../constants/abilities';
 import { viewObject } from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
+import { UNIT_SPOKEN } from '../constants/eventTypes';
 
 const viewObjectShape = {
   name() {
@@ -93,7 +94,7 @@ export default class Unit {
   }
 
   say(message) {
-    Logger.log(this.type, `${this.name} ${message}`);
+    Logger.log(UNIT_SPOKEN, { message: `${this.name} ${message}`, unitType: this.type });
   }
 
   takeDamage(amount) {
@@ -108,9 +109,9 @@ export default class Unit {
       this.say(`takes ${revisedAmount} damage, ${this.health} health power left`);
 
       if (!this.health) {
-        this.position = null;
-
         this.say('dies');
+
+        this.position = null;
       }
     }
   }
