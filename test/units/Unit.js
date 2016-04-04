@@ -83,7 +83,7 @@ describe('Unit', function () {
   it('should perform action when calling perform on turn', function () {
     this.unit.position = {};
     const expectation = this.sinon.mock(Walk.prototype).expects('perform').withArgs('backward');
-    this.unit.addAbilities({ walk: [] });
+    this.unit.addAbilities([{ name: 'walk', args: [] }]);
     const turn = {
       action: ['walk', ['backward']],
     };
@@ -96,7 +96,7 @@ describe('Unit', function () {
   it('should not perform action when dead (no position)', function () {
     this.unit.position = null;
     this.sinon.stub(Walk.prototype, 'perform').throws('action should not be called');
-    this.unit.addAbilities({ walk: [] });
+    this.unit.addAbilities([{ name: 'walk', args: [] }]);
     const turn = {
       action: ['walk', ['backward']],
     };
@@ -128,7 +128,7 @@ describe('Unit', function () {
     this.unit.position = {};
     this.unit.bind();
     this.sinon.stub(Walk.prototype, 'perform').throws('action should not be called');
-    this.unit.addAbilities({ walk: [] });
+    this.unit.addAbilities([{ name: 'walk', args: [] }]);
     const turn = {
       action: ['walk', ['backward']],
     };
@@ -141,7 +141,7 @@ describe('Unit', function () {
     beforeEach(function () {
       this.floor = new Floor(2, 3);
       this.floor.addUnit(this.unit, 0, 0);
-      this.unit.addAbilities({ explode: [3] });
+      this.unit.addAbilities([{ name: 'explode', args: [3] }]);
     });
 
     it('should explode when time reaches 0', function () {

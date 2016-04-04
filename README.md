@@ -33,10 +33,16 @@ const config = {
         x: 0,
         y: 0,
         facing: 'east',
-        abilities: {
-          attack: [],
-          feel: []
-        }
+        abilities: [
+          {
+            name: 'attack',
+            args: []
+          },
+          {
+            name: 'feel',
+            args: []
+          }
+        ]
       },
       {
         type: 'sludge',
@@ -61,9 +67,12 @@ const profile = {
     }
   `,
   warriorName: 'Spartacus',
-  abilities: {
-    walk: []
-  }
+  abilities: [
+    {
+      name: 'walk',
+      args: []
+    }
+  ]
 };
 
 const MAX_TURNS = 120;

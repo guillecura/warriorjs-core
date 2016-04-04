@@ -3,10 +3,16 @@ import Unit from './Unit';
 export default class Ranged extends Unit {
   constructor() {
     super();
-    this.addAbilities({
-      look: [],
-      shoot: [],
-    });
+    this.addAbilities([
+      {
+        name: 'look',
+        args: [],
+      },
+      {
+        name: 'shoot',
+        args: [],
+      },
+    ]);
   }
 
   _isPlayerWithinReach(turn, direction) {

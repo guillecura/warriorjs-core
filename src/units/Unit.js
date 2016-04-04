@@ -117,7 +117,7 @@ export default class Unit {
   }
 
   addAbilities(newAbilities) {
-    Object.entries(newAbilities).forEach(([name, args]) => {
+    newAbilities.forEach(({ name, args }) => {
       if (!(name in ABILITIES)) {
         throw new Error(`Unknown ability '${name}'.`);
       }

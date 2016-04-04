@@ -161,7 +161,7 @@ describe('Space', function () {
     });
 
     it('should be ticking if captive has time bomb', function () {
-      this.captive.addAbilities({ explode: [] });
+      this.captive.addAbilities([{ name: 'explode', args: [] }]);
       this.space.should.be.ticking;
     });
 

@@ -20,7 +20,7 @@ export default class LevelLoader {
     config.floor.units.forEach((unit) => {
       if (unit.type === 'warrior') {
         const { warriorName, playerCode } = profile;
-        const abilities = Object.assign({}, unit.abilities, profile.abilities);
+        const abilities = [...unit.abilities, ...profile.abilities];
         this._placeWarrior(warriorName, playerCode, unit.x, unit.y, unit.facing, abilities);
       } else {
         this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities);
@@ -28,7 +28,7 @@ export default class LevelLoader {
     });
   }
 
-  _placeUnit(type, x, y, facing, abilities = {}) {
+  _placeUnit(type, x, y, facing, abilities = []) {
     if (!(type in UNITS)) {
       throw new Error(`Unknown unit '${type}'.`);
     }
