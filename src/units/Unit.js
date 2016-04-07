@@ -4,7 +4,6 @@ import { ABILITIES } from '../constants/abilities';
 import { viewObject } from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
-import { UNIT_SPOKEN } from '../constants/eventTypes';
 
 const viewObjectShape = {
   name() {
@@ -94,7 +93,7 @@ export default class Unit {
   }
 
   say(message) {
-    Logger.log(UNIT_SPOKEN, { message: `${this.name} ${message}`, unitType: this.type });
+    Logger.unitSpoke(`${this.name} ${message}`, this.type);
   }
 
   takeDamage(amount) {

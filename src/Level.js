@@ -1,6 +1,5 @@
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
-import { TURN_CHANGED, FLOOR_CHANGED } from './constants/eventTypes';
 
 export default class Level {
   _warrior = null;
@@ -47,19 +46,24 @@ export default class Level {
 
   play(turns) {
     for (let n = 0; n < turns; n++) {
-      if (this._passed() || this._failed()) break;
+      if (this._passed() || this._failed()) {
+        break;
+      }
 
-      Logger.log(TURN_CHANGED, { turn: n + 1 });
+      const turnNumber = n + 1;
+      Logger.turnChanged(turnNumber);
 
       this.floor.units.forEach((unit) => unit.prepareTurn());
       this.floor.units.forEach((unit) => {
         unit.performTurn();
 
         const floor = this.floor.toViewObject();
-        Logger.log(FLOOR_CHANGED, { floor });
+        Logger.floorChanged(floor);
       });
 
-      if (this.timeBonus) this.timeBonus -= 1;
+      if (this.timeBonus) {
+        this.timeBonus -= 1;
+      }
     }
 
     const events = Logger.events;
