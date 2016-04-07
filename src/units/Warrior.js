@@ -1,4 +1,4 @@
-import { transform } from 'babel';
+import { transform } from 'babel-core';
 import Unit from './Unit';
 
 export default class Warrior extends Unit {
@@ -35,7 +35,13 @@ export default class Warrior extends Unit {
   }
 
   loadPlayer() {
-    const Player = eval(`(function() { ${transform(this.playerCode, { stage: 0 }).code} return Player; })()`); // eslint-disable-line no-eval
+    const options = { presets: ['es2015', 'stage-0'] };
+    const Player = eval(`
+      (function() {
+        ${transform(this.playerCode, options).code}
+        return Player;
+      })();
+    `);
     this._player = new Player();
   }
 
