@@ -8,7 +8,9 @@ export function playerObject(allowedProperties = []) {
 
         allowedProperties
           .filter((id) => typeof this[id] === 'function')
-          .forEach((id) => result[id] = this[id].bind(this));
+          .forEach((id) => {
+            result[id] = this[id].bind(this);
+          });
 
         result[originalObject] = this;
 

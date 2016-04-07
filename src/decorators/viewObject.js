@@ -1,7 +1,5 @@
 function getViewObject(object) {
-  return typeof object.toViewObject === 'function' ?
-    object.toViewObject() :
-    object;
+  return typeof object.toViewObject === 'function' ? object.toViewObject() : object;
 }
 
 export function viewObject(viewObjectShape = {}) {
@@ -15,9 +13,13 @@ export function viewObject(viewObjectShape = {}) {
             if (typeof shape[key] === 'function') {
               const viewProperty = shape[key].call(this);
 
-              result[key] = Array.isArray(viewProperty) ?
-                viewProperty.map(getViewObject) :
-                getViewObject(viewProperty);
+              if (viewProperty) {
+                result[key] = Array.isArray(viewProperty) ?
+                  viewProperty.map(getViewObject) :
+                  getViewObject(viewProperty);
+              } else {
+                result[key] = viewProperty;
+              }
             } else {
               result[key] = applyShape(shape[key]);
             }

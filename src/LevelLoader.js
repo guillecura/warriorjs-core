@@ -8,24 +8,37 @@ export default class LevelLoader {
     this._level = level;
   }
 
-  load(config, profile) {
-    this._level.timeBonus = config.timeBonus;
+  load(levelConfig, profile) {
+    this._level.timeBonus = levelConfig.timeBonus;
 
-    const { width, height } = config.floor.size;
+    const { warrior, size, stairs } = levelConfig.floor;
+
+    this._setFloor(size, stairs);
+
+    const { warriorName, playerCode } = profile;
+    const { x, y, facing } = warrior;
+    const newAbilities = warrior.abilities || [];
+    const abilities = [...newAbilities, ...profile.abilities];
+    this._placeWarrior(warriorName, playerCode, x, y, facing, abilities);
+
+    levelConfig.floor.units.forEach((unit) => {
+      this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities);
+    });
+  }
+
+  _setFloor(size, stairs) {
+    const { width, height } = size;
     this._level.floor = new Floor(width, height);
 
-    const { x, y } = config.floor.stairs;
+    const { x, y } = stairs;
     this._level.floor.placeStairs(x, y);
+  }
 
-    config.floor.units.forEach((unit) => {
-      if (unit.type === 'warrior') {
-        const { warriorName, playerCode } = profile;
-        const abilities = [...unit.abilities, ...profile.abilities];
-        this._placeWarrior(warriorName, playerCode, unit.x, unit.y, unit.facing, abilities);
-      } else {
-        this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities);
-      }
-    });
+  _placeWarrior(name, playerCode, x, y, facing, abilities) {
+    const warrior = this._placeUnit('warrior', x, y, facing, abilities);
+    warrior.name = name;
+    warrior.playerCode = playerCode;
+    this._level.warrior = warrior;
   }
 
   _placeUnit(type, x, y, facing, abilities = []) {
@@ -37,12 +50,5 @@ export default class LevelLoader {
     unit.addAbilities(abilities);
     this._level.floor.addUnit(unit, x, y, facing);
     return unit;
-  }
-
-  _placeWarrior(name, playerCode, x, y, facing, abilities) {
-    const warrior = this._placeUnit('warrior', x, y, facing, abilities);
-    warrior.name = name;
-    warrior.playerCode = playerCode;
-    this._level.warrior = warrior;
   }
 }

@@ -20,8 +20,11 @@ const viewObjectShape = {
       return this.stairsLocation[1];
     },
   },
+  warrior() {
+    return this.warrior;
+  },
   units() {
-    return this.units;
+    return this.otherUnits;
   },
 };
 
@@ -65,6 +68,10 @@ export default class Floor {
     return this._units.filter((unit) => unit.position);
   }
 
+  get warrior() {
+    return this.units.find((unit) => unit instanceof Warrior);
+  }
+
   get otherUnits() {
     return this.units.filter((unit) => !(unit instanceof Warrior));
   }
@@ -85,8 +92,9 @@ export default class Floor {
   }
 
   addUnit(unit, x, y, direction) {
-    unit.position = new Position(this, x, y, direction);
-    this._units.push(unit);
+    const positionedUnit = unit;
+    positionedUnit.position = new Position(this, x, y, direction);
+    this._units.push(positionedUnit);
   }
 
   getSpaceAt(x, y) {

@@ -52,7 +52,7 @@ export default class Level {
       Logger.log(TURN_CHANGED, { turn: n + 1 });
 
       this.floor.units.forEach((unit) => unit.prepareTurn());
-      this.floor.units.forEach((unit) => { // eslint-disable-line no-loop-func
+      this.floor.units.forEach((unit) => {
         unit.performTurn();
 
         const floor = this.floor.toViewObject();
