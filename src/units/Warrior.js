@@ -1,4 +1,6 @@
 import { transform } from 'babel-core';
+import es2015 from 'babel-preset-es2015';
+import stage0 from 'babel-preset-stage-0';
 import Unit from './Unit';
 
 export default class Warrior extends Unit {
@@ -35,7 +37,7 @@ export default class Warrior extends Unit {
   }
 
   loadPlayer() {
-    const options = { presets: ['es2015', 'stage-0'] };
+    const options = { presets: [es2015, stage0] };
     const Player = eval(`
       (function() {
         ${transform(this.playerCode, options).code}
