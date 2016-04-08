@@ -1,3 +1,4 @@
+import isEqual from 'lodash.isequal';
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
 
@@ -45,6 +46,8 @@ export default class Level {
   }
 
   play(turns) {
+    let previousFloor;
+
     for (let n = 0; n < turns; n++) {
       if (this._passed() || this._failed()) {
         break;
@@ -58,7 +61,11 @@ export default class Level {
         unit.performTurn();
 
         const floor = this.floor.toViewObject();
-        Logger.floorChanged(floor);
+        if (!isEqual(previousFloor, floor)) {
+          Logger.floorChanged(floor);
+        }
+
+        previousFloor = floor;
       });
 
       if (this.timeBonus) {
