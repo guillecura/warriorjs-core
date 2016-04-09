@@ -1,7 +1,7 @@
-import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
+import { FORWARD } from '../../constants/directions';
 import Action from './Action';
 
-const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
+const DEFAULT_DIRECTION = FORWARD;
 const TARGET_DAMAGE_AMOUNT = 8;
 const COLATERAL_DAMAGE_AMOUNT = 4;
 const SURROUNDINGS = [

@@ -1,4 +1,4 @@
-import { RELATIVE_DIRECTIONS, ORDERED_RELATIVE_DIRECTIONS } from '../constants/relativeDirections';
+import { FORWARD, BACKWARD, RIGHT, LEFT, RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
 
 class Ability {
   _unit;
@@ -21,13 +21,13 @@ class Ability {
   }
 
   _offset(direction, forward = 1, right = 0) {
-    if (direction === RELATIVE_DIRECTIONS.forward) {
+    if (direction === FORWARD) {
       return [forward, -right];
-    } else if (direction === RELATIVE_DIRECTIONS.backward) {
+    } else if (direction === BACKWARD) {
       return [-forward, right];
-    } else if (direction === RELATIVE_DIRECTIONS.right) {
+    } else if (direction === RIGHT) {
       return [right, forward];
-    } else if (direction === RELATIVE_DIRECTIONS.left) {
+    } else if (direction === LEFT) {
       return [-right, -forward];
     }
 
@@ -43,8 +43,8 @@ class Ability {
   }
 
   _verifyDirection(direction) {
-    if (!ORDERED_RELATIVE_DIRECTIONS.includes(direction)) {
-      const validDirections = ORDERED_RELATIVE_DIRECTIONS
+    if (!RELATIVE_DIRECTION_ARRAY.includes(direction)) {
+      const validDirections = RELATIVE_DIRECTION_ARRAY
         .map((validDirection) => `'${validDirection}'`)
         .join(', ');
       throw new Error(`Unknown direction '${direction}'. Should be one of: ${validDirections}.`);

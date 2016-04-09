@@ -1,7 +1,7 @@
-import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
+import { FORWARD } from '../../constants/directions';
 import Action from './Action';
 
-const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
+const DEFAULT_DIRECTION = FORWARD;
 
 export default class Shoot extends Action {
   _description = `Shoot your bow & arrow in given direction (${DEFAULT_DIRECTION} by default).`;

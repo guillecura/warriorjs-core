@@ -1,7 +1,7 @@
-import { RELATIVE_DIRECTIONS, ORDERED_RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
+import { BACKWARD, RELATIVE_DIRECTION_ARRAY } from '../../constants/directions';
 import Action from './Action';
 
-const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.backward;
+const DEFAULT_DIRECTION = BACKWARD;
 
 export default class Pivot extends Action {
   _description = `Rotate in the given direction (${DEFAULT_DIRECTION} by default).`;
@@ -11,6 +11,6 @@ export default class Pivot extends Action {
 
     this._unit.say(`pivots ${direction}`);
 
-    this._unit.position.rotate(ORDERED_RELATIVE_DIRECTIONS.indexOf(direction));
+    this._unit.position.rotate(RELATIVE_DIRECTION_ARRAY.indexOf(direction));
   }
 }

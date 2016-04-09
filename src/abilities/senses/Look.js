@@ -1,8 +1,8 @@
 import range from 'lodash.range';
-import { RELATIVE_DIRECTIONS } from '../../constants/relativeDirections';
+import { FORWARD } from '../../constants/directions';
 import Sense from './Sense';
 
-const DEFAULT_DIRECTION = RELATIVE_DIRECTIONS.forward;
+const DEFAULT_DIRECTION = FORWARD;
 const VISION_RANGE = 3;
 
 export default class Look extends Sense {

@@ -1,4 +1,4 @@
-import { ORDERED_RELATIVE_DIRECTIONS } from '../constants/relativeDirections';
+import { RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
 import Ranged from './Ranged';
 
 export default class Archer extends Ranged {
@@ -6,7 +6,7 @@ export default class Archer extends Ranged {
   _maxHealth = 7;
 
   playTurn(turn) {
-    ORDERED_RELATIVE_DIRECTIONS.some((direction) => {
+    RELATIVE_DIRECTION_ARRAY.some((direction) => {
       if (this._isPlayerWithinReach(turn, direction)) {
         turn.shoot(direction);
         return true;

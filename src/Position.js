@@ -1,5 +1,11 @@
-import { DIRECTIONS, ORDERED_DIRECTIONS } from './constants/directions';
-import { ORDERED_RELATIVE_DIRECTIONS } from './constants/relativeDirections';
+import {
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST,
+  DIRECTION_ARRAY,
+  RELATIVE_DIRECTION_ARRAY,
+} from './constants/directions';
 
 export default class Position {
   _floor;
@@ -7,11 +13,11 @@ export default class Position {
   _y;
   _directionIndex;
 
-  constructor(floor, x, y, direction = DIRECTIONS.north) {
+  constructor(floor, x, y, direction = NORTH) {
     this._floor = floor;
     this._x = x;
     this._y = y;
-    this._directionIndex = ORDERED_DIRECTIONS.indexOf(direction);
+    this._directionIndex = DIRECTION_ARRAY.indexOf(direction);
   }
 
   get floor() {
@@ -31,7 +37,7 @@ export default class Position {
   }
 
   get direction() {
-    return ORDERED_DIRECTIONS[this._directionIndex];
+    return DIRECTION_ARRAY[this._directionIndex];
   }
 
   isAt(x, y) {
@@ -65,17 +71,17 @@ export default class Position {
   getDirectionOf(space) {
     const [x, y] = space.location;
     if (Math.abs(this.x - x) > Math.abs(this.y - y)) {
-      return x > this.x ? DIRECTIONS.east : DIRECTIONS.west;
+      return x > this.x ? EAST : WEST;
     }
 
-    return y > this.y ? DIRECTIONS.south : DIRECTIONS.north;
+    return y > this.y ? SOUTH : NORTH;
   }
 
   getRelativeDirection(direction) {
-    let offset = ORDERED_DIRECTIONS.indexOf(direction) - this._directionIndex;
+    let offset = DIRECTION_ARRAY.indexOf(direction) - this._directionIndex;
     while (offset > 3) offset -= 4;
     while (offset < 0) offset += 4;
-    return ORDERED_RELATIVE_DIRECTIONS[offset];
+    return RELATIVE_DIRECTION_ARRAY[offset];
   }
 
   getRelativeDirectionOf(space) {
@@ -87,14 +93,16 @@ export default class Position {
   }
 
   _translateOffset(forward, right) {
-    if (this.direction === DIRECTIONS.north) {
+    if (this.direction === NORTH) {
       return [this.x + right, this.y - forward];
-    } else if (this.direction === DIRECTIONS.east) {
+    } else if (this.direction === EAST) {
       return [this.x + forward, this.y + right];
-    } else if (this.direction === DIRECTIONS.south) {
+    } else if (this.direction === SOUTH) {
       return [this.x - right, this.y + forward];
-    } else if (this.direction === DIRECTIONS.west) {
+    } else if (this.direction === WEST) {
       return [this.x - forward, this.y - right];
     }
+
+    throw new Error(`Unknown direction '${this.direction}'`);
   }
 }

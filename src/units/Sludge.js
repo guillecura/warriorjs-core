@@ -1,4 +1,4 @@
-import { ORDERED_RELATIVE_DIRECTIONS } from '../constants/relativeDirections';
+import { RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
 import Melee from './Melee';
 
 export default class Sludge extends Melee {
@@ -6,7 +6,7 @@ export default class Sludge extends Melee {
   _maxHealth = 12;
 
   playTurn(turn) {
-    ORDERED_RELATIVE_DIRECTIONS.some((direction) => {
+    RELATIVE_DIRECTION_ARRAY.some((direction) => {
       if (this._isPlayerWithinReach(turn, direction)) {
         turn.attack(direction);
         return true;
