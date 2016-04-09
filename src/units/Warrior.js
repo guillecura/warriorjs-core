@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 import { transform } from 'babel-core';
 import es2015 from 'babel-preset-es2015';
 import stage0 from 'babel-preset-stage-0';
@@ -28,16 +29,20 @@ export default class Warrior extends Unit {
   }
 
   loadPlayer(playerCode) {
-    const options = { presets: [es2015, stage0] };
-    /* eslint-disable no-eval */
-    const Player = eval(`
-      (function () {
-        ${transform(playerCode, options).code}
-        return Player;
-      })();
-    `);
-    /* eslint-enable no-eval */
-    this._player = new Player();
+    try {
+      const options = { presets: [es2015, stage0] };
+      const Player = eval(`
+        (function () {
+          ${transform(playerCode, options).code}
+          return Player;
+        })();
+      `);
+      this._player = new Player();
+    } catch (err) {
+      if (err instanceof SyntaxError) {
+        throw new Error('Invalid submitted code. Check the syntax and try again.');
+      }
+    }
   }
 
   playTurn(turn) {

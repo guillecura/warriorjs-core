@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import isEqual from 'lodash.isequal';
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
@@ -52,7 +53,6 @@ export default class Level {
       const turnNumber = n + 1;
       Logger.turnChanged(turnNumber);
 
-      /* eslint-disable no-loop-func */
       this.floor.units.forEach((unit) => unit.prepareTurn());
       this.floor.units.forEach((unit) => {
         unit.performTurn();
@@ -64,7 +64,6 @@ export default class Level {
 
         previousFloor = floor;
       });
-      /* eslint-enable no-loop-func */
 
       if (this.timeBonus) {
         this.timeBonus -= 1;
