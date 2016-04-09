@@ -37,12 +37,8 @@ export default class Level {
       0;
   }
 
-  loadLevel(config, warrior) {
-    new LevelLoader(this).load(config, warrior);
-  }
-
-  loadPlayer() {
-    this.warrior.loadPlayer();
+  loadPlayer(playerCode) {
+    this.warrior.loadPlayer(playerCode);
   }
 
   play(turns) {
@@ -56,6 +52,7 @@ export default class Level {
       const turnNumber = n + 1;
       Logger.turnChanged(turnNumber);
 
+      /* eslint-disable no-loop-func */
       this.floor.units.forEach((unit) => unit.prepareTurn());
       this.floor.units.forEach((unit) => {
         unit.performTurn();
@@ -67,6 +64,7 @@ export default class Level {
 
         previousFloor = floor;
       });
+      /* eslint-enable no-loop-func */
 
       if (this.timeBonus) {
         this.timeBonus -= 1;
@@ -93,5 +91,11 @@ export default class Level {
 
   _failed() {
     return !this.floor.units.includes(this.warrior);
+  }
+
+  static load(levelConfig) {
+    const level = new Level();
+    new LevelLoader(level).load(levelConfig);
+    return level;
   }
 }

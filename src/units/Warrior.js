@@ -9,7 +9,6 @@ export default class Warrior extends Unit {
   _attackPower = 5;
   _shootPower = 3;
   _maxHealth = 20;
-  _playerCode = null;
   _player = null;
 
   get name() {
@@ -24,26 +23,20 @@ export default class Warrior extends Unit {
     return this._score;
   }
 
-  get playerCode() {
-    return this._playerCode;
-  }
-
-  set playerCode(playerCode) {
-    this._playerCode = playerCode;
-  }
-
   get player() {
     return this._player;
   }
 
-  loadPlayer() {
+  loadPlayer(playerCode) {
     const options = { presets: [es2015, stage0] };
+    /* eslint-disable no-eval */
     const Player = eval(`
-      (function() {
-        ${transform(this.playerCode, options).code}
+      (function () {
+        ${transform(playerCode, options).code}
         return Player;
       })();
     `);
+    /* eslint-enable no-eval */
     this._player = new Player();
   }
 

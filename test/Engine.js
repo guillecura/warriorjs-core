@@ -1,8 +1,6 @@
 import { playLevel } from '../src/Engine';
 
 describe('Engine', function () {
-  this.slow(200);
-
   beforeEach(function () {
     this.levelConfig = {
       timeBonus: 15,
@@ -17,6 +15,7 @@ describe('Engine', function () {
           y: 0,
         },
         warrior: {
+          name: 'Spartacus',
           x: 0,
           y: 0,
           facing: 'east',
@@ -32,52 +31,48 @@ describe('Engine', function () {
     };
   });
 
-  describe('with a winner profile', function () {
+  describe('with a winner player code', function () {
+    this.slow(500);
+
     beforeEach(function () {
-      this.profile = {
-        playerCode: `
-          class Player {
-            playTurn(warrior) {
-              warrior.walk();
-            }
+      this.playerCode = `
+        class Player {
+          playTurn(warrior) {
+            warrior.walk();
           }
-        `,
-        warriorName: 'Spartacus',
-        abilities: [],
-      };
+        }
+      `;
       this.requiredTurns = 7;
     });
 
     it('should pass level when max turns are enough', function () {
       const maxTurns = this.requiredTurns;
-      const { passed } = playLevel(this.levelConfig, this.profile, maxTurns);
+      const { passed } = playLevel(this.levelConfig, this.playerCode, maxTurns);
       passed.should.be.true;
     });
 
     it('should not pass level when max turns are not enough', function () {
       const maxTurns = this.requiredTurns - 1;
-      const { passed } = playLevel(this.levelConfig, this.profile, maxTurns);
+      const { passed } = playLevel(this.levelConfig, this.playerCode, maxTurns);
       passed.should.be.false;
     });
   });
 
-  describe('with a loser profile', function () {
+  describe('with a loser player code', function () {
+    this.slow(500);
+
     beforeEach(function () {
-      this.profile = {
-        playerCode: `
-          class Player {
-            playTurn(warrior) {
-              // Cool code goes here
-            }
+      this.playerCode = `
+        class Player {
+          playTurn(warrior) {
+            // Cool code goes here
           }
-        `,
-        warriorName: 'Spartacus',
-        abilities: [],
-      };
+        }
+      `;
     });
 
     it('should not pass level', function () {
-      const { passed } = playLevel(this.levelConfig, this.profile);
+      const { passed } = playLevel(this.levelConfig, this.playerCode);
       passed.should.be.false;
     });
   });

@@ -57,22 +57,17 @@ export default class LevelLoader {
     this._level = level;
   }
 
-  load(levelConfig, profile) {
+  load(levelConfig) {
     this._level.timeBonus = levelConfig.timeBonus;
 
-    const { warrior, size, stairs } = levelConfig.floor;
+    const { size, stairs, warrior, units } = levelConfig.floor;
 
     this._setFloor(size, stairs);
 
-    const { warriorName, playerCode } = profile;
-    const { x, y, facing } = warrior;
-    const newAbilities = warrior.abilities || [];
-    const abilities = [...newAbilities, ...profile.abilities];
-    this._placeWarrior(warriorName, playerCode, x, y, facing, abilities);
+    const { name, x, y, facing, abilities } = warrior;
+    this._placeWarrior(name, x, y, facing, abilities);
 
-    levelConfig.floor.units.forEach((unit) => {
-      this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities);
-    });
+    units.forEach(unit => this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities));
   }
 
   _setFloor(size, stairs) {
@@ -83,10 +78,9 @@ export default class LevelLoader {
     this._level.floor.placeStairs(x, y);
   }
 
-  _placeWarrior(name, playerCode, x, y, facing, abilities) {
+  _placeWarrior(name, x, y, facing, abilities) {
     const warrior = this._placeUnit('warrior', x, y, facing, abilities);
     warrior.name = name;
-    warrior.playerCode = playerCode;
     this._level.warrior = warrior;
   }
 

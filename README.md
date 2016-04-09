@@ -1,13 +1,13 @@
-![banner](https://cdn.rawgit.com/olistic/warriorjs-engine/master/warriorjs-logo.svg)
+[![banner](https://cdn.rawgit.com/olistic/warriorjs-engine/master/warriorjs-logo.svg)](https://github.com/olistic/warriorjs)
 
 [![Travis](https://img.shields.io/travis/olistic/warriorjs-engine.svg?style=flat-square)](https://travis-ci.org/olistic/warriorjs-engine)
 [![npm](https://img.shields.io/npm/v/warriorjs-engine.svg?style=flat-square)](https://www.npmjs.com/package/warriorjs-engine)
 
 # WarriorJS Engine
 
-There's a small chance that you have played the game [WarriorJS](https://github.com/olistic/warriorjs) before, and an even smaller chance that you have landed here by accident, so you may be wondering what's this all about...
+There's a small chance that you have played the game WarriorJS before, and an even smaller chance that you have landed here by accident, so you may be wondering what's this all about...
 
-**This is the rules engine behind the WarriorJS game, distributed as an standalone npm package.**
+**This is the rules engine behind [WarriorJS](https://github.com/olistic/warriorjs), distributed as an standalone npm package.**
 
 ## Installation
 
@@ -26,11 +26,8 @@ Plays a WarriorJS level using the player's profile.
 #### Arguments
 
 1. `levelConfig` *(Object)*: The configuration of the level.
-2. `profile` *(Object)*: The player's profile with the following members:
-  * `playerCode` *(String)*: The code written by the player.
-  * `warriorName` *(String)*: The name of the warrior.
-  * `abilities` *(Array)*: The abilities already learnt by the warrior.
-3. `[maxTurns]` *(Number)*: The maximum number of turns that will be performed.
+2. `playerCode` *(String)*: The code written by the player.
+3. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
 
 #### Returns
 
@@ -59,10 +56,15 @@ const levelConfig = {
       y: 0
     },
     warrior: {
+      name: 'Spartacus'
       x: 0,
       y: 0,
       facing: 'east',
       abilities: [
+        {
+          name: 'walk',
+          args: []
+        },
         {
           name: 'attack',
           args: []
@@ -84,26 +86,17 @@ const levelConfig = {
   }
 };
 
-const profile = {
-  playerCode: `
-    class Player {
-      playTurn(warrior) {
-        if (warrior.feel().isEnemy()) {
-          warrior.attack();
-        } else {
-          warrior.walk();
-        }
+const playerCode = `
+  class Player {
+    playTurn(warrior) {
+      if (warrior.feel().isEnemy()) {
+        warrior.attack();
+      } else {
+        warrior.walk();
       }
     }
-  `,
-  warriorName: 'Spartacus',
-  abilities: [
-    {
-      name: 'walk',
-      args: []
-    }
-  ]
-};
+  }
+`;
 
-const { passed, score, events } = playLevel(levelConfig, profile);
+const { passed, score, events } = playLevel(levelConfig, playerCode);
 ```
