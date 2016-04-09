@@ -1,18 +1,13 @@
+import Shoot from '../abilities/actions/Shoot';
+import Look from '../abilities/senses/Look';
 import Unit from './Unit';
 
 export default class Ranged extends Unit {
   constructor() {
     super();
-    this.addAbilities([
-      {
-        name: 'look',
-        args: [],
-      },
-      {
-        name: 'shoot',
-        args: [],
-      },
-    ]);
+
+    this.abilities.shoot = new Shoot(this);
+    this.abilities.look = new Look(this);
   }
 
   _isPlayerWithinReach(turn, direction) {

@@ -1,6 +1,5 @@
 import camelCase from 'lodash.camelcase';
 import startCase from 'lodash.startcase';
-import { ABILITIES } from '../constants/abilities';
 import { viewObject } from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
@@ -113,16 +112,6 @@ export default class Unit {
         this.position = null;
       }
     }
-  }
-
-  addAbilities(newAbilities) {
-    newAbilities.forEach(({ name, args }) => {
-      if (!(name in ABILITIES)) {
-        throw new Error(`Unknown ability '${name}'.`);
-      }
-
-      this._abilities[name] = new ABILITIES[name](this, ...args);
-    });
   }
 
   playTurn(turn) { // eslint-disable-line no-unused-vars

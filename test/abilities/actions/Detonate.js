@@ -1,5 +1,6 @@
 import chai from 'chai';
 import Detonate from '../../../src/abilities/actions/Detonate';
+import Explode from '../../../src/abilities/actions/Explode';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
 import Captive from '../../../src/units/Captive';
@@ -42,7 +43,7 @@ describe('Detonate', function () {
   it('should detonate an explosive if any unit has one', function () {
     const captive = new Captive();
     captive.health = 1;
-    captive.addAbilities([{ name: 'explode', args: [] }]);
+    captive.abilities.explode = new Explode(captive);
     this.floor.addUnit(captive, 1, 1);
     this.detonate.perform();
     captive.health.should.equal(0);

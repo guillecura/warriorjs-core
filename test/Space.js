@@ -6,6 +6,7 @@ import chaiWall from './helpers/chaiWall';
 import chaiStairs from './helpers/chaiStairs';
 import chaiPlayer from './helpers/chaiPlayer';
 import chaiTicking from './helpers/chaiTicking';
+import Explode from '../src/abilities/actions/Explode';
 import Floor from '../src/Floor';
 import Warrior from '../src/units/Warrior';
 import Sludge from '../src/units/Sludge';
@@ -161,7 +162,7 @@ describe('Space', function () {
     });
 
     it('should be ticking if captive has time bomb', function () {
-      this.captive.addAbilities([{ name: 'explode', args: [] }]);
+      this.captive.abilities.explode = new Explode(this.captive);
       this.space.should.be.ticking;
     });
 

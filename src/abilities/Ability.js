@@ -1,6 +1,6 @@
 import { FORWARD, BACKWARD, RIGHT, LEFT, RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
 
-class Ability {
+export default class Ability {
   _unit;
   _description;
 
@@ -51,5 +51,3 @@ class Ability {
     }
   }
 }
-
-export default Ability;
