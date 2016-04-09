@@ -11,7 +11,7 @@ export default class Ranged extends Unit {
   }
 
   _isPlayerWithinReach(turn, direction) {
-    const unitSpace = turn.look(direction).find((space) => !space.isEmpty());
+    const unitSpace = turn.look(direction).find(space => !space.isEmpty());
     return unitSpace && unitSpace.isPlayer();
   }
 }

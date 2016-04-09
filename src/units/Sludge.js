@@ -6,11 +6,11 @@ export default class Sludge extends Melee {
   _maxHealth = 12;
 
   playTurn(turn) {
-    RELATIVE_DIRECTION_ARRAY.some((direction) => {
+    for (const direction of RELATIVE_DIRECTION_ARRAY) {
       if (this._isPlayerWithinReach(turn, direction)) {
         turn.attack(direction);
-        return true;
+        break;
       }
-    });
+    }
   }
 }

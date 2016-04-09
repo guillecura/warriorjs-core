@@ -6,11 +6,11 @@ export default class Wizard extends Ranged {
   _maxHealth = 3;
 
   playTurn(turn) {
-    RELATIVE_DIRECTION_ARRAY.some((direction) => {
+    for (const direction of RELATIVE_DIRECTION_ARRAY) {
       if (this._isPlayerWithinReach(turn, direction)) {
         turn.shoot(direction);
-        return true;
+        break;
       }
-    });
+    }
   }
 }
