@@ -5,7 +5,7 @@
 
 # WarriorJS Engine
 
-There's a small chance that you have played the game WarriorJS before, and an even smaller chance that you have landed here by accident, so you may be wondering what's this all about...
+*There's a small chance that you have played the game WarriorJS before, and an even smaller chance that you have landed here by accident, so you may be wondering what's this all about...*
 
 **This is the rules engine behind [WarriorJS](https://github.com/olistic/warriorjs), distributed as an standalone npm package.**
 
@@ -25,7 +25,13 @@ Plays a WarriorJS level using the player's profile.
 
 #### Arguments
 
-1. `levelConfig` *(Object)*: The configuration of the level.
+1. `levelConfig` *(Object)*: The configuration of the level, with the following members:
+  * `timeBonus` *(Number)*: Amount of turns the player has to complete the level obtaining bonus points.
+  * `floor` *(Object)*: The floor of the level, with the following members:
+    * `size` *(Object)*: The size of the floor.
+    * `stairs` *(Object)*: The position of the stairs.
+    * `warrior` *(Object)*: The player's warrior.
+    * `units` *(Array)*: The other units of the level.
 2. `playerCode` *(String)*: The code written by the player.
 3. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
 
