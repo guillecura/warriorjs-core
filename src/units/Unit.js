@@ -11,6 +11,9 @@ const viewObjectShape = {
   type() {
     return this.type;
   },
+  health() {
+    return this.health;
+  },
   x() {
     return this.position.x;
   },
