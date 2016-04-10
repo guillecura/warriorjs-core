@@ -43,8 +43,12 @@ export default class Level {
   }
 
   play(turns) {
-    let previousFloor;
+    Logger.clear();
 
+    const initialFloor = this.floor.toViewObject();
+    Logger.playStarted(initialFloor);
+
+    let lastFloor = initialFloor;
     for (let n = 0; n < turns; n++) {
       if (this._passed() || this._failed()) {
         break;
@@ -58,11 +62,11 @@ export default class Level {
         unit.performTurn();
 
         const floor = this.floor.toViewObject();
-        if (!isEqual(previousFloor, floor)) {
+        if (!isEqual(lastFloor, floor)) {
           Logger.floorChanged(floor);
         }
 
-        previousFloor = floor;
+        lastFloor = floor;
       });
 
       if (this.timeBonus) {
@@ -70,17 +74,14 @@ export default class Level {
       }
     }
 
-    const events = Logger.events;
-    Logger.clear();
-
     return {
-      events,
       passed: this._passed(),
       score: {
         level: this.warrior.score,
         timeBonus: this.timeBonus,
         clearBonus: this.clearBonus,
       },
+      events: Logger.events,
     };
   }
 

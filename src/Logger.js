@@ -1,10 +1,17 @@
-import { TURN_CHANGED, UNIT_SPOKE, FLOOR_CHANGED } from './constants/eventTypes';
+import { PLAY_STARTED, TURN_CHANGED, UNIT_SPOKE, FLOOR_CHANGED } from './constants/eventTypes';
 
 export default class Logger {
   static _events = [];
 
   static get events() {
     return Logger._events;
+  }
+
+  static playStarted(initialFloor) {
+    Logger._events.push({
+      type: PLAY_STARTED,
+      initialFloor,
+    });
   }
 
   static turnChanged(turn) {
