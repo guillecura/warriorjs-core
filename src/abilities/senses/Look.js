@@ -11,6 +11,7 @@ export default class Look extends Sense {
   perform(direction = DEFAULT_DIRECTION) {
     this._verifyDirection(direction);
 
-    return range(1, VISION_RANGE + 1).map((offset) => this._getSpace(direction, offset).toPlayerObject());
+    return range(1, VISION_RANGE + 1)
+      .map(offset => this._getSpace(direction, offset).toPlayerObject());
   }
 }

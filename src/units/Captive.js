@@ -5,6 +5,7 @@ export default class Captive extends Unit {
 
   constructor() {
     super();
+
     this.bind();
   }
 }

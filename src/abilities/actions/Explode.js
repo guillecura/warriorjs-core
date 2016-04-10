@@ -13,15 +13,16 @@ export default class Explode extends Action {
     if (this._unit.isAlive()) {
       this._unit.say(`explodes, collapsing the ceiling and killing every unit`);
 
-      this._unit.position.floor.units.forEach((unit) => unit.takeDamage(Infinity));
+      this._unit.position.floor.units.forEach(unit => unit.takeDamage(Infinity));
     }
   }
 
   passTurn() {
     if (this._time && this._unit.isAlive()) {
       this._unit.say('is ticking');
+
       this._time -= 1;
-      if (this._time === 0) {
+      if (!this._time) {
         this.perform();
       }
     }

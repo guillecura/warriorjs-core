@@ -1,4 +1,4 @@
-export const originalObject = Symbol();
+export const ORIGINAL_OBJECT = Symbol();
 
 export function playerObject(allowedProperties = []) {
   return (target) => {
@@ -7,12 +7,12 @@ export function playerObject(allowedProperties = []) {
         const result = {};
 
         allowedProperties
-          .filter((id) => typeof this[id] === 'function')
-          .forEach((id) => {
+          .filter(id => typeof this[id] === 'function')
+          .forEach(id => {
             result[id] = this[id].bind(this);
           });
 
-        result[originalObject] = this;
+        result[ORIGINAL_OBJECT] = this;
 
         return result;
       },

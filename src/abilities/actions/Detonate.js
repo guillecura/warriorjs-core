@@ -25,7 +25,7 @@ export default class Detonate extends Action {
 
       SURROUNDINGS
         .map(([x, y]) => this._getSpace(direction, x, y))
-        .forEach((surroundingSpace) => this._bomb(surroundingSpace, COLATERAL_DAMAGE_AMOUNT));
+        .forEach(surroundingSpace => this._bomb(surroundingSpace, COLATERAL_DAMAGE_AMOUNT));
     }
   }
 

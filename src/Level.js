@@ -53,7 +53,7 @@ export default class Level {
       const turnNumber = n + 1;
       Logger.turnChanged(turnNumber);
 
-      this.floor.units.forEach((unit) => unit.prepareTurn());
+      this.floor.units.forEach(unit => unit.prepareTurn());
       this.floor.units.forEach((unit) => {
         unit.performTurn();
 

@@ -5,7 +5,7 @@ export default class Listen extends Sense {
 
   perform() {
     return this._unit.position.floor.units
-      .filter((unit) => unit !== this._unit)
-      .map((unit) => unit.position.space.toPlayerObject());
+      .filter(unit => unit !== this._unit)
+      .map(unit => unit.position.space.toPlayerObject());
   }
 }

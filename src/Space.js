@@ -1,5 +1,4 @@
 import { playerObject } from './decorators/playerObject';
-import Warrior from './units/Warrior';
 
 const allowedMembers = [
   'isWall',
@@ -37,7 +36,7 @@ export default class Space {
   }
 
   isWarrior() {
-    return this.unit instanceof Warrior;
+    return !!this.unit && this.unit.type === 'warrior';
   }
 
   isPlayer() {
@@ -45,15 +44,15 @@ export default class Space {
   }
 
   isEnemy() {
-    return this.unit && !this.isPlayer() && !this.isCaptive();
+    return !!this.unit && !this.isPlayer() && !this.isCaptive();
   }
 
   isCaptive() {
-    return this.unit && this.unit.isBound();
+    return !!this.unit && this.unit.isBound();
   }
 
   isTicking() {
-    return this.unit && 'explode' in this.unit.abilities;
+    return !!this.unit && 'explode' in this.unit.abilities;
   }
 
   isEmpty() {

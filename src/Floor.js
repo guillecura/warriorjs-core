@@ -1,7 +1,7 @@
+import uniqBy from 'lodash.uniqby';
 import { viewObject } from './decorators/viewObject';
 import Position from './Position';
 import Space from './Space';
-import Warrior from './units/Warrior';
 
 const viewObjectShape = {
   size: {
@@ -65,26 +65,19 @@ export default class Floor {
   }
 
   get units() {
-    return this._units.filter((unit) => unit.position);
+    return this._units.filter(unit => unit.position);
   }
 
   get warrior() {
-    return this.units.find((unit) => unit instanceof Warrior);
+    return this.units.find(unit => unit.type === 'warrior');
   }
 
   get otherUnits() {
-    return this.units.filter((unit) => !(unit instanceof Warrior));
+    return this.units.filter(unit => unit.type !== 'warrior');
   }
 
   get uniqueUnits() {
-    const uniqueUnits = [];
-    this.units.forEach((unit) => {
-      if (!uniqueUnits.map((uniqueUnit) => uniqueUnit.constructor).includes(unit.constructor)) {
-        uniqueUnits.push(unit);
-      }
-    });
-
-    return uniqueUnits;
+    return uniqBy(this.units, 'type');
   }
 
   placeStairs(x, y) {
@@ -102,7 +95,7 @@ export default class Floor {
   }
 
   getUnitAt(x, y) {
-    return this.units.find((unit) => unit.position.isAt(x, y));
+    return this.units.find(unit => unit.position.isAt(x, y));
   }
 
   isOutOfBounds(x, y) {

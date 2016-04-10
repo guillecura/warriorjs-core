@@ -1,7 +1,9 @@
+import range from 'lodash.range';
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
 
 const DEFAULT_DIRECTION = FORWARD;
+const ATTACK_RANGE = 3;
 
 export default class Shoot extends Action {
   _description = `Shoot your bow & arrow in given direction (${DEFAULT_DIRECTION} by default).`;
@@ -9,7 +11,7 @@ export default class Shoot extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this._verifyDirection(direction);
 
-    const receiver = this._getUnits(direction, [1, 2, 3])[0];
+    const receiver = this._getUnits(direction, range(1, ATTACK_RANGE + 1))[0];
     if (receiver) {
       this._unit.say(`shoots ${direction} and hits ${receiver}`);
 
@@ -21,7 +23,7 @@ export default class Shoot extends Action {
 
   _getUnits(direction, offsets) {
     return offsets
-      .map((offset) => this._getUnit(direction, offset))
-      .filter((unit) => unit);
+      .map(offset => this._getUnit(direction, offset))
+      .filter(unit => unit);
   }
 }

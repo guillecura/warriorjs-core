@@ -45,7 +45,7 @@ export default class Ability {
   _verifyDirection(direction) {
     if (!RELATIVE_DIRECTION_ARRAY.includes(direction)) {
       const validDirections = RELATIVE_DIRECTION_ARRAY
-        .map((validDirection) => `'${validDirection}'`)
+        .map(validDirection => `'${validDirection}'`)
         .join(', ');
       throw new Error(`Unknown direction '${direction}'. Should be one of: ${validDirections}.`);
     }
