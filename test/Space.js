@@ -12,7 +12,7 @@ import Warrior from '../src/units/Warrior';
 import Sludge from '../src/units/Sludge';
 import Captive from '../src/units/Captive';
 
-chai.should();
+const should = chai.should();
 chai.use(chaiWarrior);
 chai.use(chaiEnemy);
 chai.use(chaiCaptive);
@@ -175,6 +175,21 @@ describe('Space', function () {
     beforeEach(function () {
       this.space = this.floor.getSpaceAt(0, 0);
       this.playerObject = this.space.toPlayerObject();
+    });
+
+    it('should be able to call informational methods', function () {
+      this.playerObject.isWall.bind(this.space).should.not.throw(Error);
+      this.playerObject.isWarrior.bind(this.space).should.not.throw(Error);
+      this.playerObject.isEnemy.bind(this.space).should.not.throw(Error);
+      this.playerObject.isEmpty.bind(this.space).should.not.throw(Error);
+    });
+
+    it('should not be able to access restricted properties', function () {
+      should.equal(this.playerObject.location, undefined);
+      should.equal(this.playerObject.unit, undefined);
+      should.equal(this.playerObject._floor, undefined);
+      should.equal(this.playerObject._x, undefined);
+      should.equal(this.playerObject._y, undefined);
     });
   });
 });

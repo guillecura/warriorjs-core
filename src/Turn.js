@@ -1,26 +1,16 @@
 import Sense from './abilities/senses/Sense';
 import { playerObject } from './decorators/playerObject';
 
-const allowedMembers = [
-  'attack',
-  'bind',
-  'detonate',
-  'directionOf',
-  'directionOfStairs',
-  'distanceOf',
-  'explode',
-  'feel',
-  'health',
-  'listen',
-  'look',
-  'pivot',
-  'rescue',
-  'rest',
-  'shoot',
-  'walk',
+const propertyBlacklist = [
+  '_action',
+  '_senses',
+  'constructor',
+  '_addAction',
+  '_addSense',
+  'action',
 ];
 
-@playerObject(allowedMembers)
+@playerObject(propertyBlacklist)
 export default class Turn {
   _action = null;
   _senses = {};

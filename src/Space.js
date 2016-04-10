@@ -1,17 +1,15 @@
 import { playerObject } from './decorators/playerObject';
 
-const allowedMembers = [
-  'isWall',
-  'isWarrior',
-  'isPlayer',
-  'isEnemy',
-  'isCaptive',
-  'isEmpty',
-  'isStairs',
-  'isTicking',
+const propertyBlacklist = [
+  '_floor',
+  '_x',
+  '_y',
+  'constructor',
+  'location',
+  'unit',
 ];
 
-@playerObject(allowedMembers)
+@playerObject(propertyBlacklist)
 export default class Space {
   _floor;
   _x;

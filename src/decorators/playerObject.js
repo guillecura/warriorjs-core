@@ -1,15 +1,22 @@
 export const ORIGINAL_OBJECT = Symbol();
 
-export function playerObject(allowedProperties = []) {
+export function playerObject(propertyBlacklist = []) {
   return (target) => {
     Object.defineProperty(target.prototype, 'toPlayerObject', {
       value() {
         const result = {};
 
-        allowedProperties
-          .filter(id => typeof this[id] === 'function')
-          .forEach(id => {
-            result[id] = this[id].bind(this);
+        const properties = [
+          ...Object.getOwnPropertyNames(this),
+          ...Object.getOwnPropertyNames(Object.getPrototypeOf(this)),
+        ];
+
+        properties
+          .filter(prop => prop !== 'toPlayerObject' && !propertyBlacklist.includes(prop))
+          .forEach((prop) => {
+            result[prop] = typeof this[prop] === 'function' ?
+              this[prop].bind(this) :
+              this[prop];
           });
 
         result[ORIGINAL_OBJECT] = this;
