@@ -40,7 +40,7 @@ Plays a WarriorJS level using the player's profile.
 *(Object)* An object containing the play result with the following members:
   * `passed` *(Boolean)*: Whether the level was passed or not.
   * `score` *(Object)*:
-    * `level` *(Number)*: The points earned by the warrior by killing units and rescuing captives.
+    * `warrior` *(Number)*: The points earned by the warrior by killing units and rescuing captives.
     * `timeBonus` *(Number)*: A bonus for completing the level in less than a specified amount of turns.
     * `clearBonus` *(Number)*: A bonus for defeating all enemies and rescuing all captives.
   * `events` *(Array)*: The sequence of events that took place during the play.

@@ -77,7 +77,7 @@ export default class Level {
     return {
       passed: this._passed(),
       score: {
-        level: this.warrior.score,
+        warrior: this.warrior.score,
         timeBonus: this.timeBonus,
         clearBonus: this.clearBonus,
       },
