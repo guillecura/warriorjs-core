@@ -4,7 +4,8 @@ import Action from './Action';
 const DEFAULT_DIRECTION = FORWARD;
 
 export default class Bind extends Action {
-  _description = `Bind a unit in the given direction to keep him from moving (${DEFAULT_DIRECTION} by default).`;
+  _description = 'Bind a unit in the given direction to keep him from moving ' +
+    `(${DEFAULT_DIRECTION} by default).`;
 
   perform(direction = DEFAULT_DIRECTION) {
     this._verifyDirection(direction);

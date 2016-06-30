@@ -9,9 +9,9 @@ describe('Turn', function () {
     this.feel = new Feel({});
     this.sinon.stub(this.feel, '_getSpace').returns({ toPlayerObject: () => null });
     this.turn = new Turn({
-      'walk': null,
-      'attack': null,
-      'feel': this.feel,
+      walk: null,
+      attack: null,
+      feel: this.feel,
     });
   });
 
@@ -32,7 +32,9 @@ describe('Turn', function () {
 
     it('should not be able to call multiple actions per turn', function () {
       this.turn.walk();
-      this.turn.attack.bind(this.turn).should.throw(Error, 'Only one action can be performed per turn.');
+      this.turn.attack.bind(this.turn).should.throw(
+        Error, 'Only one action can be performed per turn.'
+      );
     });
   });
 

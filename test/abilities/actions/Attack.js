@@ -33,7 +33,10 @@ describe('Attack', function () {
   });
 
   it('should get object at position from offset', function () {
-    const expectation = this.sinon.mock(this.attacker.position).expects('getRelativeSpace').withArgs(1, 0);
+    const expectation = this.sinon
+      .mock(this.attacker.position)
+      .expects('getRelativeSpace')
+      .withArgs(1, 0);
     this.attack._getSpace('forward');
     expectation.verify();
   });

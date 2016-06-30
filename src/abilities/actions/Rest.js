@@ -14,7 +14,9 @@ export default class Rest extends Action {
 
       this._unit.health += revisedAmount;
 
-      this._unit.say(`receives ${revisedAmount} health from resting, up to ${this._unit.health} health`);
+      this._unit.say(
+        `receives ${revisedAmount} health from resting, up to ${this._unit.health} health`
+      );
     } else {
       this._unit.say('is already fit as a fiddle');
     }

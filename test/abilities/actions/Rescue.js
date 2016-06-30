@@ -19,8 +19,16 @@ describe('Rescue', function () {
     const captive = new Captive();
     this.sinon.stub(captive, 'say', () => null);
     captive.position = {};
-    this.sinon.mock(this.rescue).expects('_getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(true) });
-    this.sinon.mock(this.rescue).expects('_getUnit').withArgs('forward').returns(captive);
+    this.sinon
+      .mock(this.rescue)
+      .expects('_getSpace')
+      .withArgs('forward')
+      .returns({ isCaptive: this.sinon.stub().returns(true) });
+    this.sinon
+      .mock(this.rescue)
+      .expects('_getUnit')
+      .withArgs('forward')
+      .returns(captive);
     const expectation = this.sinon.mock(this.warrior).expects('earnPoints').withArgs(20);
     this.rescue.perform();
     should.equal(captive.position, null);
@@ -31,8 +39,16 @@ describe('Rescue', function () {
     const unit = new Unit();
     this.sinon.stub(unit, 'say', () => null);
     unit.position = {};
-    this.sinon.mock(this.rescue).expects('_getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(false) });
-    this.sinon.mock(this.rescue).expects('_getUnit').withArgs('forward').never();
+    this.sinon
+      .mock(this.rescue)
+      .expects('_getSpace')
+      .withArgs('forward')
+      .returns({ isCaptive: this.sinon.stub().returns(false) });
+    this.sinon
+      .mock(this.rescue)
+      .expects('_getUnit')
+      .withArgs('forward')
+      .never();
     const expectation = this.sinon.mock(this.warrior).expects('earnPoints').never();
     this.rescue.perform();
     unit.position.should.not.be.null;
@@ -44,8 +60,16 @@ describe('Rescue', function () {
     this.sinon.stub(unit, 'say', () => null);
     unit.bind();
     unit.position = {};
-    this.sinon.mock(this.rescue).expects('_getSpace').withArgs('forward').returns({ isCaptive: this.sinon.stub().returns(true) });
-    this.sinon.mock(this.rescue).expects('_getUnit').withArgs('forward').returns(unit);
+    this.sinon
+      .mock(this.rescue)
+      .expects('_getSpace')
+      .withArgs('forward')
+      .returns({ isCaptive: this.sinon.stub().returns(true) });
+    this.sinon
+      .mock(this.rescue)
+      .expects('_getUnit')
+      .withArgs('forward')
+      .returns(unit);
     const expectation = this.sinon.mock(this.warrior).expects('earnPoints').never();
     this.rescue.perform();
     unit.should.not.be.bound;

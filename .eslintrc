@@ -9,6 +9,7 @@
 
   "rules": {
     "id-length": [2, {"min": 2, "properties": "never", "exceptions": ["n", "x", "y"]}],
+    "no-underscore-dangle": [0],
     "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}]
   }
 }

@@ -1,7 +1,8 @@
 import Action from './Action';
 
 export default class Explode extends Action {
-  _description = 'Kills you and all surrounding units. You probably don\'t want to do this intentionally.';
+  _description = 'Kills you and all surrounding units. You probably don\'t want to do this' +
+    'intentionally.';
   _time;
 
   constructor(unit, time) {
@@ -11,7 +12,7 @@ export default class Explode extends Action {
 
   perform() {
     if (this._unit.isAlive()) {
-      this._unit.say(`explodes, collapsing the ceiling and killing every unit`);
+      this._unit.say('explodes, collapsing the ceiling and killing every unit');
 
       this._unit.position.floor.units.forEach(unit => unit.takeDamage(Infinity));
     }

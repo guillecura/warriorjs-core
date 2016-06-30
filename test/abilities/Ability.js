@@ -24,7 +24,11 @@ describe('Ability', function () {
   });
 
   it('should fetch unit at given direction with distance', function () {
-    this.sinon.mock(this.ability).expects('_getSpace').withArgs('right', 3, 1).returns({ unit: 'unit' });
+    this.sinon
+      .mock(this.ability)
+      .expects('_getSpace')
+      .withArgs('right', 3, 1)
+      .returns({ unit: 'unit' });
     this.ability._getUnit('right', 3, 1).should.equal('unit');
   });
 
@@ -33,6 +37,9 @@ describe('Ability', function () {
   });
 
   it('should throw an error if direction isn\'t recognized', function () {
-    this.ability._verifyDirection.bind(this.ability, 'foo').should.throw(Error, `Unknown direction \'foo\'. Should be one of: 'forward', 'right', 'backward', 'left'.`);
+    this.ability._verifyDirection.bind(this.ability, 'foo').should.throw(
+      Error,
+      'Unknown direction \'foo\'. Should be one of: \'forward\', \'right\', \'backward\', \'left\'.'
+    );
   });
 });

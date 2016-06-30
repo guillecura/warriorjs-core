@@ -12,7 +12,8 @@ const SURROUNDINGS = [
 ];
 
 export default class Detonate extends Action {
-  _description = `Detonate a bomb in a given direction (${DEFAULT_DIRECTION} by default) which damages that space and surrounding 4 spaces (including yourself).`;
+  _description = `Detonate a bomb in a given direction (${DEFAULT_DIRECTION} by default) which ` +
+    'damages that space and surrounding 4 spaces (including yourself).';
 
   perform(direction = DEFAULT_DIRECTION) {
     this._verifyDirection(direction);

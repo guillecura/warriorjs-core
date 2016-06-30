@@ -27,7 +27,11 @@ describe('Shoot', function () {
     };
     const receiverExpectation = this.sinon.mock(receiver).expects('takeDamage').withArgs(2);
     const otherExpectation = this.sinon.mock(other).expects('takeDamage').never();
-    const shootExpectation = this.sinon.mock(this.shoot).expects('_getUnits').withArgs('forward', sinon.match.any).returns([receiver, other]);
+    const shootExpectation = this.sinon
+      .mock(this.shoot)
+      .expects('_getUnits')
+      .withArgs('forward', sinon.match.any)
+      .returns([receiver, other]);
     this.shoot.perform();
     receiverExpectation.verify();
     otherExpectation.verify();
@@ -35,7 +39,11 @@ describe('Shoot', function () {
   });
 
   it('should shoot and do nothing if no units in the way', function () {
-    const expectation = this.sinon.mock(this.shoot).expects('_getUnits').withArgs('forward', sinon.match.any).returns([null, null]);
+    const expectation = this.sinon
+      .mock(this.shoot)
+      .expects('_getUnits')
+      .withArgs('forward', sinon.match.any)
+      .returns([null, null]);
     this.shoot.perform.bind(this.shoot).should.not.throw(Error);
     expectation.verify();
   });
