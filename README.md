@@ -7,7 +7,7 @@
 
 *There's a small chance that you have played the game WarriorJS before, and an even smaller chance that you have come here intentionally, so you may be wondering what's this all about...*
 
-**This is the rules engine behind [WarriorJS](https://github.com/olistic/warriorjs), distributed as an standalone npm package.**
+**This is the rules engine behind [WarriorJS](https://github.com/olistic/warriorjs), distributed as a standalone npm package.**
 
 ## Installation
 
@@ -62,7 +62,7 @@ const levelConfig = {
       y: 0
     },
     warrior: {
-      name: 'Spartacus'
+      name: 'Spartacus',
       x: 0,
       y: 0,
       facing: 'east',

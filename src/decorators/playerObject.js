@@ -14,9 +14,7 @@ export function playerObject(propertyBlacklist = []) {
         properties
           .filter(prop => prop !== 'toPlayerObject' && !propertyBlacklist.includes(prop))
           .forEach((prop) => {
-            result[prop] = typeof this[prop] === 'function' ?
-              this[prop].bind(this) :
-              this[prop];
+            result[prop] = typeof this[prop] === 'function' ? this[prop].bind(this) : this[prop];
           });
 
         result[ORIGINAL_OBJECT] = this;

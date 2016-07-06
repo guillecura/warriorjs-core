@@ -7,6 +7,7 @@ const propertyBlacklist = [
   'constructor',
   'location',
   'unit',
+  'toString',
 ];
 
 @playerObject(propertyBlacklist)
