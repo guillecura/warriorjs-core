@@ -1,14 +1,12 @@
 cache:
   directories:
-  - node_modules
+    - node_modules
 
 install: npm update
 
 language: node_js
 
 node_js:
-  - '4.1'
-  - '4.0'
-  - '0.12'
-
-script: npm run-script test-travis
+  - "6"
+  - "4"
+  - "0.12"
