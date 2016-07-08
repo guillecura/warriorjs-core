@@ -1,5 +1,5 @@
 import Sense from './abilities/senses/Sense';
-import { playerObject } from './decorators/playerObject';
+import playerObject from './decorators/playerObject';
 
 const propertyBlacklist = [
   '_action',

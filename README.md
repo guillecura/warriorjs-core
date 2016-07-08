@@ -1,4 +1,4 @@
-[![banner](https://cdn.rawgit.com/olistic/warriorjs-engine/master/warriorjs-logo.svg)](https://github.com/olistic/warriorjs)
+![banner](https://cdn.rawgit.com/olistic/warriorjs-engine/master/warriorjs-logo.svg)
 
 [![Travis](https://img.shields.io/travis/olistic/warriorjs-engine.svg?style=flat-square)](https://travis-ci.org/olistic/warriorjs-engine)
 [![npm](https://img.shields.io/npm/v/warriorjs-engine.svg?style=flat-square)](https://www.npmjs.com/package/warriorjs-engine)
@@ -48,7 +48,7 @@ Plays a WarriorJS level using the player's code.
 #### Example
 
 ```javascript
-import { playLevel } from 'warriorjs-engine';
+import playLevel from 'warriorjs-engine';
 
 const levelConfig = {
   timeBonus: 15,

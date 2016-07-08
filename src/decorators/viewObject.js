@@ -2,7 +2,7 @@ function getViewObject(object) {
   return typeof object.toViewObject === 'function' ? object.toViewObject() : object;
 }
 
-export function viewObject(viewObjectShape = {}) {
+export default function viewObject(viewObjectShape = {}) {
   return (target) => {
     Object.defineProperty(target.prototype, 'toViewObject', {
       value() {

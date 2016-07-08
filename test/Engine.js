@@ -1,4 +1,4 @@
-import { playLevel } from '../src/Engine';
+import playLevel from '../src/Engine';
 
 describe('Engine', function () {
   beforeEach(function () {

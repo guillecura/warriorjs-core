@@ -1,5 +1,5 @@
 import uniqBy from 'lodash.uniqby';
-import { viewObject } from './decorators/viewObject';
+import viewObject from './decorators/viewObject';
 import Position from './Position';
 import Space from './Space';
 

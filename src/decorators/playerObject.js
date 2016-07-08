@@ -1,6 +1,6 @@
 export const ORIGINAL_OBJECT = Symbol();
 
-export function playerObject(propertyBlacklist = []) {
+export default function playerObject(propertyBlacklist = []) {
   return (target) => {
     Object.defineProperty(target.prototype, 'toPlayerObject', {
       value() {

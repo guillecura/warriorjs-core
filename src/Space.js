@@ -1,4 +1,4 @@
-import { playerObject } from './decorators/playerObject';
+import playerObject from './decorators/playerObject';
 
 const propertyBlacklist = [
   '_floor',

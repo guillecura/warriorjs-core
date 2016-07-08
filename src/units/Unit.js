@@ -1,6 +1,6 @@
 import camelCase from 'lodash.camelcase';
 import startCase from 'lodash.startcase';
-import { viewObject } from '../decorators/viewObject';
+import viewObject from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
 
