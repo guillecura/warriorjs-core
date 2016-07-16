@@ -143,7 +143,7 @@ describe('Unit', function () {
       this.floor = new Floor(2, 3);
       this.floor.addUnit(this.unit, 0, 0);
       this.explodeTime = 3;
-      this.unit.abilities.walk = new Explode(this.unit, this.explodeTime);
+      this.unit.abilities.explode = new Explode(this.unit, this.explodeTime);
     });
 
     it('should explode when time reaches 0', function () {

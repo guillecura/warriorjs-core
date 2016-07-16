@@ -11,17 +11,11 @@ const viewObjectShape = {
   type() {
     return this.type;
   },
+  position() {
+    return this.position;
+  },
   health() {
     return this.health;
-  },
-  x() {
-    return this.position.x;
-  },
-  y() {
-    return this.position.y;
-  },
-  facing() {
-    return this.position.direction;
   },
 };
 
