@@ -11,7 +11,7 @@ describe('Shoot', function () {
         getRelativeSpace: () => null,
       },
       shootPower: 2,
-      say: () => null,
+      toViewObject: () => null,
     };
     this.shoot = new Shoot(this.shooter);
   });

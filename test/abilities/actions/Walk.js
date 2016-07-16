@@ -16,7 +16,7 @@ describe('Walk', function () {
     const unit = {
       position: this.position,
       isAlive: () => true,
-      say: () => null,
+      toViewObject: () => null,
     };
     this.walk = new Walk(unit);
   });

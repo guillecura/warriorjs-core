@@ -23,7 +23,7 @@ const viewObjectShape = {
     return this.warrior;
   },
   units() {
-    return this.otherUnits;
+    return [...this.otherUnits.values()];
   },
 };
 

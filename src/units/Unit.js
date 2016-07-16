@@ -90,15 +90,11 @@ export default class Unit {
   unbind() {
     this._bound = false;
 
-    this.say('released from bonds');
+    Logger.unit(this.toViewObject(), 'released from bonds');
   }
 
   bind() {
     this._bound = true;
-  }
-
-  say(message) {
-    Logger.unitSpoke(`${this.name} ${message}`, this.type);
   }
 
   takeDamage(amount) {
@@ -110,10 +106,10 @@ export default class Unit {
       const revisedAmount = this.health - amount < 0 ? this.health : amount;
       this.health -= revisedAmount;
 
-      this.say(`takes ${revisedAmount} damage, ${this.health} health power left`);
+      Logger.unit(this.toViewObject(), `takes ${revisedAmount} damage, ${this.health} health power left`);
 
       if (!this.health) {
-        this.say('dies');
+        Logger.unit(this.toViewObject(), 'dies');
 
         this.position = null;
       }

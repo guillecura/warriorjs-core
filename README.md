@@ -38,12 +38,13 @@ Plays a WarriorJS level using the player's code.
 #### Returns
 
 *(Object)* An object containing the play result with the following members:
+  * `floor` *(Object)*: The floor of the level, augmented with unique IDs for each of the units.
+  * `events` *(Array)*: The sequence of events that took place during the play.
   * `passed` *(Boolean)*: Whether the level was passed or not.
   * `score` *(Object)*:
     * `warrior` *(Number)*: The points earned by the warrior by killing units and rescuing captives.
     * `timeBonus` *(Number)*: A bonus for completing the level in less than a specified amount of turns.
     * `clearBonus` *(Number)*: A bonus for defeating all enemies and rescuing all captives.
-  * `events` *(Array)*: The sequence of events that took place during the play.
 
 #### Example
 
@@ -108,5 +109,5 @@ const playerCode = `
   }
 `;
 
-const { passed, score, events } = playLevel(levelConfig, playerCode);
+const { floor, events, passed, score } = playLevel(levelConfig, playerCode);
 ```

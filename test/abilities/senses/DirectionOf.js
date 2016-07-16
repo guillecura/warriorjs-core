@@ -9,7 +9,6 @@ describe('Direction of', function () {
       position: {
         getRelativeDirectionOf: () => null,
       },
-      say: () => null,
     };
     this.directionOf = new DirectionOf(this.unit);
   });

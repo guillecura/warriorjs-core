@@ -9,7 +9,6 @@ describe('Look', function () {
       position: {
         getRelativeSpace: () => null,
       },
-      say: () => null,
     };
     this.look = new Look(this.unit);
   });

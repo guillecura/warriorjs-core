@@ -1,5 +1,6 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
+import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 const RESCUING_BONUS = 20;
@@ -14,7 +15,7 @@ export default class Rescue extends Action {
     if (this._getSpace(direction).isCaptive()) {
       const recipient = this._getUnit(direction);
 
-      this._unit.say(`unbinds ${direction} and rescues ${recipient}`);
+      Logger.unit(this._unit.toViewObject(), `unbinds ${direction} and rescues ${recipient}`);
 
       recipient.unbind();
       if (recipient.type === 'captive') {
@@ -23,7 +24,7 @@ export default class Rescue extends Action {
         this._unit.earnPoints(RESCUING_BONUS);
       }
     } else {
-      this._unit.say(`unbinds ${direction} and rescues nothing`);
+      Logger.unit(this._unit.toViewObject(), `unbinds ${direction} and rescues nothing`);
     }
   }
 }

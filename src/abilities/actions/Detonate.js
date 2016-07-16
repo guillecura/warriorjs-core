@@ -1,5 +1,6 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
+import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 const TARGET_DAMAGE_AMOUNT = 8;
@@ -19,7 +20,7 @@ export default class Detonate extends Action {
     this._verifyDirection(direction);
 
     if (this._unit.isAlive()) {
-      this._unit.say(`detonates a bomb ${direction} launching a deadly explosion`);
+      Logger.unit(this._unit.toViewObject(), `detonates a bomb ${direction} launching a deadly explosion`);
 
       const targetSpace = this._getSpace(direction, 1, 0);
       this._bomb(targetSpace, TARGET_DAMAGE_AMOUNT);
@@ -34,7 +35,7 @@ export default class Detonate extends Action {
     const receiver = space.unit;
     if (receiver) {
       if ('explode' in receiver.abilities) {
-        receiver.say('caught in bomb\'s flames which detonates ticking explosive');
+        Logger.unit(receiver.toViewObject(), 'caught in bomb\'s flames which detonates ticking explosive');
 
         receiver.abilities.explode.perform();
       } else {

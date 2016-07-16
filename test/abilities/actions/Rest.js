@@ -7,7 +7,6 @@ chai.should();
 describe('Rest', function () {
   beforeEach(function () {
     this.warrior = new Warrior();
-    this.sinon.stub(this.warrior, 'say', () => null);
     this.rest = new Rest(this.warrior);
   });
 
