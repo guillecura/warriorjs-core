@@ -11,14 +11,14 @@ describe('Explode', function () {
   beforeEach(function () {
     this.floor = new Floor(2, 3);
     this.captive = new Captive();
-    this.floor.addUnit(this.captive, 0, 0);
+    this.floor.addUnit(this.captive, { x: 0, y: 0 });
     this.explode = new Explode(this.captive, 3);
   });
 
   it('should kill every unit on the floor', function () {
     const unit = new Unit();
     unit.health = 101;
-    this.floor.addUnit(unit, 0, 1);
+    this.floor.addUnit(unit, { x: 0, y: 1 });
     this.captive.health = 10;
     this.explode.perform();
     this.captive.health.should.equal(0);

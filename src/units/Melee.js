@@ -6,8 +6,8 @@ export default class Melee extends Unit {
   constructor() {
     super();
 
-    this.abilities.attack = new Attack(this);
-    this.abilities.feel = new Feel(this);
+    this.abilities.set('attack', new Attack(this));
+    this.abilities.set('feel', new Feel(this));
   }
 
   _isPlayerWithinReach(turn, direction) {

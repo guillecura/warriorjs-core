@@ -7,8 +7,13 @@ const should = chai.should();
 describe('Position', function () {
   beforeEach(function () {
     this.unit = new Unit();
+    const position = {
+      x: 1,
+      y: 2,
+      direction: 'north',
+    };
     this.floor = new Floor(6, 5);
-    this.floor.addUnit(this.unit, 1, 2, 'north');
+    this.floor.addUnit(this.unit, position);
     this.position = this.unit.position;
   });
 
@@ -29,23 +34,23 @@ describe('Position', function () {
   });
 
   it('should get relative space in front', function () {
-    this.floor.addUnit(new Unit(), 1, 1);
+    this.floor.addUnit(new Unit(), { x: 1, y: 1 });
     this.position.getRelativeSpace(1).isEmpty().should.be.false;
   });
 
   it('should get relative object in front when rotated', function () {
-    this.floor.addUnit(new Unit(), 2, 2);
+    this.floor.addUnit(new Unit(), { x: 2, y: 2 });
     this.position.rotate(1);
     this.position.getRelativeSpace(1).isEmpty().should.be.false;
   });
 
   it('should get relative object diagonally', function () {
-    this.floor.addUnit(new Unit(), 0, 1);
+    this.floor.addUnit(new Unit(), { x: 0, y: 1 });
     this.position.getRelativeSpace(1, -1).isEmpty().should.be.false;
   });
 
   it('should get relative object diagonally when rotating', function () {
-    this.floor.addUnit(new Unit(), 0, 1);
+    this.floor.addUnit(new Unit(), { x: 0, y: 1 });
     this.position.rotate(2);
     this.position.getRelativeSpace(-1, 1).isEmpty().should.be.false;
   });

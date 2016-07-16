@@ -19,7 +19,12 @@ describe('Level', function () {
 
   it('should consider passed when warrior is on stairs', function () {
     this.level.warrior = new Warrior();
-    this.floor.addUnit(this.level.warrior, 0, 0, 'north');
+    const position = {
+      x: 0,
+      y: 0,
+      direction: 'north',
+    };
+    this.floor.addUnit(this.level.warrior, position);
     this.floor.placeStairs(0, 0);
     this.level.should.be.passed;
   });
@@ -31,10 +36,15 @@ describe('Level', function () {
   describe('playing', function () {
     it('should call prepareTurn and playTurn on each unit specified number of times', function () {
       const unit = new Unit();
+      const position = {
+        x: 0,
+        y: 0,
+        direction: 'north',
+      };
       const mock = this.sinon.mock(unit);
       const expectationOne = mock.expects('prepareTurn').twice();
       const expectationTwo = mock.expects('performTurn').twice();
-      this.floor.addUnit(unit, 0, 0, 'north');
+      this.floor.addUnit(unit, position);
       this.level.play(2);
       expectationOne.verify();
       expectationTwo.verify();
@@ -42,8 +52,13 @@ describe('Level', function () {
 
     it('should return immediately when passed', function () {
       const unit = new Unit();
+      const position = {
+        x: 0,
+        y: 0,
+        direction: 'north',
+      };
       const expectation = this.sinon.mock(unit).expects('performTurn').never();
-      this.floor.addUnit(unit, 0, 0, 'north');
+      this.floor.addUnit(unit, position);
       this.sinon.stub(this.level, '_passed').returns(true);
       this.level.play(2);
       expectation.verify();

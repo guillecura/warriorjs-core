@@ -31,7 +31,7 @@ export default class Unit {
   _shootPower = 0;
   _maxHealth = 0;
   _health = null;
-  _abilities = {};
+  _abilities = new Map();
   _currentTurn = null;
 
   get id() {
@@ -131,10 +131,10 @@ export default class Unit {
 
   performTurn() {
     if (this.isAlive()) {
-      Object.values(this.abilities).forEach(ability => ability.passTurn());
+      this.abilities.forEach(ability => ability.passTurn());
       if (this._currentTurn.action && !this.isBound()) {
         const [name, args] = this._currentTurn.action;
-        this.abilities[name].perform(...args);
+        this.abilities.get(name).perform(...args);
       }
     }
   }

@@ -1,4 +1,3 @@
-import uniqBy from 'lodash.uniqby';
 import viewObject from './decorators/viewObject';
 import Position from './Position';
 import Space from './Space';
@@ -33,7 +32,7 @@ export default class Floor {
   _width;
   _height;
   _stairsLocation = [-1, -1];
-  _units = [];
+  _units = new Map();
 
   constructor(width, height) {
     this._width = width;
@@ -65,19 +64,19 @@ export default class Floor {
   }
 
   get units() {
-    return this._units.filter(unit => unit.position);
+    return new Map(
+      [...this._units].filter(([, unit]) => unit.position)
+    );
   }
 
   get warrior() {
-    return this.units.find(unit => unit.type === 'warrior');
+    return [...this.units.values()].find(unit => unit.type === 'warrior');
   }
 
   get otherUnits() {
-    return this.units.filter(unit => unit.type !== 'warrior');
-  }
-
-  get uniqueUnits() {
-    return uniqBy(this.units, 'type');
+    return new Map(
+      [...this.units].filter(([, unit]) => unit.type !== 'warrior')
+    );
   }
 
   placeStairs(x, y) {
@@ -87,7 +86,7 @@ export default class Floor {
   addUnit(unit, { x, y, direction }) {
     const positionedUnit = unit;
     positionedUnit.position = new Position(this, x, y, direction);
-    this._units.push(positionedUnit);
+    this._units.set(positionedUnit.id, positionedUnit);
   }
 
   getSpaceAt(x, y) {
@@ -95,7 +94,7 @@ export default class Floor {
   }
 
   getUnitAt(x, y) {
-    return this.units.find(unit => unit.position.isAt(x, y));
+    return [...this.units.values()].find(unit => unit.position.isAt(x, y));
   }
 
   isOutOfBounds(x, y) {

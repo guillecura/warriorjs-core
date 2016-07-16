@@ -96,7 +96,8 @@ export default class LevelLoader {
         throw new Error(`Unknown ability '${name}'.`);
       }
 
-      unit.abilities[name] = new ABILITIES[name](unit, ...args);
+      const ability = new ABILITIES[name](unit, ...args);
+      unit.abilities.set(name, ability);
     });
 
     this._level.floor.addUnit(unit, position);

@@ -90,7 +90,7 @@ export default class Level {
   }
 
   _failed() {
-    return !this.floor.units.includes(this.warrior);
+    return !this.floor.units.has(this.warrior.id);
   }
 
   static load(levelConfig) {

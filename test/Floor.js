@@ -16,24 +16,44 @@ describe('Floor', function () {
 
     it('should be able to add a unit and fetch it at that position', function () {
       const unit = new Unit();
-      this.floor.addUnit(unit, 0, 1, 'north');
+      const position = {
+        x: 0,
+        y: 1,
+        direction: 'north',
+      };
+      this.floor.addUnit(unit, position);
       this.floor.getUnitAt(0, 1).should.equal(unit);
     });
 
     it('should not consider unit on floor if no position', function () {
       const unit = new Unit();
-      this.floor.addUnit(unit, 0, 1, 'north');
+      const position = {
+        x: 0,
+        y: 1,
+        direction: 'north',
+      };
+      this.floor.addUnit(unit, position);
       unit.position = null;
-      this.floor.units.should.not.include(unit);
+      [...this.floor.units.values()].should.not.include(unit);
     });
 
     it('should fetch other units not warrior', function () {
       const unit = new Unit();
+      const unitPosition = {
+        x: 0,
+        y: 0,
+        direction: 'north',
+      };
       const warrior = new Warrior();
-      this.floor.addUnit(unit, 0, 0, 'north');
-      this.floor.addUnit(warrior, 1, 0, 'north');
-      this.floor.otherUnits.should.include(unit);
-      this.floor.otherUnits.should.not.include(warrior);
+      const warriorPosition = {
+        x: 1,
+        y: 0,
+        direction: 'north',
+      };
+      this.floor.addUnit(unit, unitPosition);
+      this.floor.addUnit(warrior, warriorPosition);
+      [...this.floor.otherUnits.values()].should.include(unit);
+      [...this.floor.otherUnits.values()].should.not.include(warrior);
     });
 
     it('should not consider corners out of bounds', function () {
@@ -57,19 +77,6 @@ describe('Floor', function () {
     it('should place stairs and be able to fetch the location', function () {
       this.floor.placeStairs(1, 2);
       this.floor.stairsLocation.should.eql([1, 2]);
-    });
-  });
-
-  describe('3x1', function () {
-    beforeEach(function () {
-      this.floor = new Floor(3, 1);
-    });
-
-    it('should return unique units', function () {
-      const unit = new Unit();
-      this.floor.addUnit(unit, 0, 0);
-      this.floor.addUnit(new Unit(), 1, 0);
-      this.floor.uniqueUnits.should.eql([unit]);
     });
   });
 });

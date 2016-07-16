@@ -84,7 +84,7 @@ describe('Space', function () {
 
   describe('with warrior', function () {
     beforeEach(function () {
-      this.floor.addUnit(new Warrior(), 0, 0);
+      this.floor.addUnit(new Warrior(), { x: 0, y: 0 });
       this.space = this.floor.getSpaceAt(0, 0);
     });
 
@@ -111,7 +111,7 @@ describe('Space', function () {
 
   describe('with enemy', function () {
     beforeEach(function () {
-      this.floor.addUnit(new Sludge(), 0, 0);
+      this.floor.addUnit(new Sludge(), { x: 0, y: 0 });
       this.space = this.floor.getSpaceAt(0, 0);
     });
 
@@ -149,7 +149,7 @@ describe('Space', function () {
   describe('with captive', function () {
     beforeEach(function () {
       this.captive = new Captive();
-      this.floor.addUnit(this.captive, 0, 0);
+      this.floor.addUnit(this.captive, { x: 0, y: 0 });
       this.space = this.floor.getSpaceAt(0, 0);
     });
 
