@@ -44,7 +44,8 @@
     "lodash.isequal": "^4.2.0",
     "lodash.range": "^3.1.5",
     "lodash.startcase": "^4.2.1",
-    "lodash.uniqby": "^4.5.0"
+    "lodash.uniqby": "^4.5.0",
+    "shortid": "^2.2.6"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",

@@ -1,10 +1,14 @@
 import camelCase from 'lodash.camelcase';
 import startCase from 'lodash.startcase';
+import shortid from 'shortid';
 import viewObject from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
 
 const viewObjectShape = {
+  id() {
+    return this.id;
+  },
   name() {
     return this.name;
   },
@@ -21,6 +25,7 @@ const viewObjectShape = {
 
 @viewObject(viewObjectShape)
 export default class Unit {
+  _id = shortid.generate();
   _position = null;
   _attackPower = 0;
   _shootPower = 0;
@@ -28,6 +33,10 @@ export default class Unit {
   _health = null;
   _abilities = {};
   _currentTurn = null;
+
+  get id() {
+    return this._id;
+  }
 
   get name() {
     return startCase(this.constructor.name);
