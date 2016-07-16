@@ -84,7 +84,7 @@ export default class Floor {
     this._stairsLocation = [x, y];
   }
 
-  addUnit(unit, x, y, direction) {
+  addUnit(unit, { x, y, direction }) {
     const positionedUnit = unit;
     positionedUnit.position = new Position(this, x, y, direction);
     this._units.push(positionedUnit);

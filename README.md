@@ -63,9 +63,11 @@ const levelConfig = {
     },
     warrior: {
       name: 'Spartacus',
-      x: 0,
-      y: 0,
-      facing: 'east',
+      position: {
+        x: 0,
+        y: 0,
+        direction: 'east'
+      },
       abilities: [
         {
           name: 'walk',
@@ -84,9 +86,11 @@ const levelConfig = {
     units: [
       {
         type: 'sludge',
-        x: 4,
-        y: 0,
-        facing: 'west'
+        position: {
+          x: 4,
+          y: 0,
+          direction: 'west'
+        }
       }
     ]
   }

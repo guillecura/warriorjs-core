@@ -64,10 +64,10 @@ export default class LevelLoader {
 
     this._setFloor(size, stairs);
 
-    const { name, x, y, facing, abilities } = warrior;
-    this._placeWarrior(name, x, y, facing, abilities);
+    const { name, position, abilities } = warrior;
+    this._placeWarrior(name, position, abilities);
 
-    units.forEach(unit => this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities));
+    units.forEach(unit => this._placeUnit(unit.type, unit.position, unit.abilities));
   }
 
   _setFloor(size, stairs) {
@@ -78,13 +78,13 @@ export default class LevelLoader {
     this._level.floor.placeStairs(x, y);
   }
 
-  _placeWarrior(name, x, y, facing, abilities) {
-    const warrior = this._placeUnit('warrior', x, y, facing, abilities);
+  _placeWarrior(name, position, abilities) {
+    const warrior = this._placeUnit('warrior', position, abilities);
     warrior.name = name;
     this._level.warrior = warrior;
   }
 
-  _placeUnit(type, x, y, facing, abilities = []) {
+  _placeUnit(type, position, abilities = []) {
     if (!(type in UNITS)) {
       throw new Error(`Unknown unit '${type}'.`);
     }
@@ -99,7 +99,7 @@ export default class LevelLoader {
       unit.abilities[name] = new ABILITIES[name](unit, ...args);
     });
 
-    this._level.floor.addUnit(unit, x, y, facing);
+    this._level.floor.addUnit(unit, position);
 
     return unit;
   }
