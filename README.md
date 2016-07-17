@@ -12,7 +12,7 @@
 ## Installation
 
 ```bash
-$ npm install --save warriorjs-engine
+$ npm install --save warriorjs-engine@next
 ```
 
 ## API Reference
