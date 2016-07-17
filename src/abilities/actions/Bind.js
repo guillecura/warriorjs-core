@@ -1,3 +1,4 @@
+import { BINDING } from '../../constants/states';
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
 import Logger from '../../Logger';
@@ -13,11 +14,15 @@ export default class Bind extends Action {
 
     const receiver = this._getUnit(direction);
     if (receiver) {
-      Logger.unit(this._unit.toViewObject(), `binds ${direction} and restricts ${receiver}`);
+      Logger.unit(
+        this._unit.toViewObject(),
+        BINDING,
+        `binds ${direction} and restricts ${receiver}`,
+      );
 
       receiver.bind();
     } else {
-      Logger.unit(this._unit.toViewObject(), `binds ${direction} and restricts nothing`);
+      Logger.unit(this._unit.toViewObject(), BINDING, `binds ${direction} and restricts nothing`);
     }
   }
 }

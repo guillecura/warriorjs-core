@@ -1,0 +1,15 @@
+export const ATTACKING = 'ATTACKING';
+export const BEING_UNBOUND = 'BEING_UNBOUND';
+export const BINDING = 'BINDING';
+export const DETONATING = 'DETONATING';
+export const DOING_NOTHING = 'DOING_NOTHING';
+export const DYING = 'DYING';
+export const EARNING_POINTS = 'EARNING_POINTS';
+export const EXPLODING = 'EXPLODING';
+export const PIVOTING = 'PIVOTING';
+export const RESCUING = 'RESCUING';
+export const RESTING = 'RESTING';
+export const SHOOTING = 'SHOOTING';
+export const TAKING_DAMAGE = 'TAKING_DAMAGE';
+export const TICKING = 'TICKING';
+export const WALKING = 'WALKING';

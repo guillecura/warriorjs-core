@@ -1,5 +1,6 @@
 import range from 'lodash.range';
 import { FORWARD } from '../../constants/directions';
+import { SHOOTING } from '../../constants/states';
 import Action from './Action';
 import Logger from '../../Logger';
 
@@ -14,11 +15,11 @@ export default class Shoot extends Action {
 
     const receiver = this._getUnits(direction, range(1, ATTACK_RANGE + 1))[0];
     if (receiver) {
-      Logger.unit(this._unit.toViewObject(), `shoots ${direction} and hits ${receiver}`);
+      Logger.unit(this._unit.toViewObject(), SHOOTING, `shoots ${direction} and hits ${receiver}`);
 
       this._damage(receiver, this._unit.shootPower);
     } else {
-      Logger.unit(this._unit.toViewObject(), `shoots ${direction} and hits nothing`);
+      Logger.unit(this._unit.toViewObject(), SHOOTING, `shoots ${direction} and hits nothing`);
     }
   }
 

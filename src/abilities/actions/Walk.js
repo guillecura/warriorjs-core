@@ -1,4 +1,5 @@
 import { FORWARD } from '../../constants/directions';
+import { WALKING } from '../../constants/states';
 import Action from './Action';
 import Logger from '../../Logger';
 
@@ -13,9 +14,9 @@ export default class Walk extends Action {
       if (this._getSpace(direction).isEmpty()) {
         this._unit.position.move(...this._offset(direction));
 
-        Logger.unit(this._unit.toViewObject(), `walks ${direction}`);
+        Logger.unit(this._unit.toViewObject(), WALKING, `walks ${direction}`);
       } else {
-        Logger.unit(this._unit.toViewObject(), `bumps into ${this._getSpace(direction)}`);
+        Logger.unit(this._unit.toViewObject(), WALKING, `bumps into ${this._getSpace(direction)}`);
       }
     }
   }

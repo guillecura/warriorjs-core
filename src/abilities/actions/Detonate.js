@@ -1,3 +1,4 @@
+import { DETONATING } from '../../constants/states';
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
 import Logger from '../../Logger';
@@ -22,6 +23,7 @@ export default class Detonate extends Action {
     if (this._unit.isAlive()) {
       Logger.unit(
         this._unit.toViewObject(),
+        DETONATING,
         `detonates a bomb ${direction} launching a deadly explosion`
       );
 
