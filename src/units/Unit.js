@@ -1,6 +1,5 @@
 import camelCase from 'lodash.camelcase';
 import startCase from 'lodash.startcase';
-import shortid from 'shortid';
 import viewObject from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
@@ -25,7 +24,7 @@ const viewObjectShape = {
 
 @viewObject(viewObjectShape)
 export default class Unit {
-  _id = shortid.generate();
+  _id = null;
   _position = null;
   _attackPower = 0;
   _shootPower = 0;
@@ -33,6 +32,10 @@ export default class Unit {
   _health = null;
   _abilities = new Map();
   _currentTurn = null;
+
+  constructor(id) {
+    this._id = id;
+  }
 
   get id() {
     return this._id;
@@ -106,7 +109,10 @@ export default class Unit {
       const revisedAmount = this.health - amount < 0 ? this.health : amount;
       this.health -= revisedAmount;
 
-      Logger.unit(this.toViewObject(), `takes ${revisedAmount} damage, ${this.health} health power left`);
+      Logger.unit(
+        this.toViewObject(),
+        `takes ${revisedAmount} damage, ${this.health} health power left`,
+      );
 
       if (!this.health) {
         Logger.unit(this.toViewObject(), 'dies');

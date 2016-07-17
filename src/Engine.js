@@ -2,16 +2,8 @@ import Level from './Level';
 
 const MAX_TURNS = 1000;
 
-export default function playLevel(levelConfig, playerCode, maxTurns = MAX_TURNS) {
-  const level = Level.load(levelConfig);
-
+export default function playLevel(levelConfig, warriorName, playerCode, maxTurns = MAX_TURNS) {
+  const level = Level.load(levelConfig, warriorName);
   level.loadPlayer(playerCode);
-  const { events, passed, score } = level.play(maxTurns);
-
-  return {
-    floor: level.floor.toViewObject(),
-    events,
-    passed,
-    score,
-  };
+  return level.play(maxTurns);
 }

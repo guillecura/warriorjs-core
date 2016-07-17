@@ -34,7 +34,7 @@ describe('Floor', function () {
       };
       this.floor.addUnit(unit, position);
       unit.position = null;
-      [...this.floor.units.values()].should.not.include(unit);
+      this.floor.units.should.not.include(unit);
     });
 
     it('should fetch other units not warrior', function () {

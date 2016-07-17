@@ -19,7 +19,7 @@ $ npm install --save warriorjs-engine
 
 The WarriorJS Engine API exposes a single yet important function:
 
-### `playLevel(levelConfig, playerCode, [maxTurns])`
+### `playLevel(levelConfig, warriorName, playerCode, [maxTurns])`
 
 Plays a WarriorJS level using the player's code.
 
@@ -30,15 +30,14 @@ Plays a WarriorJS level using the player's code.
   * `floor` *(Object)*: The floor of the level, with the following members:
     * `size` *(Object)*: The size of the floor.
     * `stairs` *(Object)*: The position of the stairs.
-    * `warrior` *(Object)*: The player's warrior.
-    * `units` *(Array)*: The other units in the level.
-2. `playerCode` *(String)*: The code written by the player.
-3. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
+    * `units` *(Object)*: The units in the level.
+2. `warriorName` *(String)*: The name of the warrior.
+3. `playerCode` *(String)*: The code written by the player.
+4. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
 
 #### Returns
 
 *(Object)* An object containing the play result with the following members:
-  * `floor` *(Object)*: The floor of the level, augmented with unique IDs for each of the units.
   * `events` *(Array)*: The sequence of events that took place during the play.
   * `passed` *(Boolean)*: Whether the level was passed or not.
   * `score` *(Object)*:
@@ -62,30 +61,30 @@ const levelConfig = {
       x: 7,
       y: 0
     },
-    warrior: {
-      name: 'Spartacus',
-      position: {
-        x: 0,
-        y: 0,
-        direction: 'east'
+    units: {
+      r10qaXdP: {
+        type: 'warrior',
+        position: {
+          x: 0,
+          y: 0,
+          direction: 'east'
+        },
+        abilities: [
+          {
+            name: 'walk',
+            args: []
+          },
+          {
+            name: 'attack',
+            args: []
+          },
+          {
+            name: 'feel',
+            args: []
+          }
+        ]
       },
-      abilities: [
-        {
-          name: 'walk',
-          args: []
-        },
-        {
-          name: 'attack',
-          args: []
-        },
-        {
-          name: 'feel',
-          args: []
-        }
-      ]
-    },
-    units: [
-      {
+      Bktha7dP: {
         type: 'sludge',
         position: {
           x: 4,
@@ -93,9 +92,11 @@ const levelConfig = {
           direction: 'west'
         }
       }
-    ]
+    }
   }
 };
+
+const warriorName = 'Spartacus';
 
 const playerCode = `
   class Player {
@@ -109,5 +110,5 @@ const playerCode = `
   }
 `;
 
-const { floor, events, passed, score } = playLevel(levelConfig, playerCode);
+const { events, passed, score } = playLevel(levelConfig, warriorName, playerCode);
 ```

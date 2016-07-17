@@ -20,7 +20,10 @@ export default class Detonate extends Action {
     this._verifyDirection(direction);
 
     if (this._unit.isAlive()) {
-      Logger.unit(this._unit.toViewObject(), `detonates a bomb ${direction} launching a deadly explosion`);
+      Logger.unit(
+        this._unit.toViewObject(),
+        `detonates a bomb ${direction} launching a deadly explosion`
+      );
 
       const targetSpace = this._getSpace(direction, 1, 0);
       this._bomb(targetSpace, TARGET_DAMAGE_AMOUNT);
@@ -35,7 +38,10 @@ export default class Detonate extends Action {
     const receiver = space.unit;
     if (receiver) {
       if ('explode' in receiver.abilities) {
-        Logger.unit(receiver.toViewObject(), 'caught in bomb\'s flames which detonates ticking explosive');
+        Logger.unit(
+          receiver.toViewObject(),
+          'caught in bomb\'s flames which detonates ticking explosive'
+        );
 
         receiver.abilities.explode.perform();
       } else {

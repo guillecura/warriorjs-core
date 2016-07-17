@@ -76,12 +76,12 @@ export default class Level {
   }
 
   _failed() {
-    return !this.floor.units.has(this.warrior.id);
+    return !this.floor.units.includes(this.warrior);
   }
 
-  static load(levelConfig) {
+  static load(levelConfig, warriorName) {
     const level = new Level();
-    new LevelLoader(level).load(levelConfig);
+    new LevelLoader(level).load(levelConfig, warriorName);
     return level;
   }
 }

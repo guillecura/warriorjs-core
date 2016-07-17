@@ -3,8 +3,8 @@ import Look from '../abilities/senses/Look';
 import Unit from './Unit';
 
 export default class Ranged extends Unit {
-  constructor() {
-    super();
+  constructor(id) {
+    super(id);
 
     this.abilities.set('shoot', new Shoot(this));
     this.abilities.set('look', new Look(this));

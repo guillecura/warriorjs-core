@@ -15,23 +15,25 @@ describe('Engine', function () {
             x: 7,
             y: 0,
           },
-          warrior: {
-            name: 'Spartacus',
-            position: {
-              x: 0,
-              y: 0,
-              direction: 'east',
-            },
-            abilities: [
-              {
-                name: 'walk',
-                args: [],
+          units: {
+            r10qaXdP: {
+              type: 'warrior',
+              position: {
+                x: 0,
+                y: 0,
+                direction: 'east',
               },
-            ],
+              abilities: [
+                {
+                  name: 'walk',
+                  args: [],
+                },
+              ],
+            },
           },
-          units: [],
         },
       };
+      this.warriorName = 'Spartacus';
     });
 
     describe('with a winner player code', function () {
@@ -50,13 +52,13 @@ describe('Engine', function () {
 
       it('should pass level when max turns are enough', function () {
         const maxTurns = this.requiredTurns;
-        const { passed } = playLevel(this.levelConfig, this.playerCode, maxTurns);
+        const { passed } = playLevel(this.levelConfig, this.warriorName, this.playerCode, maxTurns);
         passed.should.be.true;
       });
 
       it('should not pass level when max turns are not enough', function () {
         const maxTurns = this.requiredTurns - 1;
-        const { passed } = playLevel(this.levelConfig, this.playerCode, maxTurns);
+        const { passed } = playLevel(this.levelConfig, this.warriorName, this.playerCode, maxTurns);
         passed.should.be.false;
       });
     });
@@ -75,7 +77,7 @@ describe('Engine', function () {
       });
 
       it('should not pass level', function () {
-        const { passed } = playLevel(this.levelConfig, this.playerCode);
+        const { passed } = playLevel(this.levelConfig, this.warriorName, this.playerCode);
         passed.should.be.false;
       });
     });
@@ -94,30 +96,30 @@ describe('Engine', function () {
             x: 7,
             y: 0,
           },
-          warrior: {
-            name: 'Spartacus',
-            position: {
-              x: 0,
-              y: 0,
-              direction: 'east',
+          units: {
+            r10qaXdP: {
+              type: 'warrior',
+              position: {
+                x: 0,
+                y: 0,
+                direction: 'east',
+              },
+              abilities: [
+                {
+                  name: 'walk',
+                  args: [],
+                },
+                {
+                  name: 'attack',
+                  args: [],
+                },
+                {
+                  name: 'feel',
+                  args: [],
+                },
+              ],
             },
-            abilities: [
-              {
-                name: 'walk',
-                args: [],
-              },
-              {
-                name: 'attack',
-                args: [],
-              },
-              {
-                name: 'feel',
-                args: [],
-              },
-            ],
-          },
-          units: [
-            {
+            Bktha7dP: {
               type: 'sludge',
               position: {
                 x: 4,
@@ -125,9 +127,10 @@ describe('Engine', function () {
                 direction: 'west',
               },
             },
-          ],
+          },
         },
       };
+      this.warriorName = 'Spartacus';
     });
 
     describe('with a winner player code', function () {
@@ -150,13 +153,13 @@ describe('Engine', function () {
 
       it('should pass level when max turns are enough', function () {
         const maxTurns = this.requiredTurns;
-        const { passed } = playLevel(this.levelConfig, this.playerCode, maxTurns);
+        const { passed } = playLevel(this.levelConfig, this.warriorName, this.playerCode, maxTurns);
         passed.should.be.true;
       });
 
       it('should not pass level when max turns are not enough', function () {
         const maxTurns = this.requiredTurns - 1;
-        const { passed } = playLevel(this.levelConfig, this.playerCode, maxTurns);
+        const { passed } = playLevel(this.levelConfig, this.warriorName, this.playerCode, maxTurns);
         passed.should.be.false;
       });
     });
@@ -175,7 +178,7 @@ describe('Engine', function () {
       });
 
       it('should not pass level', function () {
-        const { passed } = playLevel(this.levelConfig, this.playerCode);
+        const { passed } = playLevel(this.levelConfig, this.warriorName, this.playerCode);
         passed.should.be.false;
       });
     });

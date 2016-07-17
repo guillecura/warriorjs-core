@@ -13,7 +13,10 @@ export default class Explode extends Action {
 
   perform() {
     if (this._unit.isAlive()) {
-      Logger.unit(this._unit.toViewObject(), 'explodes, collapsing the ceiling and killing every unit');
+      Logger.unit(
+        this._unit.toViewObject(),
+        'explodes, collapsing the ceiling and killing every unit',
+      );
 
       this._unit.position.floor.units.forEach(unit => unit.takeDamage(Infinity));
     }
