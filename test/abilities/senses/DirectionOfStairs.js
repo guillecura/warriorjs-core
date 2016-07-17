@@ -9,7 +9,6 @@ describe('Direction of stairs', function () {
       position: {
         getRelativeDirectionOfStairs: () => null,
       },
-      say: () => null,
     };
     this.directionOfStairs = new DirectionOfStairs(this.unit);
   });

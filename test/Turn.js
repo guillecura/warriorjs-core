@@ -8,11 +8,11 @@ describe('Turn', function () {
   beforeEach(function () {
     this.feel = new Feel({});
     this.sinon.stub(this.feel, '_getSpace').returns({ toPlayerObject: () => null });
-    this.turn = new Turn({
-      walk: null,
-      attack: null,
-      feel: this.feel,
-    });
+    this.turn = new Turn(new Map([
+      ['walk', null],
+      ['attack', null],
+      ['feel', this.feel],
+    ]));
   });
 
   describe('with actions', function () {

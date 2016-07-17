@@ -9,7 +9,7 @@ chai.use(chaiBound);
 describe('Bind', function () {
   beforeEach(function () {
     const unit = {
-      say: () => null,
+      toViewObject: () => null,
     };
     this.bind = new Bind(unit);
   });

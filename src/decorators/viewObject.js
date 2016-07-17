@@ -1,7 +1,3 @@
-function getViewObject(object) {
-  return typeof object.toViewObject === 'function' ? object.toViewObject() : object;
-}
-
 export default function viewObject(viewObjectShape = {}) {
   return (target) => {
     Object.defineProperty(target.prototype, 'toViewObject', {
@@ -14,9 +10,9 @@ export default function viewObject(viewObjectShape = {}) {
               const viewProperty = shape[key].call(this);
 
               if (viewProperty) {
-                result[key] = Array.isArray(viewProperty) ?
-                  viewProperty.map(getViewObject) :
-                  getViewObject(viewProperty);
+                result[key] = typeof viewProperty.toViewObject === 'function' ?
+                  viewProperty.toViewObject() :
+                  viewProperty;
               } else {
                 result[key] = viewProperty;
               }

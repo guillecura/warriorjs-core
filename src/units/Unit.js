@@ -5,35 +5,41 @@ import Turn from '../Turn';
 import Logger from '../Logger';
 
 const viewObjectShape = {
+  id() {
+    return this.id;
+  },
   name() {
     return this.name;
   },
   type() {
     return this.type;
   },
+  position() {
+    return this.position;
+  },
   health() {
     return this.health;
-  },
-  x() {
-    return this.position.x;
-  },
-  y() {
-    return this.position.y;
-  },
-  facing() {
-    return this.position.direction;
   },
 };
 
 @viewObject(viewObjectShape)
 export default class Unit {
+  _id = null;
   _position = null;
   _attackPower = 0;
   _shootPower = 0;
   _maxHealth = 0;
   _health = null;
-  _abilities = {};
+  _abilities = new Map();
   _currentTurn = null;
+
+  constructor(id) {
+    this._id = id;
+  }
+
+  get id() {
+    return this._id;
+  }
 
   get name() {
     return startCase(this.constructor.name);
@@ -87,15 +93,11 @@ export default class Unit {
   unbind() {
     this._bound = false;
 
-    this.say('released from bonds');
+    Logger.unit(this.toViewObject(), 'released from bonds');
   }
 
   bind() {
     this._bound = true;
-  }
-
-  say(message) {
-    Logger.unitSpoke(`${this.name} ${message}`, this.type);
   }
 
   takeDamage(amount) {
@@ -107,12 +109,17 @@ export default class Unit {
       const revisedAmount = this.health - amount < 0 ? this.health : amount;
       this.health -= revisedAmount;
 
-      this.say(`takes ${revisedAmount} damage, ${this.health} health power left`);
+      Logger.unit(
+        this.toViewObject(),
+        `takes ${revisedAmount} damage, ${this.health} health power left`,
+      );
 
       if (!this.health) {
-        this.say('dies');
+        Logger.unit(this.toViewObject(), 'dies');
 
         this.position = null;
+
+        Logger.unit(this.toViewObject());
       }
     }
   }
@@ -128,10 +135,10 @@ export default class Unit {
 
   performTurn() {
     if (this.isAlive()) {
-      Object.values(this.abilities).forEach(ability => ability.passTurn());
+      this.abilities.forEach(ability => ability.passTurn());
       if (this._currentTurn.action && !this.isBound()) {
         const [name, args] = this._currentTurn.action;
-        this.abilities[name].perform(...args);
+        this.abilities.get(name).perform(...args);
       }
     }
   }

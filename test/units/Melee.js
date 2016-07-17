@@ -9,10 +9,10 @@ describe('Melee', function () {
   });
 
   it('should have feel sense', function () {
-    this.meleeUnit.abilities.should.include.key('feel');
+    [...this.meleeUnit.abilities.keys()].should.include('feel');
   });
 
   it('should have attack action', function () {
-    this.meleeUnit.abilities.should.include.key('attack');
+    [...this.meleeUnit.abilities.keys()].should.include('attack');
   });
 });

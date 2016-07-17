@@ -10,12 +10,12 @@ describe('Listen', function () {
   beforeEach(function () {
     this.floor = new Floor(2, 3);
     this.warrior = new Warrior();
-    this.floor.addUnit(this.warrior, 0, 0);
+    this.floor.addUnit(this.warrior, { x: 0, y: 0 });
     this.listen = new Listen(this.warrior);
   });
 
   it('should return an array of spaces which have units on them besides main unit', function () {
-    this.floor.addUnit(new Unit(), 0, 1);
+    this.floor.addUnit(new Unit(), { x: 0, y: 1 });
     this.listen.perform().should.have.length(1);
   });
 });

@@ -19,7 +19,7 @@ $ npm install --save warriorjs-engine
 
 The WarriorJS Engine API exposes a single yet important function:
 
-### `playLevel(levelConfig, playerCode, [maxTurns])`
+### `playLevel(levelConfig, warriorName, playerCode, [maxTurns])`
 
 Plays a WarriorJS level using the player's code.
 
@@ -30,20 +30,20 @@ Plays a WarriorJS level using the player's code.
   * `floor` *(Object)*: The floor of the level, with the following members:
     * `size` *(Object)*: The size of the floor.
     * `stairs` *(Object)*: The position of the stairs.
-    * `warrior` *(Object)*: The player's warrior.
-    * `units` *(Array)*: The other units in the level.
-2. `playerCode` *(String)*: The code written by the player.
-3. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
+    * `units` *(Object)*: The units in the level.
+2. `warriorName` *(String)*: The name of the warrior.
+3. `playerCode` *(String)*: The code written by the player.
+4. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
 
 #### Returns
 
 *(Object)* An object containing the play result with the following members:
+  * `events` *(Array)*: The sequence of events that took place during the play.
   * `passed` *(Boolean)*: Whether the level was passed or not.
   * `score` *(Object)*:
     * `warrior` *(Number)*: The points earned by the warrior by killing units and rescuing captives.
     * `timeBonus` *(Number)*: A bonus for completing the level in less than a specified amount of turns.
     * `clearBonus` *(Number)*: A bonus for defeating all enemies and rescuing all captives.
-  * `events` *(Array)*: The sequence of events that took place during the play.
 
 #### Example
 
@@ -61,36 +61,42 @@ const levelConfig = {
       x: 7,
       y: 0
     },
-    warrior: {
-      name: 'Spartacus',
-      x: 0,
-      y: 0,
-      facing: 'east',
-      abilities: [
-        {
-          name: 'walk',
-          args: []
+    units: {
+      r10qaXdP: {
+        type: 'warrior',
+        position: {
+          x: 0,
+          y: 0,
+          direction: 'east'
         },
-        {
-          name: 'attack',
-          args: []
-        },
-        {
-          name: 'feel',
-          args: []
-        }
-      ]
-    },
-    units: [
-      {
+        abilities: [
+          {
+            name: 'walk',
+            args: []
+          },
+          {
+            name: 'attack',
+            args: []
+          },
+          {
+            name: 'feel',
+            args: []
+          }
+        ]
+      },
+      Bktha7dP: {
         type: 'sludge',
-        x: 4,
-        y: 0,
-        facing: 'west'
+        position: {
+          x: 4,
+          y: 0,
+          direction: 'west'
+        }
       }
-    ]
+    }
   }
 };
+
+const warriorName = 'Spartacus';
 
 const playerCode = `
   class Player {
@@ -104,5 +110,5 @@ const playerCode = `
   }
 `;
 
-const { passed, score, events } = playLevel(levelConfig, playerCode);
+const { events, passed, score } = playLevel(levelConfig, warriorName, playerCode);
 ```

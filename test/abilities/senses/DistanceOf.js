@@ -9,7 +9,6 @@ describe('Distance of', function () {
       position: {
         getDistanceOf: () => null,
       },
-      say: () => null,
     };
     this.distanceOf = new DistanceOf(this.unit);
   });

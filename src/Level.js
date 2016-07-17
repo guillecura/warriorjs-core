@@ -1,5 +1,4 @@
 /* eslint-disable no-loop-func */
-import isEqual from 'lodash.isequal';
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
 
@@ -45,29 +44,16 @@ export default class Level {
   play(turns) {
     Logger.clear();
 
-    const initialFloor = this.floor.toViewObject();
-    Logger.playStarted(initialFloor);
-
-    let lastFloor = initialFloor;
     for (let n = 0; n < turns; n++) {
       if (this._passed() || this._failed()) {
         break;
       }
 
       const turnNumber = n + 1;
-      Logger.turnChanged(turnNumber);
+      Logger.turn(turnNumber);
 
       this.floor.units.forEach(unit => unit.prepareTurn());
-      this.floor.units.forEach((unit) => {
-        unit.performTurn();
-
-        const floor = this.floor.toViewObject();
-        if (!isEqual(lastFloor, floor)) {
-          Logger.floorChanged(floor);
-        }
-
-        lastFloor = floor;
-      });
+      this.floor.units.forEach(unit => unit.performTurn());
 
       if (this.timeBonus) {
         this.timeBonus -= 1;
@@ -75,13 +61,13 @@ export default class Level {
     }
 
     return {
+      events: Logger.events,
       passed: this._passed(),
       score: {
         warrior: this.warrior.score,
         timeBonus: this.timeBonus,
         clearBonus: this.clearBonus,
       },
-      events: Logger.events,
     };
   }
 
@@ -93,9 +79,9 @@ export default class Level {
     return !this.floor.units.includes(this.warrior);
   }
 
-  static load(levelConfig) {
+  static load(levelConfig, warriorName) {
     const level = new Level();
-    new LevelLoader(level).load(levelConfig);
+    new LevelLoader(level).load(levelConfig, warriorName);
     return level;
   }
 }

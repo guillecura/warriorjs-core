@@ -6,7 +6,21 @@ import {
   DIRECTION_ARRAY,
   RELATIVE_DIRECTION_ARRAY,
 } from './constants/directions';
+import viewObject from './decorators/viewObject';
 
+const viewObjectShape = {
+  x() {
+    return this.x;
+  },
+  y() {
+    return this.y;
+  },
+  direction() {
+    return this.direction;
+  },
+};
+
+@viewObject(viewObjectShape)
 export default class Position {
   _floor;
   _x;

@@ -11,7 +11,7 @@ describe('Pivot', function () {
     };
     this.pivot = new Pivot({
       position: this.position,
-      say: () => null,
+      toViewObject: () => null,
     });
   });
 

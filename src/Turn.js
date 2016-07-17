@@ -13,10 +13,10 @@ const propertyBlacklist = [
 @playerObject(propertyBlacklist)
 export default class Turn {
   _action = null;
-  _senses = {};
+  _senses = new Map();
 
   constructor(abilities) {
-    Object.entries(abilities).forEach(([name, ability]) => {
+    abilities.forEach((ability, name) => {
       if (ability instanceof Sense) {
         this._addSense(name, ability);
       } else {
@@ -42,9 +42,9 @@ export default class Turn {
   }
 
   _addSense(name, sense) {
-    this._senses[name] = sense;
+    this._senses.set(name, sense);
     Object.defineProperty(this, name, {
-      value: (...args) => this._senses[name].perform(...args),
+      value: (...args) => this._senses.get(name).perform(...args),
     });
   }
 }

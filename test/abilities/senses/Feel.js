@@ -9,7 +9,6 @@ describe('Feel', function () {
       position: {
         getRelativeSpace: () => null,
       },
-      say: () => null,
     };
     this.feel = new Feel(this.unit);
   });

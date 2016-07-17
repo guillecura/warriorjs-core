@@ -1,34 +1,6 @@
-import uniqBy from 'lodash.uniqby';
-import viewObject from './decorators/viewObject';
 import Position from './Position';
 import Space from './Space';
 
-const viewObjectShape = {
-  size: {
-    width() {
-      return this.width;
-    },
-    height() {
-      return this.height;
-    },
-  },
-  stairs: {
-    x() {
-      return this.stairsLocation[0];
-    },
-    y() {
-      return this.stairsLocation[1];
-    },
-  },
-  warrior() {
-    return this.warrior;
-  },
-  units() {
-    return this.otherUnits;
-  },
-};
-
-@viewObject(viewObjectShape)
 export default class Floor {
   _width;
   _height;
@@ -76,15 +48,11 @@ export default class Floor {
     return this.units.filter(unit => unit.type !== 'warrior');
   }
 
-  get uniqueUnits() {
-    return uniqBy(this.units, 'type');
-  }
-
   placeStairs(x, y) {
     this._stairsLocation = [x, y];
   }
 
-  addUnit(unit, x, y, direction) {
+  addUnit(unit, { x, y, direction }) {
     const positionedUnit = unit;
     positionedUnit.position = new Position(this, x, y, direction);
     this._units.push(positionedUnit);

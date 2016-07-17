@@ -12,7 +12,6 @@ chai.use(chaiAlive);
 describe('Unit', function () {
   beforeEach(function () {
     this.unit = new Unit();
-    this.sinon.stub(this.unit, 'say', () => null);
   });
 
   it('should have an attack power which defaults to zero', function () {
@@ -84,7 +83,7 @@ describe('Unit', function () {
   it('should perform action when calling perform on turn', function () {
     this.unit.position = {};
     const expectation = this.sinon.mock(Walk.prototype).expects('perform').withArgs('backward');
-    this.unit.abilities.walk = new Walk(this.unit);
+    this.unit.abilities.set('walk', new Walk(this.unit));
     const turn = {
       action: ['walk', ['backward']],
     };
@@ -141,9 +140,9 @@ describe('Unit', function () {
   describe('with explosive', function () {
     beforeEach(function () {
       this.floor = new Floor(2, 3);
-      this.floor.addUnit(this.unit, 0, 0);
+      this.floor.addUnit(this.unit, { x: 0, y: 0 });
       this.explodeTime = 3;
-      this.unit.abilities.walk = new Explode(this.unit, this.explodeTime);
+      this.unit.abilities.set('explode', new Explode(this.unit, this.explodeTime));
     });
 
     it('should explode when time reaches 0', function () {

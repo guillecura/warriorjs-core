@@ -3,11 +3,11 @@ import Feel from '../abilities/senses/Feel';
 import Unit from './Unit';
 
 export default class Melee extends Unit {
-  constructor() {
-    super();
+  constructor(id) {
+    super(id);
 
-    this.abilities.attack = new Attack(this);
-    this.abilities.feel = new Feel(this);
+    this.abilities.set('attack', new Attack(this));
+    this.abilities.set('feel', new Feel(this));
   }
 
   _isPlayerWithinReach(turn, direction) {

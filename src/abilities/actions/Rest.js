@@ -1,4 +1,5 @@
 import Action from './Action';
+import Logger from '../../Logger';
 
 const HEALTH_GAIN = 0.1;
 
@@ -14,11 +15,11 @@ export default class Rest extends Action {
 
       this._unit.health += revisedAmount;
 
-      this._unit.say(
+      Logger.unit(this._unit.toViewObject(),
         `receives ${revisedAmount} health from resting, up to ${this._unit.health} health`
       );
     } else {
-      this._unit.say('is already fit as a fiddle');
+      Logger.unit(this._unit.toViewObject(), 'is already fit as a fiddle');
     }
   }
 }

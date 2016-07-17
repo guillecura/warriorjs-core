@@ -12,14 +12,13 @@ describe('Attack', function () {
       },
       attackPower: 3,
       earnPoints: () => null,
-      say: () => null,
+      toViewObject: () => null,
     };
     this.attack = new Attack(this.attacker);
   });
 
   it('should subtract attack power amount from health', function () {
     const receiver = new Unit();
-    this.sinon.stub(receiver, 'say', () => null);
     this.sinon.stub(receiver, 'isAlive').returns(true);
     receiver.health = 5;
     this.sinon.stub(this.attack, '_getUnit').returns(receiver);
@@ -67,7 +66,6 @@ describe('Attack', function () {
 
   it('should reduce attack power when attacking backward', function () {
     const receiver = new Unit();
-    this.sinon.stub(receiver, 'say', () => null);
     this.sinon.stub(receiver, 'isAlive').returns(true);
     receiver.health = 5;
     this.sinon.stub(this.attack, '_getUnit').returns(receiver);
