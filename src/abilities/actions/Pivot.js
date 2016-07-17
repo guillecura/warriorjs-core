@@ -10,8 +10,8 @@ export default class Pivot extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this._verifyDirection(direction);
 
-    Logger.unit(this._unit.toViewObject(), `pivots ${direction}`);
-
     this._unit.position.rotate(RELATIVE_DIRECTION_ARRAY.indexOf(direction));
+
+    Logger.unit(this._unit.toViewObject(), `pivots ${direction}`);
   }
 }

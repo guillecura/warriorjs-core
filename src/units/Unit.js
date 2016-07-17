@@ -118,6 +118,8 @@ export default class Unit {
         Logger.unit(this.toViewObject(), 'dies');
 
         this.position = null;
+
+        Logger.unit(this.toViewObject());
       }
     }
   }

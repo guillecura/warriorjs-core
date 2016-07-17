@@ -1,34 +1,6 @@
-import viewObject from './decorators/viewObject';
 import Position from './Position';
 import Space from './Space';
 
-const viewObjectShape = {
-  size: {
-    width() {
-      return this.width;
-    },
-    height() {
-      return this.height;
-    },
-  },
-  stairs: {
-    x() {
-      return this.stairsLocation[0];
-    },
-    y() {
-      return this.stairsLocation[1];
-    },
-  },
-  units() {
-    const units = {};
-    this.units.forEach(unit => {
-      units[unit.id] = unit.toViewObject();
-    });
-    return units;
-  },
-};
-
-@viewObject(viewObjectShape)
 export default class Floor {
   _width;
   _height;

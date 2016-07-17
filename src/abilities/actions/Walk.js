@@ -10,10 +10,10 @@ export default class Walk extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this._verifyDirection(direction);
     if (this._unit.isAlive()) {
-      Logger.unit(this._unit.toViewObject(), `walks ${direction}`);
-
       if (this._getSpace(direction).isEmpty()) {
         this._unit.position.move(...this._offset(direction));
+
+        Logger.unit(this._unit.toViewObject(), `walks ${direction}`);
       } else {
         Logger.unit(this._unit.toViewObject(), `bumps into ${this._getSpace(direction)}`);
       }
