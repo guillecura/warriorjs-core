@@ -64,8 +64,7 @@ export default class LevelLoader {
 
     this._setFloor(size, stairs);
 
-    Object.keys(units).forEach(id => {
-      const { type, position, abilities } = units[id];
+    units.forEach(({ id, type, position, abilities }) => {
       const unit = this._placeUnit(id, type, position, abilities);
       if (unit.type === 'warrior') {
         unit.name = warriorName;

@@ -15,8 +15,9 @@ describe('Engine', function () {
             x: 7,
             y: 0,
           },
-          units: {
-            r10qaXdP: {
+          units: [
+            {
+              id: 'r10qaXdP',
               type: 'warrior',
               position: {
                 x: 0,
@@ -30,7 +31,7 @@ describe('Engine', function () {
                 },
               ],
             },
-          },
+          ],
         },
       };
       this.warriorName = 'Spartacus';
@@ -96,8 +97,9 @@ describe('Engine', function () {
             x: 7,
             y: 0,
           },
-          units: {
-            r10qaXdP: {
+          units: [
+            {
+              id: 'r10qaXdP',
               type: 'warrior',
               position: {
                 x: 0,
@@ -119,7 +121,8 @@ describe('Engine', function () {
                 },
               ],
             },
-            Bktha7dP: {
+            {
+              id: 'Bktha7dP',
               type: 'sludge',
               position: {
                 x: 4,
@@ -127,7 +130,7 @@ describe('Engine', function () {
                 direction: 'west',
               },
             },
-          },
+          ],
         },
       };
       this.warriorName = 'Spartacus';

@@ -30,7 +30,7 @@ Plays a WarriorJS level using the player's code.
   * `floor` *(Object)*: The floor of the level, with the following members:
     * `size` *(Object)*: The size of the floor.
     * `stairs` *(Object)*: The position of the stairs.
-    * `units` *(Object)*: The units in the level.
+    * `units` *(Array)*: The units in the level.
 2. `warriorName` *(String)*: The name of the warrior.
 3. `playerCode` *(String)*: The code written by the player.
 4. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
@@ -61,8 +61,9 @@ const levelConfig = {
       x: 7,
       y: 0
     },
-    units: {
-      r10qaXdP: {
+    units: [
+      {
+        id: 'r10qaXdP',
         type: 'warrior',
         position: {
           x: 0,
@@ -84,7 +85,8 @@ const levelConfig = {
           }
         ]
       },
-      Bktha7dP: {
+      {
+        id: 'Bktha7dP'
         type: 'sludge',
         position: {
           x: 4,
@@ -92,7 +94,7 @@ const levelConfig = {
           direction: 'west'
         }
       }
-    }
+    ]
   }
 };
 
