@@ -11,11 +11,13 @@ export default class Attack extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this._verifyDirection(direction);
 
+    const state = this._getStateWithDirection(ATTACKING, direction);
+
     const receiver = this._getUnit(direction);
     if (receiver) {
       Logger.unit(
         this._unit.toViewObject(),
-        ATTACKING,
+        state,
         `attacks ${direction} and hits ${receiver}`,
       );
 
@@ -24,7 +26,7 @@ export default class Attack extends Action {
         this._unit.attackPower;
       this._damage(receiver, power);
     } else {
-      Logger.unit(this._unit.toViewObject(), ATTACKING, `attacks ${direction} and hits nothing`);
+      Logger.unit(this._unit.toViewObject(), state, `attacks ${direction} and hits nothing`);
     }
   }
 }

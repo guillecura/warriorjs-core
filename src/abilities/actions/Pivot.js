@@ -13,6 +13,10 @@ export default class Pivot extends Action {
 
     this._unit.position.rotate(RELATIVE_DIRECTION_ARRAY.indexOf(direction));
 
-    Logger.unit(this._unit.toViewObject(), PIVOTING, `pivots ${direction}`);
+    Logger.unit(
+      this._unit.toViewObject(),
+      this._getStateWithDirection(PIVOTING, direction),
+      `pivots ${direction}`,
+    );
   }
 }
