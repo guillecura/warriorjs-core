@@ -1,6 +1,6 @@
 ![banner](https://cdn.rawgit.com/olistic/warriorjs-engine/master/warriorjs-logo.svg)
 
-[![Travis](https://img.shields.io/travis/olistic/warriorjs-engine.svg?style=flat-square)](https://travis-ci.org/olistic/warriorjs-engine)
+[![Build Status](https://img.shields.io/travis/olistic/warriorjs-engine/v2.svg?style=flat-square)](https://travis-ci.org/olistic/warriorjs-engine)
 [![npm](https://img.shields.io/npm/v/warriorjs-engine.svg?style=flat-square)](https://www.npmjs.com/package/warriorjs-engine)
 
 # WarriorJS Engine
