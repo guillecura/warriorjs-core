@@ -1,3 +1,4 @@
+import { RESTING } from '../../constants/states';
 import Action from './Action';
 import Logger from '../../Logger';
 
@@ -15,11 +16,13 @@ export default class Rest extends Action {
 
       this._unit.health += revisedAmount;
 
-      Logger.unit(this._unit.toViewObject(),
-        `receives ${revisedAmount} health from resting, up to ${this._unit.health} health`
+      Logger.unit(
+        this._unit.toViewObject(),
+        RESTING,
+        `receives ${revisedAmount} health from resting, up to ${this._unit.health} health`,
       );
     } else {
-      Logger.unit(this._unit.toViewObject(), 'is already fit as a fiddle');
+      Logger.unit(this._unit.toViewObject(), RESTING, 'is already fit as a fiddle');
     }
   }
 }

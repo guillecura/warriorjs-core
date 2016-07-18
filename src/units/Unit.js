@@ -1,5 +1,6 @@
 import camelCase from 'lodash.camelcase';
 import startCase from 'lodash.startcase';
+import { BEING_UNBOUND, DYING, TAKING_DAMAGE } from '../constants/states';
 import viewObject from '../decorators/viewObject';
 import Turn from '../Turn';
 import Logger from '../Logger';
@@ -93,7 +94,7 @@ export default class Unit {
   unbind() {
     this._bound = false;
 
-    Logger.unit(this.toViewObject(), 'released from bonds');
+    Logger.unit(this.toViewObject(), BEING_UNBOUND, 'released from bonds');
   }
 
   bind() {
@@ -111,11 +112,12 @@ export default class Unit {
 
       Logger.unit(
         this.toViewObject(),
+        TAKING_DAMAGE,
         `takes ${revisedAmount} damage, ${this.health} health power left`,
       );
 
       if (!this.health) {
-        Logger.unit(this.toViewObject(), 'dies');
+        Logger.unit(this.toViewObject(), DYING, 'dies');
 
         this.position = null;
 

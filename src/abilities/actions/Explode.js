@@ -1,3 +1,4 @@
+import { EXPLODING, TICKING } from '../../constants/states';
 import Action from './Action';
 import Logger from '../../Logger';
 
@@ -15,6 +16,7 @@ export default class Explode extends Action {
     if (this._unit.isAlive()) {
       Logger.unit(
         this._unit.toViewObject(),
+        EXPLODING,
         'explodes, collapsing the ceiling and killing every unit',
       );
 
@@ -24,7 +26,7 @@ export default class Explode extends Action {
 
   passTurn() {
     if (this._time && this._unit.isAlive()) {
-      Logger.unit(this._unit.toViewObject(), 'is ticking');
+      Logger.unit(this._unit.toViewObject(), TICKING, 'is ticking');
 
       this._time -= 1;
       if (!this._time) {

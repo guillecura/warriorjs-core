@@ -1,3 +1,4 @@
+import { DETONATING } from '../../constants/states';
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
 import Logger from '../../Logger';
@@ -22,6 +23,7 @@ export default class Detonate extends Action {
     if (this._unit.isAlive()) {
       Logger.unit(
         this._unit.toViewObject(),
+        this._getStateWithDirection(DETONATING, direction),
         `detonates a bomb ${direction} launching a deadly explosion`
       );
 
@@ -40,7 +42,7 @@ export default class Detonate extends Action {
       if ('explode' in receiver.abilities) {
         Logger.unit(
           receiver.toViewObject(),
-          'caught in bomb\'s flames which detonates ticking explosive'
+          'caught in bomb\'s flames which detonates ticking explosive',
         );
 
         receiver.abilities.explode.perform();

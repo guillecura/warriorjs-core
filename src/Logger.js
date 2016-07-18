@@ -14,10 +14,11 @@ export default class Logger {
     });
   }
 
-  static unit(unit, message) {
+  static unit(unit, state, message) {
     Logger._events.push({
       type: UNIT,
       unit,
+      state,
       message,
     });
   }

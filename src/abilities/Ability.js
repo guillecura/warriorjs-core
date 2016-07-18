@@ -1,3 +1,4 @@
+import startCase from 'lodash.startcase';
 import { FORWARD, BACKWARD, RIGHT, LEFT, RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
 
 export default class Ability {
@@ -49,5 +50,9 @@ export default class Ability {
         .join(', ');
       throw new Error(`Unknown direction '${direction}'. Should be one of: ${validDirections}.`);
     }
+  }
+
+  _getStateWithDirection(state, direction) {
+    return `${state}${startCase(direction)}`;
   }
 }

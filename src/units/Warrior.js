@@ -2,6 +2,7 @@
 import { transform } from 'babel-core';
 import es2015 from 'babel-preset-es2015';
 import stage0 from 'babel-preset-stage-0';
+import { DOING_NOTHING, EARNING_POINTS } from '../constants/states';
 import Logger from '../Logger';
 import Unit from './Unit';
 
@@ -52,7 +53,7 @@ export default class Warrior extends Unit {
 
   performTurn() {
     if (!this._currentTurn.action) {
-      Logger.unit(this.toViewObject(), 'does nothing');
+      Logger.unit(this.toViewObject(), DOING_NOTHING, 'does nothing');
     }
 
     super.performTurn();
@@ -61,6 +62,6 @@ export default class Warrior extends Unit {
   earnPoints(points) {
     this._score += points;
 
-    Logger.unit(this.toViewObject(), `earns ${points} points`);
+    Logger.unit(this.toViewObject(), EARNING_POINTS, `earns ${points} points`);
   }
 }
