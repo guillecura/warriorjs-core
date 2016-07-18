@@ -4,10 +4,11 @@
   "description": "The bowels of WarriorJS",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf lib/*",
+    "precompile": "npm run clean",
     "compile": "babel src -d lib",
     "prepublish": "npm run compile",
     "test": "mocha --compilers js:babel-register --ui bdd --reporter spec --recursive",
-    "test:babel": "babel test -d . && npm test",
     "lint": "eslint . --ext .js --ignore-path .gitignore"
   },
   "repository": {
@@ -55,6 +56,7 @@
     "eslint-plugin-import": "^1.10.2",
     "lodash.times": "^4.2.0",
     "mocha": "^2.5.3",
+    "rimraf": "^2.5.3",
     "sinon": "^1.17.4"
   }
 }
