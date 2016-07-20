@@ -28,6 +28,8 @@ export default class Rescue extends Action {
       if (recipient.type === 'captive') {
         recipient.position = null;
 
+        Logger.unit(recipient.toViewObject());
+
         this._unit.earnPoints(RESCUING_BONUS);
       }
     } else {
