@@ -1,14 +1,6 @@
 import playerObject from './decorators/playerObject';
 
-const propertyBlacklist = [
-  '_floor',
-  '_x',
-  '_y',
-  'constructor',
-  'location',
-  'unit',
-  'toString',
-];
+const propertyBlacklist = ['_floor', '_x', '_y', 'constructor', 'location', 'unit', 'toString'];
 
 @playerObject(propertyBlacklist)
 export default class Space {

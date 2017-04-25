@@ -10,6 +10,7 @@ export default class Melee extends Unit {
     this.abilities.feel = new Feel(this);
   }
 
+  // eslint-disable-next-line
   _isPlayerWithinReach(turn, direction) {
     return turn.feel(direction).isPlayer();
   }

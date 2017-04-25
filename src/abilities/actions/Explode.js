@@ -1,8 +1,7 @@
 import Action from './Action';
 
 export default class Explode extends Action {
-  _description = 'Kills you and all surrounding units. You probably don\'t want to do this' +
-    'intentionally.';
+  _description = "Kills you and all surrounding units. You probably don't want to do this intentionally.";
   _time;
 
   constructor(unit, time) {

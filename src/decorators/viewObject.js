@@ -14,9 +14,9 @@ export default function viewObject(viewObjectShape = {}) {
               const viewProperty = shape[key].call(this);
 
               if (viewProperty) {
-                result[key] = Array.isArray(viewProperty) ?
-                  viewProperty.map(getViewObject) :
-                  getViewObject(viewProperty);
+                result[key] = Array.isArray(viewProperty)
+                  ? viewProperty.map(getViewObject)
+                  : getViewObject(viewProperty);
               } else {
                 result[key] = viewProperty;
               }

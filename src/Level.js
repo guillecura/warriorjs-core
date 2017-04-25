@@ -1,5 +1,5 @@
-/* eslint-disable no-loop-func */
 import isEqual from 'lodash.isequal';
+
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
 
@@ -33,9 +33,9 @@ export default class Level {
   }
 
   get clearBonus() {
-    return !this.floor.otherUnits.length ?
-      Math.round((this.warrior.score + this.timeBonus) * 0.2) :
-      0;
+    return !this.floor.otherUnits.length
+      ? Math.round((this.warrior.score + this.timeBonus) * 0.2)
+      : 0;
   }
 
   loadPlayer(playerCode) {
@@ -49,6 +49,8 @@ export default class Level {
     Logger.playStarted(initialFloor);
 
     let lastFloor = initialFloor;
+
+    // eslint-disable-next-line
     for (let n = 0; n < turns; n++) {
       if (this._passed() || this._failed()) {
         break;
@@ -58,7 +60,8 @@ export default class Level {
       Logger.turnChanged(turnNumber);
 
       this.floor.units.forEach(unit => unit.prepareTurn());
-      this.floor.units.forEach((unit) => {
+      // eslint-disable-next-line
+      this.floor.units.forEach(unit => {
         unit.performTurn();
 
         const floor = this.floor.toViewObject();

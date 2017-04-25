@@ -1,8 +1,9 @@
 import camelCase from 'lodash.camelcase';
 import startCase from 'lodash.startcase';
-import viewObject from '../decorators/viewObject';
-import Turn from '../Turn';
+
 import Logger from '../Logger';
+import Turn from '../Turn';
+import viewObject from '../decorators/viewObject';
 
 const viewObjectShape = {
   name() {
@@ -117,7 +118,8 @@ export default class Unit {
     }
   }
 
-  playTurn(turn) { // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line
+  playTurn(turn) {
     // To be overriden by subclass
   }
 
@@ -136,7 +138,8 @@ export default class Unit {
     }
   }
 
-  earnPoints(points) { // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line
+  earnPoints(points) {
     // To be overriden by subclass
   }
 
