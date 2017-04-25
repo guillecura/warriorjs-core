@@ -1,8 +1,3 @@
-/* eslint-disable no-eval */
-import { transform } from 'babel-core';
-import env from 'babel-preset-env';
-import stage0 from 'babel-preset-stage-0';
-
 import Unit from './Unit';
 
 export default class Warrior extends Unit {
@@ -31,11 +26,11 @@ export default class Warrior extends Unit {
 
   loadPlayer(playerCode) {
     try {
-      const options = { presets: [env, stage0] };
+      // eslint-disable-next-line
       const Player = eval(
         `
-          (function () {
-            ${transform(playerCode, options).code}
+          (() => {
+            ${playerCode}
             return Player;
           })();
         `,
