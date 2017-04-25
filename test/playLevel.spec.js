@@ -1,6 +1,6 @@
-import playLevel from '../src/Engine';
+import playLevel from '../src/playLevel';
 
-describe('Engine', () => {
+describe('play level', () => {
   const levelConfig = {
     timeBonus: 15,
 
