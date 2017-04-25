@@ -1,5 +1,5 @@
-import Turn from '../src/Turn';
 import Feel from '../src/abilities/senses/Feel';
+import Turn from '../src/Turn';
 
 describe('Turn', () => {
   let feel;

@@ -1,4 +1,4 @@
-import { FORWARD, BACKWARD, RIGHT, LEFT, RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
+import { BACKWARD, FORWARD, LEFT, RELATIVE_DIRECTION_ARRAY, RIGHT } from '../constants/directions';
 
 export default class Ability {
   _unit;
@@ -12,14 +12,27 @@ export default class Ability {
     return this._description;
   }
 
+  // eslint-disable-next-line
   passTurn() {
     // Callback which is triggered every turn
   }
 
+  // eslint-disable-next-line
   perform() {
     // To be overriden by subclass
   }
 
+  // eslint-disable-next-line
+  _verifyDirection(direction) {
+    if (!RELATIVE_DIRECTION_ARRAY.includes(direction)) {
+      const validDirections = RELATIVE_DIRECTION_ARRAY.map(
+        validDirection => `'${validDirection}'`,
+      ).join(', ');
+      throw new Error(`Unknown direction '${direction}'. Should be one of: ${validDirections}.`);
+    }
+  }
+
+  // eslint-disable-next-line
   _offset(direction, forward = 1, right = 0) {
     if (direction === FORWARD) {
       return [forward, -right];
@@ -40,14 +53,5 @@ export default class Ability {
 
   _getUnit(direction, forward = 1, right = 0) {
     return this._getSpace(direction, forward, right).unit;
-  }
-
-  _verifyDirection(direction) {
-    if (!RELATIVE_DIRECTION_ARRAY.includes(direction)) {
-      const validDirections = RELATIVE_DIRECTION_ARRAY
-        .map(validDirection => `'${validDirection}'`)
-        .join(', ');
-      throw new Error(`Unknown direction '${direction}'. Should be one of: ${validDirections}.`);
-    }
   }
 }

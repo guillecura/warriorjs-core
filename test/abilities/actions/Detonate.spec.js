@@ -1,9 +1,9 @@
+import Captive from '../../../src/units/Captive';
 import Detonate from '../../../src/abilities/actions/Detonate';
 import Explode from '../../../src/abilities/actions/Explode';
+import Floor from '../../../src/Floor';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
-import Captive from '../../../src/units/Captive';
-import Floor from '../../../src/Floor';
 
 describe('Detonate', () => {
   let detonate;

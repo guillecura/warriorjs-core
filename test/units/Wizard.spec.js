@@ -1,5 +1,5 @@
-import Wizard from '../../src/units/Wizard';
 import Ranged from '../../src/units/Ranged';
+import Wizard from '../../src/units/Wizard';
 
 describe('Wizard', () => {
   const wizard = new Wizard();

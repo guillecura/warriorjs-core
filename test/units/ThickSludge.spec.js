@@ -1,5 +1,5 @@
-import ThickSludge from '../../src/units/ThickSludge';
 import Sludge from '../../src/units/Sludge';
+import ThickSludge from '../../src/units/ThickSludge';
 
 describe('ThickSludge', () => {
   const thickSludge = new ThickSludge();

@@ -2,6 +2,7 @@
 import { transform } from 'babel-core';
 import env from 'babel-preset-env';
 import stage0 from 'babel-preset-stage-0';
+
 import Unit from './Unit';
 
 export default class Warrior extends Unit {
@@ -31,12 +32,14 @@ export default class Warrior extends Unit {
   loadPlayer(playerCode) {
     try {
       const options = { presets: [env, stage0] };
-      const Player = eval(`
-        (function () {
-          ${transform(playerCode, options).code}
-          return Player;
-        })();
-      `);
+      const Player = eval(
+        `
+          (function () {
+            ${transform(playerCode, options).code}
+            return Player;
+          })();
+        `,
+      );
       this._player = new Player();
     } catch (err) {
       if (err instanceof SyntaxError) {

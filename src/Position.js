@@ -1,10 +1,10 @@
 import {
-  NORTH,
+  DIRECTION_ARRAY,
   EAST,
+  NORTH,
+  RELATIVE_DIRECTION_ARRAY,
   SOUTH,
   WEST,
-  DIRECTION_ARRAY,
-  RELATIVE_DIRECTION_ARRAY,
 } from './constants/directions';
 
 export default class Position {
@@ -50,8 +50,12 @@ export default class Position {
 
   rotate(amount) {
     this._directionIndex += amount;
-    while (this._directionIndex > 3) this._directionIndex -= 4;
-    while (this._directionIndex < 0) this._directionIndex += 4;
+    while (this._directionIndex > 3) {
+      this._directionIndex -= 4;
+    }
+    while (this._directionIndex < 0) {
+      this._directionIndex += 4;
+    }
   }
 
   getRelativeSpace(forward, right = 0) {
@@ -79,8 +83,12 @@ export default class Position {
 
   getRelativeDirection(direction) {
     let offset = DIRECTION_ARRAY.indexOf(direction) - this._directionIndex;
-    while (offset > 3) offset -= 4;
-    while (offset < 0) offset += 4;
+    while (offset > 3) {
+      offset -= 4;
+    }
+    while (offset < 0) {
+      offset += 4;
+    }
     return RELATIVE_DIRECTION_ARRAY[offset];
   }
 

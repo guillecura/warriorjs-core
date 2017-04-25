@@ -1,4 +1,4 @@
-export const ORIGINAL_OBJECT = Symbol();
+export const ORIGINAL_OBJECT = Symbol('ORIGINAL_OBJECT');
 
 export default function playerObject(propertyBlacklist = []) {
   return (target) => {

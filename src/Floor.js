@@ -1,7 +1,8 @@
 import uniqBy from 'lodash.uniqby';
-import viewObject from './decorators/viewObject';
+
 import Position from './Position';
 import Space from './Space';
+import viewObject from './decorators/viewObject';
 
 const viewObjectShape = {
   size: {

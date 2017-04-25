@@ -13,9 +13,9 @@ export default class Attack extends Action {
     if (receiver) {
       this._unit.say(`attacks ${direction} and hits ${receiver}`);
 
-      const power = direction === BACKWARD ?
-        Math.ceil(this._unit.attackPower / 2.0) :
-        this._unit.attackPower;
+      const power = direction === BACKWARD
+        ? Math.ceil(this._unit.attackPower / 2.0)
+        : this._unit.attackPower;
       this._damage(receiver, power);
     } else {
       this._unit.say(`attacks ${direction} and hits nothing`);

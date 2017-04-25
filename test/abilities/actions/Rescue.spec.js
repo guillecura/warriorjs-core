@@ -1,7 +1,7 @@
-import Rescue from '../../../src/abilities/actions/Rescue';
-import Warrior from '../../../src/units/Warrior';
 import Captive from '../../../src/units/Captive';
+import Rescue from '../../../src/abilities/actions/Rescue';
 import Unit from '../../../src/units/Unit';
+import Warrior from '../../../src/units/Warrior';
 
 describe('Rescue', () => {
   let rescue;

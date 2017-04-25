@@ -1,4 +1,5 @@
 import range from 'lodash.range';
+
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
 
@@ -22,8 +23,6 @@ export default class Shoot extends Action {
   }
 
   _getUnits(direction, offsets) {
-    return offsets
-      .map(offset => this._getUnit(direction, offset))
-      .filter(unit => unit);
+    return offsets.map(offset => this._getUnit(direction, offset)).filter(unit => unit);
   }
 }

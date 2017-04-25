@@ -1,7 +1,8 @@
-![banner](https://cdn.rawgit.com/olistic/warriorjs-engine/master/warriorjs-logo.svg)
+![banner](https://cdn.rawgit.com/warriorjs/warriorjs-engine/master/warriorjs-logo.svg)
 
-[![Build Status](https://img.shields.io/travis/olistic/warriorjs-engine/master.svg?style=flat-square)](https://travis-ci.org/olistic/warriorjs-engine)
+[![Build Status](https://img.shields.io/travis/warriorjs/warriorjs-engine/master.svg?style=flat-square)](https://travis-ci.org/warriorjs/warriorjs-engine)
 [![npm](https://img.shields.io/npm/v/warriorjs-engine.svg?style=flat-square)](https://www.npmjs.com/package/warriorjs-engine)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 # WarriorJS Engine
 

@@ -1,4 +1,4 @@
-import { PLAY_STARTED, TURN_CHANGED, UNIT_SPOKE, FLOOR_CHANGED } from './constants/eventTypes';
+import { FLOOR_CHANGED, PLAY_STARTED, TURN_CHANGED, UNIT_SPOKE } from './constants/eventTypes';
 
 export default class Logger {
   static _events = [];

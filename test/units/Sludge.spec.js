@@ -1,5 +1,5 @@
-import Sludge from '../../src/units/Sludge';
 import Melee from '../../src/units/Melee';
+import Sludge from '../../src/units/Sludge';
 
 describe('Sludge', () => {
   const sludge = new Sludge();

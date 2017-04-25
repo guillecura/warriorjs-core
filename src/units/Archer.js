@@ -6,11 +6,12 @@ export default class Archer extends Ranged {
   _maxHealth = 7;
 
   playTurn(turn) {
-    for (const direction of RELATIVE_DIRECTION_ARRAY) {
-      if (this._isPlayerWithinReach(turn, direction)) {
-        turn.shoot(direction);
-        break;
-      }
+    const playerDirection = RELATIVE_DIRECTION_ARRAY.filter(direction =>
+      this._isPlayerWithinReach(turn, direction),
+    )[0];
+
+    if (playerDirection) {
+      turn.shoot(playerDirection);
     }
   }
 }

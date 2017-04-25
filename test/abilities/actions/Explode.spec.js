@@ -1,9 +1,9 @@
 import times from 'lodash.times';
 
-import Explode from '../../../src/abilities/actions/Explode';
-import Unit from '../../../src/units/Unit';
 import Captive from '../../../src/units/Captive';
+import Explode from '../../../src/abilities/actions/Explode';
 import Floor from '../../../src/Floor';
+import Unit from '../../../src/units/Unit';
 
 describe('Explode', () => {
   let floor;

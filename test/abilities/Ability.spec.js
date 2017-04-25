@@ -45,6 +45,8 @@ describe('Ability', () => {
   it('should throw an error if direction is not recognized', () => {
     expect(() => {
       ability._verifyDirection('foo');
-    }).toThrow('Unknown direction \'foo\'. Should be one of: \'forward\', \'right\', \'backward\', \'left\'.');
+    }).toThrow(
+      "Unknown direction 'foo'. Should be one of: 'forward', 'right', 'backward', 'left'.",
+    );
   });
 });
