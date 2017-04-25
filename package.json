@@ -6,9 +6,8 @@
   "scripts": {
     "compile": "babel src -d lib",
     "prepublish": "npm run compile",
-    "test": "mocha --compilers js:babel-register --ui bdd --reporter spec --recursive",
-    "test:babel": "babel test -d . && npm test",
-    "lint": "eslint . --ext .js --ignore-path .gitignore"
+    "lint": "eslint . --ext .js --ignore-path .gitignore",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -51,12 +50,13 @@
     "babel-eslint": "^7.2.3",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-register": "^6.9.0",
-    "chai": "^3.5.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.1.3",
     "eslint-plugin-import": "^2.2.0",
-    "lodash.times": "^4.2.0",
-    "mocha": "^2.5.3",
-    "sinon": "^1.17.4"
+    "jest": "^19.0.2",
+    "lodash.times": "^4.2.0"
+  },
+  "jest": {
+    "testRegex": "(/test/.*\\.spec.js)$"
   }
 }
