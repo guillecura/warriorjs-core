@@ -158,7 +158,7 @@ describe('Space', () => {
     });
 
     it('should be ticking if captive has time bomb', () => {
-      captive.abilities.explode = new Explode(captive);
+      captive.abilities.set('explode', new Explode(captive));
       expect(space.isTicking()).toBe(true);
     });
 
