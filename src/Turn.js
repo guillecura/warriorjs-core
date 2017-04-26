@@ -13,7 +13,7 @@ const propertyBlacklist = [
 @playerObject(propertyBlacklist)
 export default class Turn {
   _action = null;
-  _senses = {};
+  _senses = new Map();
 
   constructor(abilities) {
     abilities.forEach((ability, name) => {
@@ -42,9 +42,9 @@ export default class Turn {
   }
 
   _addSense(name, sense) {
-    this._senses[name] = sense;
+    this._senses.set(name, sense);
     Object.defineProperty(this, name, {
-      value: (...args) => this._senses[name].perform(...args),
+      value: (...args) => this._senses.get(name).perform(...args),
     });
   }
 }
