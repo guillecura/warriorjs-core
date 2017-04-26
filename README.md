@@ -1,24 +1,18 @@
-![banner](https://cdn.rawgit.com/warriorjs/warriorjs-engine/master/warriorjs-logo.svg)
+# ![WarriorJS Core](https://cdn.rawgit.com/warriorjs/warriorjs-core/master/warriorjs-logo.svg)
 
-[![Build Status](https://img.shields.io/travis/warriorjs/warriorjs-engine/master.svg?style=flat-square)](https://travis-ci.org/warriorjs/warriorjs-engine)
-[![npm](https://img.shields.io/npm/v/warriorjs-engine.svg?style=flat-square)](https://www.npmjs.com/package/warriorjs-engine)
+[![Build Status](https://img.shields.io/travis/warriorjs/warriorjs-core/master.svg?style=flat-square)](https://travis-ci.org/warriorjs/warriorjs-core)
+[![Codecov](https://img.shields.io/codecov/c/github/warriorjs/warriorjs-core.svg?style=flat-square)](https://codecov.io/gh/warriorjs/warriorjs-core)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-# WarriorJS Engine
-
-*There's a small chance that you have played the game WarriorJS before, and an even smaller chance that you have come here intentionally, so you may be wondering what's this all about...*
-
-**This is the rules engine behind [WarriorJS](https://github.com/olistic/warriorjs), distributed as a standalone npm package.**
 
 ## Installation
 
 ```bash
-$ npm install --save warriorjs-engine
+$ npm install --save warriorjs-core
 ```
 
 ## API Reference
 
-The WarriorJS Engine API exposes a single yet important function:
+The WarriorJS Core API exposes a single yet important function:
 
 ### `playLevel(levelConfig, playerCode, [maxTurns])`
 
@@ -49,7 +43,7 @@ Plays a WarriorJS level using the player's code.
 #### Example
 
 ```javascript
-import playLevel from 'warriorjs-engine';
+import playLevel from 'warriorjs-core';
 
 const levelConfig = {
   timeBonus: 15,

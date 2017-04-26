@@ -1,5 +1,5 @@
 {
-  "name": "warriorjs-engine",
+  "name": "warriorjs-core",
   "version": "1.0.0",
   "description": "The bowels of WarriorJS",
   "main": "index.js",
@@ -14,21 +14,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/olistic/warriorjs-engine.git"
+    "url": "git+https://github.com/warriorjs/warriorjs-core.git"
   },
   "keywords": [
     "warriorjs",
+    "core",
     "game",
-    "engine",
     "learn",
     "javascript"
   ],
-  "author": "Matias Olivera <moliverafreire@gmail.com>",
+  "author": "Matias Olivera <moliverafreire@gmail.com> (https://github.com/olistic)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/olistic/warriorjs-engine/issues"
+    "url": "https://github.com/warriorjs/warriorjs-core/issues"
   },
-  "homepage": "https://github.com/olistic/warriorjs-engine#readme",
+  "homepage": "https://github.com/warriorjs/warriorjs-core#readme",
   "dependencies": {
     "lodash.camelcase": "^4.1.1",
     "lodash.isequal": "^4.2.0",
