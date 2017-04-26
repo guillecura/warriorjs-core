@@ -16,7 +16,7 @@ export default class Turn {
   _senses = {};
 
   constructor(abilities) {
-    Object.entries(abilities).forEach(([name, ability]) => {
+    abilities.forEach((ability, name) => {
       if (ability instanceof Sense) {
         this._addSense(name, ability);
       } else {

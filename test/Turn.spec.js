@@ -7,12 +7,15 @@ describe('Turn', () => {
 
   beforeEach(() => {
     feel = new Feel({});
-    feel._getSpace = jest.fn().mockReturnValue({ toPlayerObject: () => {} });
-    turn = new Turn({
-      feel,
-      walk: null,
-      attack: null,
-    });
+    feel._getSpace = () => ({ toPlayerObject: () => {} });
+    const abilities = new Map([['feel', feel], ['attack', null], ['walk', null]]);
+    turn = new Turn(abilities);
+  });
+
+  it('should define a function for each ability passed to the constructor', () => {
+    expect(turn).toHaveProperty('feel');
+    expect(turn).toHaveProperty('attack');
+    expect(turn).toHaveProperty('walk');
   });
 
   describe('with actions', () => {
@@ -44,7 +47,6 @@ describe('Turn', () => {
       expect(() => {
         turn.feel('backward');
       }).not.toThrow();
-      expect(turn.action).toBeNull();
     });
   });
 

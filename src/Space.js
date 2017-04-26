@@ -43,7 +43,7 @@ export default class Space {
   }
 
   isTicking() {
-    return !!this.unit && 'explode' in this.unit.abilities;
+    return !!this.unit && this.unit.abilities.has('explode');
   }
 
   isEmpty() {

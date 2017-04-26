@@ -27,10 +27,10 @@ export default class Detonate extends Action {
   _bomb(space, damageAmount) {
     const receiver = space.unit;
     if (receiver) {
-      if ('explode' in receiver.abilities) {
+      if (receiver.abilities.has('explode')) {
         receiver.say("caught in bomb's flames which detonates ticking explosive");
 
-        receiver.abilities.explode.perform();
+        receiver.abilities.get('explode').perform();
       } else {
         this._damage(receiver, damageAmount);
       }

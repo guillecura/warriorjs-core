@@ -44,7 +44,7 @@ describe('Detonate', () => {
   it('should detonate an explosive if any unit has one', () => {
     const captive = new Captive();
     captive.health = 1;
-    captive.abilities.explode = new Explode(captive);
+    captive.abilities.set('explode', new Explode(captive));
     floor.addUnit(captive, 1, 1);
     detonate.perform();
     expect(captive.health).toBe(0);
