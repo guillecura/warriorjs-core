@@ -12,20 +12,20 @@ $ npm install --save warriorjs-core
 
 ## API Reference
 
-The WarriorJS Core API exposes a single yet important function:
+The WarriorJS Core API exposes a single function:
 
-### `playLevel(levelConfig, playerCode, [maxTurns])`
+### `playLevel(levelConfig, warriorName, playerCode, [maxTurns])`
 
 Plays a WarriorJS level using the player's code.
 
 #### Arguments
 
 1. `levelConfig` *(Object)*: The configuration of the level, with the following members:
-  * `timeBonus` *(Number)*: Amount of turns the player has to complete the level obtaining bonus points.
-  * `floor` *(Object)*: The floor of the level, with the following members:
-    * `size` *(Object)*: The size of the floor.
-    * `stairs` *(Object)*: The position of the stairs.
-    * `units` *(Array)*: The units in the level.
+    * `timeBonus` *(Number)*: Amount of turns the player has to complete the level obtaining bonus points.
+    * `floor` *(Object)*: The floor of the level, with the following members:
+        * `size` *(Object)*: The size of the floor.
+        * `stairs` *(Object)*: The position of the stairs.
+        * `units` *(Array)*: The units in the level.
 2. `warriorName` *(String)*: The name of the warrior.
 3. `playerCode` *(String)*: The code written by the player.
 4. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
@@ -33,12 +33,12 @@ Plays a WarriorJS level using the player's code.
 #### Returns
 
 *(Object)* An object containing the play result with the following members:
-  * `passed` *(Boolean)*: Whether the level was passed or not.
-  * `score` *(Object)*:
+* `passed` *(Boolean)*: Whether the level was passed or not.
+* `score` *(Object)*:
     * `warrior` *(Number)*: The points earned by the warrior by killing units and rescuing captives.
     * `timeBonus` *(Number)*: A bonus for completing the level in less than a specified amount of turns.
     * `clearBonus` *(Number)*: A bonus for defeating all enemies and rescuing all captives.
-  * `events` *(Array)*: The sequence of events that took place during the play.
+* `events` *(Array)*: The sequence of events that took place during the play.
 
 #### Example
 
