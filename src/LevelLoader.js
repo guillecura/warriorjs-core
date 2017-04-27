@@ -57,17 +57,20 @@ export default class LevelLoader {
     this._level = level;
   }
 
-  load(levelConfig) {
+  load(levelConfig, warriorName) {
     this._level.timeBonus = levelConfig.timeBonus;
 
-    const { size, stairs, warrior, units } = levelConfig.floor;
+    const { size, stairs, units } = levelConfig.floor;
 
     this._setFloor(size, stairs);
 
-    const { name, x, y, facing, abilities } = warrior;
-    this._placeWarrior(name, x, y, facing, abilities);
-
-    units.forEach(unit => this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities));
+    units.forEach((unit) => {
+      const placedUnit = this._placeUnit(unit.type, unit.x, unit.y, unit.facing, unit.abilities);
+      if (unit.type === 'warrior') {
+        placedUnit.name = warriorName;
+        this._level.warrior = placedUnit;
+      }
+    });
   }
 
   _setFloor(size, stairs) {
@@ -76,12 +79,6 @@ export default class LevelLoader {
 
     const { x, y } = stairs;
     this._level.floor.placeStairs(x, y);
-  }
-
-  _placeWarrior(name, x, y, facing, abilities) {
-    const warrior = this._placeUnit('warrior', x, y, facing, abilities);
-    warrior.name = name;
-    this._level.warrior = warrior;
   }
 
   _placeUnit(type, x, y, facing, abilities = []) {

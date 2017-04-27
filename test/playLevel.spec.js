@@ -13,21 +13,23 @@ describe('play level', () => {
         x: 7,
         y: 0,
       },
-      warrior: {
-        name: 'Spartacus',
-        x: 0,
-        y: 0,
-        facing: 'east',
-        abilities: [
-          {
-            name: 'walk',
-            args: [],
-          },
-        ],
-      },
-      units: [],
+      units: [
+        {
+          type: 'warrior',
+          x: 0,
+          y: 0,
+          facing: 'east',
+          abilities: [
+            {
+              name: 'walk',
+              args: [],
+            },
+          ],
+        },
+      ],
     },
   };
+  const warriorName = 'Spartacus';
 
   describe('with a winner player code', () => {
     const playerCode = `
@@ -41,13 +43,13 @@ describe('play level', () => {
 
     it('should pass level when max turns are enough', () => {
       const maxTurns = requiredTurns;
-      const { passed } = playLevel(levelConfig, playerCode, maxTurns);
+      const { passed } = playLevel(levelConfig, warriorName, playerCode, maxTurns);
       expect(passed).toBe(true);
     });
 
     it('should not pass level when max turns are not enough', () => {
       const maxTurns = requiredTurns - 1;
-      const { passed } = playLevel(levelConfig, playerCode, maxTurns);
+      const { passed } = playLevel(levelConfig, warriorName, playerCode, maxTurns);
       expect(passed).toBe(false);
     });
   });
@@ -62,7 +64,7 @@ describe('play level', () => {
     `;
 
     it('should not pass level', () => {
-      const { passed } = playLevel(levelConfig, playerCode);
+      const { passed } = playLevel(levelConfig, warriorName, playerCode);
       expect(passed).toBe(false);
     });
   });
