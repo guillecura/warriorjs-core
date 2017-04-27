@@ -64,6 +64,10 @@ export default class LevelLoader {
 
     this._setFloor(size, stairs);
 
+    if (units.filter(unit => unit.type === 'warrior').length !== 1) {
+      throw new Error('One unit in the level must be a warrior.');
+    }
+
     units.forEach(({ type, position, abilities }) => {
       const unit = this._placeUnit(type, position, abilities);
       if (type === 'warrior') {
