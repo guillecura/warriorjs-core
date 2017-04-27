@@ -9,7 +9,7 @@ describe('Position', () => {
   beforeEach(() => {
     unit = new Unit();
     floor = new Floor(6, 5);
-    floor.addUnit(unit, 1, 2, 'north');
+    floor.addUnit(unit, { x: 1, y: 2, direction: 'north' });
     position = unit.position;
   });
 
@@ -34,23 +34,23 @@ describe('Position', () => {
   });
 
   it('should get relative space in front', () => {
-    floor.addUnit(new Unit(), 1, 1);
+    floor.addUnit(new Unit(), { x: 1, y: 1 });
     expect(position.getRelativeSpace(1).isEmpty()).toBe(false);
   });
 
   it('should get relative object in front when rotated', () => {
-    floor.addUnit(new Unit(), 2, 2);
+    floor.addUnit(new Unit(), { x: 2, y: 2 });
     position.rotate(1);
     expect(position.getRelativeSpace(1).isEmpty()).toBe(false);
   });
 
   it('should get relative object diagonally', () => {
-    floor.addUnit(new Unit(), 0, 1);
+    floor.addUnit(new Unit(), { x: 0, y: 1 });
     expect(position.getRelativeSpace(1, -1).isEmpty()).toBe(false);
   });
 
   it('should get relative object diagonally when rotated', () => {
-    floor.addUnit(new Unit(), 0, 1);
+    floor.addUnit(new Unit(), { x: 0, y: 1 });
     position.rotate(2);
     expect(position.getRelativeSpace(-1, 1).isEmpty()).toBe(false);
   });

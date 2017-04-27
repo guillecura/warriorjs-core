@@ -16,9 +16,11 @@ describe('play level', () => {
       units: [
         {
           type: 'warrior',
-          x: 0,
-          y: 0,
-          facing: 'east',
+          position: {
+            x: 0,
+            y: 0,
+            direction: 'east',
+          },
           abilities: [
             {
               name: 'walk',

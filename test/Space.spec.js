@@ -75,7 +75,7 @@ describe('Space', () => {
     let space;
 
     beforeEach(() => {
-      floor.addUnit(new Warrior(), 0, 0);
+      floor.addUnit(new Warrior(), { x: 0, y: 0 });
       space = floor.getSpaceAt(0, 0);
     });
 
@@ -104,7 +104,7 @@ describe('Space', () => {
     let space;
 
     beforeEach(() => {
-      floor.addUnit(new Sludge(), 0, 0);
+      floor.addUnit(new Sludge(), { x: 0, y: 0 });
       space = floor.getSpaceAt(0, 0);
     });
 
@@ -145,7 +145,7 @@ describe('Space', () => {
 
     beforeEach(() => {
       captive = new Captive();
-      floor.addUnit(captive, 0, 0);
+      floor.addUnit(captive, { x: 0, y: 0 });
       space = floor.getSpaceAt(0, 0);
     });
 
