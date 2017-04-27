@@ -13,7 +13,7 @@ describe('Explode', () => {
   beforeEach(() => {
     floor = new Floor(2, 3);
     captive = new Captive();
-    floor.addUnit(captive, 0, 0);
+    floor.addUnit(captive, { x: 0, y: 0 });
     explode = new Explode(captive, 3);
   });
 
@@ -28,7 +28,7 @@ describe('Explode', () => {
   it('should kill every unit on the floor', () => {
     const unit = new Unit();
     unit.health = 101;
-    floor.addUnit(unit, 0, 1);
+    floor.addUnit(unit, { x: 0, y: 1 });
     captive.health = 10;
     explode.perform();
     expect(captive.health).toBe(0);

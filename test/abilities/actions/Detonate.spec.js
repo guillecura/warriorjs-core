@@ -13,7 +13,7 @@ describe('Detonate', () => {
   beforeEach(() => {
     floor = new Floor(2, 3);
     warrior = new Warrior();
-    floor.addUnit(warrior, 0, 0, 'south');
+    floor.addUnit(warrior, { x: 0, y: 0, direction: 'south' });
     detonate = new Detonate(warrior);
   });
 
@@ -22,8 +22,8 @@ describe('Detonate', () => {
     targetUnit.health = 15;
     const otherUnit = new Unit();
     otherUnit.health = 15;
-    floor.addUnit(targetUnit, 0, 1);
-    floor.addUnit(otherUnit, 1, 1);
+    floor.addUnit(targetUnit, { x: 0, y: 1 });
+    floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform();
     expect(targetUnit.health).toBe(7);
     expect(otherUnit.health).toBe(11);
@@ -34,8 +34,8 @@ describe('Detonate', () => {
     targetUnit.health = 15;
     const otherUnit = new Unit();
     otherUnit.health = 15;
-    floor.addUnit(targetUnit, 1, 0);
-    floor.addUnit(otherUnit, 1, 1);
+    floor.addUnit(targetUnit, { x: 1, y: 0 });
+    floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform('left');
     expect(targetUnit.health).toBe(7);
     expect(otherUnit.health).toBe(11);
@@ -45,7 +45,7 @@ describe('Detonate', () => {
     const captive = new Captive();
     captive.health = 1;
     captive.abilities.set('explode', new Explode(captive));
-    floor.addUnit(captive, 1, 1);
+    floor.addUnit(captive, { x: 1, y: 1 });
     detonate.perform();
     expect(captive.health).toBe(0);
     expect(warrior.health).toBe(0);

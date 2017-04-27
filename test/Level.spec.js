@@ -21,7 +21,7 @@ describe('Level', () => {
 
   it('should consider passed when warrior is on stairs', () => {
     level.warrior = new Warrior();
-    floor.addUnit(level.warrior, 0, 0, 'north');
+    floor.addUnit(level.warrior, { x: 0, y: 0, direction: 'north' });
     floor.placeStairs(0, 0);
     expect(level._passed()).toBe(true);
   });
@@ -31,7 +31,7 @@ describe('Level', () => {
       const unit = new Unit();
       unit.prepareTurn = jest.fn();
       unit.performTurn = jest.fn();
-      floor.addUnit(unit, 0, 0, 'north');
+      floor.addUnit(unit, { x: 0, y: 0, direction: 'north' });
       level.play(2);
       expect(unit.prepareTurn.mock.calls.length).toBe(2);
       expect(unit.performTurn.mock.calls.length).toBe(2);
@@ -40,7 +40,7 @@ describe('Level', () => {
     it('should return immediately when passed', () => {
       const unit = new Unit();
       unit.performTurn = jest.fn();
-      floor.addUnit(unit, 0, 0, 'north');
+      floor.addUnit(unit, { x: 0, y: 0, direction: 'north' });
       level._passed = jest.fn().mockReturnValue(true);
       level.play(2);
       expect(unit.performTurn.mock.calls.length).toBe(0);

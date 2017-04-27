@@ -12,13 +12,13 @@ describe('Floor', () => {
 
   it('should be able to add a unit and fetch it at that position', () => {
     const unit = new Unit();
-    floor.addUnit(unit, 0, 1, 'north');
+    floor.addUnit(unit, { x: 0, y: 1 });
     expect(floor.getUnitAt(0, 1)).toBe(unit);
   });
 
   it('should not consider unit on floor if no position', () => {
     const unit = new Unit();
-    floor.addUnit(unit, 0, 1, 'north');
+    floor.addUnit(unit, { x: 0, y: 1 });
     unit.position = null;
     expect(floor.units).not.toContain(unit);
   });
@@ -26,16 +26,16 @@ describe('Floor', () => {
   it('should fetch other units not warrior', () => {
     const unit = new Unit();
     const warrior = new Warrior();
-    floor.addUnit(unit, 0, 0, 'north');
-    floor.addUnit(warrior, 1, 0, 'north');
+    floor.addUnit(unit, { x: 0, y: 0 });
+    floor.addUnit(warrior, { x: 1, y: 0 });
     expect(floor.otherUnits).toContain(unit);
     expect(floor.otherUnits).not.toContain(warrior);
   });
 
   it('should return unique units', () => {
     const unit = new Unit();
-    floor.addUnit(unit, 0, 0);
-    floor.addUnit(new Unit(), 1, 0);
+    floor.addUnit(unit, { x: 0, y: 0 });
+    floor.addUnit(new Unit(), { x: 1, y: 0 });
     expect(floor.uniqueUnits).toEqual([unit]);
   });
 
