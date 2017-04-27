@@ -25,10 +25,10 @@ Plays a WarriorJS level using the player's code.
   * `floor` *(Object)*: The floor of the level, with the following members:
     * `size` *(Object)*: The size of the floor.
     * `stairs` *(Object)*: The position of the stairs.
-    * `warrior` *(Object)*: The player's warrior.
-    * `units` *(Array)*: The other units in the level.
-2. `playerCode` *(String)*: The code written by the player.
-3. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
+    * `units` *(Array)*: The units in the level.
+2. `warriorName` *(String)*: The name of the warrior.
+3. `playerCode` *(String)*: The code written by the player.
+4. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
 
 #### Returns
 
@@ -50,42 +50,48 @@ const levelConfig = {
   floor: {
     size: {
       width: 8,
-      height: 1
+      height: 1,
     },
     stairs: {
       x: 7,
-      y: 0
-    },
-    warrior: {
-      name: 'Spartacus',
-      x: 0,
       y: 0,
-      facing: 'east',
-      abilities: [
-        {
-          name: 'walk',
-          args: []
-        },
-        {
-          name: 'attack',
-          args: []
-        },
-        {
-          name: 'feel',
-          args: []
-        }
-      ]
     },
     units: [
       {
+        type: 'warrior',
+        position: {
+          x: 0,
+          y: 0,
+          direction: 'east',
+        },
+        abilities: [
+          {
+            name: 'walk',
+            args: [],
+          },
+          {
+            name: 'attack',
+            args: [],
+          },
+          {
+            name: 'feel',
+            args: [],
+          },
+        ],
+      },
+      {
         type: 'sludge',
-        x: 4,
-        y: 0,
-        facing: 'west'
-      }
-    ]
-  }
+        position: {
+          x: 4,
+          y: 0,
+          direction: 'west',
+        },
+      },
+    ],
+  },
 };
+
+const warriorName = 'Spartacus';
 
 const playerCode = `
   class Player {
@@ -99,5 +105,5 @@ const playerCode = `
   }
 `;
 
-const { passed, score, events } = playLevel(levelConfig, playerCode);
+const { passed, score, events } = playLevel(levelConfig, warriorName, playerCode);
 ```
