@@ -6,22 +6,16 @@ import viewObject from '../decorators/viewObject';
 
 const viewObjectShape = {
   name() {
-    return this.name;
+    return this.getName();
   },
   type() {
-    return this.type;
+    return this.getType();
+  },
+  position() {
+    return this.position;
   },
   health() {
     return this.getHealth();
-  },
-  x() {
-    return this.position.x;
-  },
-  y() {
-    return this.position.y;
-  },
-  facing() {
-    return this.position.direction;
   },
 };
 
