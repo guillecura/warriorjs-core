@@ -217,5 +217,26 @@ describe('play level', () => {
         expect(passed).toBe(false);
       });
     });
+
+    describe('with an invalid player code', () => {
+      it('should throw an error when there is a syntax error', () => {
+        const playerCode = `
+          class Player {
+            playTurn(warrior) {
+
+          }
+        `;
+        expect(() => {
+          playLevel(levelConfig, warriorName, playerCode);
+        }).toThrow('Invalid player code. Check the syntax and try again.');
+      });
+
+      it('should throw an error when there is a reference error', () => {
+        const playerCode = 'foo';
+        expect(() => {
+          playLevel(levelConfig, warriorName, playerCode);
+        }).toThrow('Invalid player code: foo is not defined.');
+      });
+    });
   });
 });
