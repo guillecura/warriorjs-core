@@ -66,8 +66,8 @@ export default class LevelLoader {
       throw new Error('One unit in the level must be a warrior.');
     }
 
-    units.forEach(({ type, position, abilities }) => {
-      const unit = this.placeUnit(type, position, abilities);
+    units.forEach(({ type, position, abilities }, index) => {
+      const unit = this.placeUnit(index, type, position, abilities);
       if (type === 'warrior') {
         unit.name = warriorName;
         this.level.warrior = unit;
@@ -83,12 +83,12 @@ export default class LevelLoader {
     this.level.floor.placeStairs(x, y);
   }
 
-  placeUnit(type, position, abilities = []) {
+  placeUnit(index, type, position, abilities = []) {
     if (!(type in UNITS)) {
       throw new Error(`Unknown unit '${type}'.`);
     }
 
-    const unit = new UNITS[type]();
+    const unit = new UNITS[type](index);
 
     abilities.forEach(({ name, args }) => {
       if (!(name in ABILITIES)) {

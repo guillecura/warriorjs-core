@@ -1,8 +1,8 @@
 import Unit from './Unit';
 
 export default class Warrior extends Unit {
-  constructor() {
-    super();
+  constructor(index) {
+    super(index);
 
     this.name = null;
     this.score = 0;

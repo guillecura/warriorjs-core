@@ -5,6 +5,9 @@ import Turn from '../Turn';
 import viewObject from '../decorators/viewObject';
 
 const viewObjectShape = {
+  index() {
+    return this.index;
+  },
   name() {
     return this.getName();
   },
@@ -21,7 +24,8 @@ const viewObjectShape = {
 
 @viewObject(viewObjectShape)
 export default class Unit {
-  constructor() {
+  constructor(index) {
+    this.index = index;
     this.position = null;
     this.maxHealth = 0;
     this.health = null;

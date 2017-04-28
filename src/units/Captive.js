@@ -1,8 +1,8 @@
 import Unit from './Unit';
 
 export default class Captive extends Unit {
-  constructor() {
-    super();
+  constructor(index) {
+    super(index);
 
     this.maxHealth = 1;
 
