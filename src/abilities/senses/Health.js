@@ -1,9 +1,13 @@
 import Sense from './Sense';
 
 export default class Health extends Sense {
-  _description = 'Return an integer representing your health.';
+  constructor(unit) {
+    super(unit);
+
+    this.description = 'Return an integer representing your health.';
+  }
 
   perform() {
-    return this._unit.health;
+    return this.unit.getHealth();
   }
 }

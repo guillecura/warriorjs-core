@@ -7,7 +7,7 @@ describe('Turn', () => {
 
   beforeEach(() => {
     feel = new Feel({});
-    feel._getSpace = () => ({ toPlayerObject: () => {} });
+    feel.getSpace = () => ({ toPlayerObject: () => {} });
     const abilities = new Map([['feel', feel], ['attack', null], ['walk', null]]);
     turn = new Turn(abilities);
   });
@@ -65,11 +65,10 @@ describe('Turn', () => {
     });
 
     it('should not be able to access restricted properties', () => {
-      expect(playerObject._addAction).toBeUndefined();
-      expect(playerObject._addSense).toBeUndefined();
+      expect(playerObject.addAction).toBeUndefined();
+      expect(playerObject.addSense).toBeUndefined();
       expect(playerObject.action).toBeUndefined();
-      expect(playerObject._action).toBeUndefined();
-      expect(playerObject._senses).toBeUndefined();
+      expect(playerObject.senses).toBeUndefined();
     });
   });
 });

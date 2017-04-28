@@ -5,24 +5,28 @@ const DEFAULT_DIRECTION = FORWARD;
 const RESCUING_BONUS = 20;
 
 export default class Rescue extends Action {
-  _description = `Rescue a captive from his chains (earning ${RESCUING_BONUS} points) in the given direction (${DEFAULT_DIRECTION} by default).`;
+  constructor(unit) {
+    super(unit);
+
+    this.description = `Rescue a captive from his chains (earning ${RESCUING_BONUS} points) in the given direction (${DEFAULT_DIRECTION} by default).`;
+  }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this._verifyDirection(direction);
+    this.verifyDirection(direction);
 
-    if (this._getSpace(direction).isCaptive()) {
-      const recipient = this._getUnit(direction);
+    if (this.getSpace(direction).isCaptive()) {
+      const recipient = this.getUnit(direction);
 
-      this._unit.say(`unbinds ${direction} and rescues ${recipient}`);
+      this.unit.say(`unbinds ${direction} and rescues ${recipient}`);
 
       recipient.unbind();
-      if (recipient.type === 'captive') {
+      if (recipient.getType() === 'captive') {
         recipient.position = null;
 
-        this._unit.earnPoints(RESCUING_BONUS);
+        this.unit.earnPoints(RESCUING_BONUS);
       }
     } else {
-      this._unit.say(`unbinds ${direction} and rescues nothing`);
+      this.unit.say(`unbinds ${direction} and rescues nothing`);
     }
   }
 }

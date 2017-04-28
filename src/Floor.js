@@ -1,4 +1,4 @@
-import uniqBy from 'lodash.uniqby';
+import { uniqBy } from 'lodash';
 
 import Position from './Position';
 import Space from './Space';
@@ -31,64 +31,41 @@ const viewObjectShape = {
 
 @viewObject(viewObjectShape)
 export default class Floor {
-  _width;
-  _height;
-  _stairsLocation = [-1, -1];
-  _units = [];
-
   constructor(width, height) {
-    this._width = width;
-    this._height = height;
+    this.width = width;
+    this.height = height;
+    this.stairsLocation = [-1, -1];
+    this.units = [];
   }
 
-  get width() {
-    return this._width;
-  }
-
-  set width(width) {
-    this._width = width;
-  }
-
-  get height() {
-    return this._height;
-  }
-
-  set height(height) {
-    this._height = height;
-  }
-
-  get stairsLocation() {
-    return this._stairsLocation;
-  }
-
-  get stairsSpace() {
+  getStairsSpace() {
     return this.getSpaceAt(...this.stairsLocation);
   }
 
-  get units() {
-    return this._units.filter(unit => unit.position);
+  getUnits() {
+    return this.units.filter(unit => unit.position);
   }
 
-  get warrior() {
-    return this.units.find(unit => unit.type === 'warrior');
+  getWarrior() {
+    return this.getUnits().find(unit => unit.getType() === 'warrior');
   }
 
-  get otherUnits() {
-    return this.units.filter(unit => unit.type !== 'warrior');
+  getOtherUnits() {
+    return this.getUnits().filter(unit => unit.getType() !== 'warrior');
   }
 
-  get uniqueUnits() {
-    return uniqBy(this.units, 'type');
+  getUniqueUnits() {
+    return uniqBy(this.getUnits(), 'type');
   }
 
   placeStairs(x, y) {
-    this._stairsLocation = [x, y];
+    this.stairsLocation = [x, y];
   }
 
   addUnit(unit, { x, y, direction }) {
     const positionedUnit = unit;
     positionedUnit.position = new Position(this, x, y, direction);
-    this._units.push(positionedUnit);
+    this.units.push(positionedUnit);
   }
 
   getSpaceAt(x, y) {
@@ -96,7 +73,7 @@ export default class Floor {
   }
 
   getUnitAt(x, y) {
-    return this.units.find(unit => unit.position.isAt(x, y));
+    return this.getUnits().find(unit => unit.position.isAt(x, y));
   }
 
   isOutOfBounds(x, y) {

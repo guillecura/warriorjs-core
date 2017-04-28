@@ -1,5 +1,9 @@
 import Sludge from './Sludge';
 
 export default class ThickSludge extends Sludge {
-  _maxHealth = 24;
+  constructor() {
+    super();
+
+    this.maxHealth = 24;
+  }
 }

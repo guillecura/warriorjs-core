@@ -1,4 +1,4 @@
-import times from 'lodash.times';
+import { times } from 'lodash';
 
 import Captive from '../../../src/units/Captive';
 import Explode from '../../../src/abilities/actions/Explode';
@@ -20,9 +20,9 @@ describe('Explode', () => {
   it('should explode when bomb time reaches zero', () => {
     captive.health = 10;
     times(2, () => explode.passTurn());
-    expect(captive.health).toBe(10);
+    expect(captive.getHealth()).toBe(10);
     explode.passTurn();
-    expect(captive.health).toBe(0);
+    expect(captive.getHealth()).toBe(0);
   });
 
   it('should kill every unit on the floor', () => {
@@ -31,7 +31,7 @@ describe('Explode', () => {
     floor.addUnit(unit, { x: 0, y: 1 });
     captive.health = 10;
     explode.perform();
-    expect(captive.health).toBe(0);
-    expect(unit.health).toBe(0);
+    expect(captive.getHealth()).toBe(0);
+    expect(unit.getHealth()).toBe(0);
   });
 });

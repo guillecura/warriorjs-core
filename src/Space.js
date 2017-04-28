@@ -1,33 +1,30 @@
 import playerObject from './decorators/playerObject';
 
-const propertyBlacklist = ['_floor', '_x', '_y', 'constructor', 'location', 'unit', 'toString'];
+const propertyBlacklist = ['constructor', 'floor', 'location', 'unit', 'toString', 'x', 'y'];
 
 @playerObject(propertyBlacklist)
 export default class Space {
-  _floor;
-  _x;
-  _y;
-
   constructor(floor, x, y) {
-    this._floor = floor;
-    this._x = x;
-    this._y = y;
+    this.floor = floor;
+    this.x = x;
+    this.y = y;
   }
 
-  get location() {
-    return [this._x, this._y];
+  getLocation() {
+    return [this.x, this.y];
   }
 
-  get unit() {
-    return this._floor.getUnitAt(...this.location);
+  getUnit() {
+    return this.floor.getUnitAt(...this.getLocation());
   }
 
   isWall() {
-    return this._floor.isOutOfBounds(...this.location);
+    return this.floor.isOutOfBounds(...this.getLocation());
   }
 
   isWarrior() {
-    return !!this.unit && this.unit.type === 'warrior';
+    const unit = this.getUnit();
+    return !!unit && unit.getType() === 'warrior';
   }
 
   isPlayer() {
@@ -35,30 +32,33 @@ export default class Space {
   }
 
   isEnemy() {
-    return !!this.unit && !this.isPlayer() && !this.isCaptive();
+    return !!this.getUnit() && !this.isPlayer() && !this.isCaptive();
   }
 
   isCaptive() {
-    return !!this.unit && this.unit.isBound();
+    const unit = this.getUnit();
+    return !!unit && unit.isBound();
   }
 
   isTicking() {
-    return !!this.unit && this.unit.abilities.has('explode');
+    const unit = this.getUnit();
+    return !!unit && unit.abilities.has('explode');
   }
 
   isEmpty() {
-    return !this.unit && !this.isWall();
+    return !this.getUnit() && !this.isWall();
   }
 
   isStairs() {
-    const [stairsX, stairsY] = this._floor.stairsLocation;
-    const [x, y] = this.location;
+    const [stairsX, stairsY] = this.floor.stairsLocation;
+    const [x, y] = this.getLocation();
     return stairsX === x && stairsY === y;
   }
 
   toString() {
-    if (this.unit) {
-      return this.unit.toString();
+    const unit = this.getUnit();
+    if (unit) {
+      return unit.toString();
     }
 
     if (this.isWall()) {

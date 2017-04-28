@@ -13,6 +13,6 @@ describe('ThickSludge', () => {
   });
 
   it('should have the name of "Thick Sludge"', () => {
-    expect(thickSludge.name).toEqual('Thick Sludge');
+    expect(thickSludge.getName()).toEqual('Thick Sludge');
   });
 });

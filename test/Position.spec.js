@@ -14,22 +14,22 @@ describe('Position', () => {
   });
 
   it('should return a space at the same location as position', () => {
-    expect(position.space.location).toEqual([1, 2]);
+    expect(position.getSpace().getLocation()).toEqual([1, 2]);
   });
 
   it('should rotate clockwise', () => {
-    expect(position.direction).toEqual('north');
+    expect(position.getDirection()).toEqual('north');
     ['east', 'south', 'west', 'north', 'east'].forEach((direction) => {
       position.rotate(1);
-      expect(position.direction).toEqual(direction);
+      expect(position.getDirection()).toEqual(direction);
     });
   });
 
   it('should rotate counterclockwise', () => {
-    expect(position.direction).toEqual('north');
+    expect(position.getDirection()).toEqual('north');
     ['west', 'south', 'east', 'north', 'west'].forEach((direction) => {
       position.rotate(-1);
-      expect(position.direction).toEqual(direction);
+      expect(position.getDirection()).toEqual(direction);
     });
   });
 

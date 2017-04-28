@@ -11,7 +11,7 @@ describe('Level', () => {
     floor = new Floor(0, 0);
     level = new Level();
     level.floor = floor;
-    level._failed = jest.fn().mockReturnValue(false);
+    level.failed = jest.fn().mockReturnValue(false);
     level.warrior = { score: () => {} };
   });
 
@@ -23,7 +23,7 @@ describe('Level', () => {
     level.warrior = new Warrior();
     floor.addUnit(level.warrior, { x: 0, y: 0, direction: 'north' });
     floor.placeStairs(0, 0);
-    expect(level._passed()).toBe(true);
+    expect(level.passed()).toBe(true);
   });
 
   describe('playing', () => {
@@ -31,7 +31,7 @@ describe('Level', () => {
       const unit = new Unit();
       unit.prepareTurn = jest.fn();
       unit.performTurn = jest.fn();
-      floor.addUnit(unit, { x: 0, y: 0, direction: 'north' });
+      floor.addUnit(unit, { x: 0, y: 0 });
       level.play(2);
       expect(unit.prepareTurn.mock.calls.length).toBe(2);
       expect(unit.performTurn.mock.calls.length).toBe(2);
@@ -40,8 +40,8 @@ describe('Level', () => {
     it('should return immediately when passed', () => {
       const unit = new Unit();
       unit.performTurn = jest.fn();
-      floor.addUnit(unit, { x: 0, y: 0, direction: 'north' });
-      level._passed = jest.fn().mockReturnValue(true);
+      floor.addUnit(unit, { x: 0, y: 0 });
+      level.passed = jest.fn().mockReturnValue(true);
       level.play(2);
       expect(unit.performTurn.mock.calls.length).toBe(0);
     });

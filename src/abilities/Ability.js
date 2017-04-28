@@ -1,15 +1,8 @@
 import { BACKWARD, FORWARD, LEFT, RELATIVE_DIRECTION_ARRAY, RIGHT } from '../constants/directions';
 
 export default class Ability {
-  _unit;
-  _description;
-
   constructor(unit) {
-    this._unit = unit;
-  }
-
-  get description() {
-    return this._description;
+    this.unit = unit;
   }
 
   // eslint-disable-next-line
@@ -23,7 +16,7 @@ export default class Ability {
   }
 
   // eslint-disable-next-line
-  _verifyDirection(direction) {
+  verifyDirection(direction) {
     if (!RELATIVE_DIRECTION_ARRAY.includes(direction)) {
       const validDirections = RELATIVE_DIRECTION_ARRAY.map(
         validDirection => `'${validDirection}'`,
@@ -33,25 +26,26 @@ export default class Ability {
   }
 
   // eslint-disable-next-line
-  _offset(direction, forward = 1, right = 0) {
-    if (direction === FORWARD) {
-      return [forward, -right];
-    } else if (direction === BACKWARD) {
-      return [-forward, right];
-    } else if (direction === RIGHT) {
-      return [right, forward];
-    } else if (direction === LEFT) {
-      return [-right, -forward];
+  offset(direction, forward = 1, right = 0) {
+    switch (direction) {
+      case FORWARD:
+        return [forward, -right];
+      case BACKWARD:
+        return [-forward, right];
+      case RIGHT:
+        return [right, forward];
+      case LEFT:
+        return [-right, -forward];
+      default:
+        throw new Error(`Unknown direction '${direction}'.`);
     }
-
-    throw new Error(`Unknown direction '${direction}'.`);
   }
 
-  _getSpace(direction, forward = 1, right = 0) {
-    return this._unit.position.getRelativeSpace(...this._offset(direction, forward, right));
+  getSpace(direction, forward = 1, right = 0) {
+    return this.unit.position.getRelativeSpace(...this.offset(direction, forward, right));
   }
 
-  _getUnit(direction, forward = 1, right = 0) {
-    return this._getSpace(direction, forward, right).unit;
+  getUnit(direction, forward = 1, right = 0) {
+    return this.getSpace(direction, forward, right).unit;
   }
 }
