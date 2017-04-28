@@ -16,9 +16,9 @@ describe('Warrior', () => {
   });
 
   it('should default name to Warrior', () => {
-    expect(warrior.name).toEqual('Warrior');
+    expect(warrior.getName()).toEqual('Warrior');
     warrior.name = '';
-    expect(warrior.name).toEqual('Warrior');
+    expect(warrior.getName()).toEqual('Warrior');
   });
 
   it('should be able to set name', () => {
@@ -44,7 +44,7 @@ describe('Warrior', () => {
         return 'turn';
       },
     };
-    warrior._player = player;
+    warrior.player = player;
     warrior.playTurn(turn);
     expect(player.playTurn.mock.calls[0][0]).toEqual('turn');
   });

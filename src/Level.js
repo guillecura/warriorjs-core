@@ -1,39 +1,17 @@
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
 
 export default class Level {
-  _warrior = null;
-  _floor = null;
-  _timeBonus = 0;
-
-  get warrior() {
-    return this._warrior;
+  constructor() {
+    this.warrior = null;
+    this.floor = null;
+    this.timeBonus = 0;
   }
 
-  set warrior(warrior) {
-    this._warrior = warrior;
-  }
-
-  get floor() {
-    return this._floor;
-  }
-
-  set floor(floor) {
-    this._floor = floor;
-  }
-
-  get timeBonus() {
-    return this._timeBonus;
-  }
-
-  set timeBonus(timeBonus) {
-    this._timeBonus = timeBonus;
-  }
-
-  get clearBonus() {
-    return !this.floor.otherUnits.length
+  getClearBonus() {
+    return !this.floor.getOtherUnits().length
       ? Math.round((this.warrior.score + this.timeBonus) * 0.2)
       : 0;
   }
@@ -52,16 +30,16 @@ export default class Level {
 
     // eslint-disable-next-line
     for (let n = 0; n < turns; n++) {
-      if (this._passed() || this._failed()) {
+      if (this.passed() || this.failed()) {
         break;
       }
 
       const turnNumber = n + 1;
       Logger.turnChanged(turnNumber);
 
-      this.floor.units.forEach(unit => unit.prepareTurn());
+      this.floor.getUnits().forEach(unit => unit.prepareTurn());
       // eslint-disable-next-line
-      this.floor.units.forEach(unit => {
+      this.floor.getUnits().forEach(unit => {
         unit.performTurn();
 
         const floor = this.floor.toViewObject();
@@ -78,22 +56,22 @@ export default class Level {
     }
 
     return {
-      passed: this._passed(),
+      passed: this.passed(),
       score: {
         warrior: this.warrior.score,
         timeBonus: this.timeBonus,
-        clearBonus: this.clearBonus,
+        clearBonus: this.getClearBonus(),
       },
       events: Logger.events,
     };
   }
 
-  _passed() {
-    return this.floor.stairsSpace.isWarrior();
+  passed() {
+    return this.floor.getStairsSpace().isWarrior();
   }
 
-  _failed() {
-    return !this.floor.units.includes(this.warrior);
+  failed() {
+    return !this.floor.getUnits().includes(this.warrior);
   }
 
   static load(levelConfig) {

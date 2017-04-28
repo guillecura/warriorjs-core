@@ -13,8 +13,8 @@ describe('Unit', () => {
   });
 
   it('should have a health which defaults to max health', () => {
-    unit._maxHealth = 10;
-    expect(unit.health).toBe(unit.maxHealth);
+    unit.maxHealth = 10;
+    expect(unit.getHealth()).toBe(10);
   });
 
   it('should have an attack power which defaults to zero', () => {
@@ -36,17 +36,18 @@ describe('Unit', () => {
 
   describe('when taking damage', () => {
     beforeEach(() => {
-      unit._maxHealth = 10;
+      unit.maxHealth = 10;
+      unit.health = 10;
     });
 
     it('should subtract health', () => {
       unit.takeDamage(3);
-      expect(unit.health).toBe(7);
+      expect(unit.getHealth()).toBe(7);
     });
 
     it('should not go under zero health', () => {
       unit.takeDamage(11);
-      expect(unit.health).toBe(0);
+      expect(unit.getHealth()).toBe(0);
     });
 
     it('should die when running out of health', () => {
@@ -82,7 +83,7 @@ describe('Unit', () => {
       const turn = {
         action: ['walk', ['backward']],
       };
-      unit._nextTurn = jest.fn().mockReturnValue(turn);
+      unit.getNextTurn = jest.fn().mockReturnValue(turn);
       unit.prepareTurn();
       unit.performTurn();
       expect(walk.perform.mock.calls.length).toBe(0);
@@ -95,12 +96,12 @@ describe('Unit', () => {
   });
 
   it('should return name in toString', () => {
-    expect(unit.name).toEqual('Unit');
+    expect(unit.getName()).toEqual('Unit');
     expect(unit.toString()).toEqual('Unit');
   });
 
   it('should prepare turn by calling playTurn with next turn object', () => {
-    unit._nextTurn = jest.fn().mockReturnValue('nextTurn');
+    unit.getNextTurn = jest.fn().mockReturnValue('nextTurn');
     unit.playTurn = jest.fn();
     unit.prepareTurn();
     expect(unit.playTurn.mock.calls[0][0]).toEqual('nextTurn');
@@ -125,7 +126,7 @@ describe('Unit', () => {
     const turn = {
       action: ['walk', ['backward']],
     };
-    unit._nextTurn = jest.fn().mockReturnValue(turn);
+    unit.getNextTurn = jest.fn().mockReturnValue(turn);
     unit.prepareTurn();
     unit.performTurn();
     expect(walk.perform.mock.calls[0][0]).toEqual('backward');
@@ -141,7 +142,7 @@ describe('Unit', () => {
     const turn = {
       action: ['walk', ['backward']],
     };
-    unit._nextTurn = jest.fn().mockReturnValue(turn);
+    unit.getNextTurn = jest.fn().mockReturnValue(turn);
     unit.prepareTurn();
     unit.performTurn();
     expect(walk.perform.mock.calls.length).toBe(0);

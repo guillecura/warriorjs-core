@@ -18,10 +18,10 @@ describe('Rescue', () => {
     const captive = new Captive();
     captive.position = {};
     captive.say = () => {};
-    rescue._getSpace = jest.fn().mockReturnValue({
+    rescue.getSpace = jest.fn().mockReturnValue({
       isCaptive: jest.fn().mockReturnValue(true),
     });
-    rescue._getUnit = jest.fn().mockReturnValue(captive);
+    rescue.getUnit = jest.fn().mockReturnValue(captive);
     rescue.perform();
     expect(captive.position).toBeNull();
     expect(warrior.earnPoints.mock.calls[0][0]).toBe(20);
@@ -32,10 +32,10 @@ describe('Rescue', () => {
     unit.position = {};
     unit.say = () => {};
     unit.bind();
-    rescue._getSpace = jest.fn().mockReturnValue({
+    rescue.getSpace = jest.fn().mockReturnValue({
       isCaptive: jest.fn().mockReturnValue(true),
     });
-    rescue._getUnit = jest.fn().mockReturnValue(unit);
+    rescue.getUnit = jest.fn().mockReturnValue(unit);
     rescue.perform();
     expect(unit.isBound()).toBe(false);
     expect(unit.position).not.toBeNull();
@@ -46,7 +46,7 @@ describe('Rescue', () => {
     const unit = new Unit();
     unit.position = {};
     unit.say = () => {};
-    rescue._getSpace = jest.fn().mockReturnValue({
+    rescue.getSpace = jest.fn().mockReturnValue({
       isCaptive: jest.fn().mockReturnValue(false),
     });
     rescue.perform();

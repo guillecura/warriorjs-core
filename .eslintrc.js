@@ -5,7 +5,4 @@ module.exports = {
     jest: true,
     node: true,
   },
-  rules: {
-    'no-underscore-dangle': 0,
-  },
 };

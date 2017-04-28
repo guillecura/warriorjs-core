@@ -20,7 +20,7 @@ describe('Floor', () => {
     const unit = new Unit();
     floor.addUnit(unit, { x: 0, y: 1 });
     unit.position = null;
-    expect(floor.units).not.toContain(unit);
+    expect(floor.getUnits()).not.toContain(unit);
   });
 
   it('should fetch other units not warrior', () => {
@@ -28,15 +28,15 @@ describe('Floor', () => {
     const warrior = new Warrior();
     floor.addUnit(unit, { x: 0, y: 0 });
     floor.addUnit(warrior, { x: 1, y: 0 });
-    expect(floor.otherUnits).toContain(unit);
-    expect(floor.otherUnits).not.toContain(warrior);
+    expect(floor.getOtherUnits()).toContain(unit);
+    expect(floor.getOtherUnits()).not.toContain(warrior);
   });
 
   it('should return unique units', () => {
     const unit = new Unit();
     floor.addUnit(unit, { x: 0, y: 0 });
     floor.addUnit(new Unit(), { x: 1, y: 0 });
-    expect(floor.uniqueUnits).toEqual([unit]);
+    expect(floor.getUniqueUnits()).toEqual([unit]);
   });
 
   it('should not consider corners out of bounds', () => {

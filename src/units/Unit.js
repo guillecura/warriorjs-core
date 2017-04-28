@@ -1,5 +1,4 @@
-import camelCase from 'lodash.camelcase';
-import startCase from 'lodash.startcase';
+import { camelCase, startCase } from 'lodash';
 
 import Logger from '../Logger';
 import Turn from '../Turn';
@@ -13,7 +12,7 @@ const viewObjectShape = {
     return this.type;
   },
   health() {
-    return this.health;
+    return this.getHealth();
   },
   x() {
     return this.position.x;
@@ -28,53 +27,28 @@ const viewObjectShape = {
 
 @viewObject(viewObjectShape)
 export default class Unit {
-  _position = null;
-  _attackPower = 0;
-  _shootPower = 0;
-  _maxHealth = 0;
-  _health = null;
-  _abilities = new Map();
-  _currentTurn = null;
+  constructor() {
+    this.position = null;
+    this.maxHealth = 0;
+    this.health = null;
+    this.attackPower = 0;
+    this.shootPower = 0;
+    this.bound = false;
+    this.abilities = new Map();
+    this.currentTurn = null;
+  }
 
-  get name() {
+  getName() {
     return startCase(this.constructor.name);
   }
 
-  get type() {
+  getType() {
     return camelCase(this.constructor.name);
   }
 
-  get position() {
-    return this._position;
-  }
-
-  set position(position) {
-    this._position = position;
-  }
-
-  get attackPower() {
-    return this._attackPower;
-  }
-
-  get shootPower() {
-    return this._shootPower;
-  }
-
-  get maxHealth() {
-    return this._maxHealth;
-  }
-
-  get health() {
-    this._health = this._health === null ? this._maxHealth : this._health;
-    return this._health;
-  }
-
-  set health(health) {
-    this._health = health;
-  }
-
-  get abilities() {
-    return this._abilities;
+  getHealth() {
+    this.health = this.health === null ? this.maxHealth : this.health;
+    return this.health;
   }
 
   isAlive() {
@@ -82,17 +56,17 @@ export default class Unit {
   }
 
   isBound() {
-    return this._bound;
+    return this.bound;
   }
 
   unbind() {
-    this._bound = false;
+    this.bound = false;
 
     this.say('released from bonds');
   }
 
   bind() {
-    this._bound = true;
+    this.bound = true;
   }
 
   say(message) {
@@ -104,18 +78,22 @@ export default class Unit {
       this.unbind();
     }
 
-    if (this.health) {
-      const revisedAmount = this.health - amount < 0 ? this.health : amount;
+    if (this.getHealth()) {
+      const revisedAmount = this.getHealth() - amount < 0 ? this.getHealth() : amount;
       this.health -= revisedAmount;
 
-      this.say(`takes ${revisedAmount} damage, ${this.health} health power left`);
+      this.say(`takes ${revisedAmount} damage, ${this.getHealth()} health power left`);
 
-      if (!this.health) {
+      if (!this.getHealth()) {
         this.say('dies');
 
         this.position = null;
       }
     }
+  }
+
+  getNextTurn() {
+    return new Turn(this.abilities);
   }
 
   // eslint-disable-next-line
@@ -124,15 +102,15 @@ export default class Unit {
   }
 
   prepareTurn() {
-    this._currentTurn = this._nextTurn();
-    this.playTurn(this._currentTurn);
+    this.currentTurn = this.getNextTurn();
+    this.playTurn(this.currentTurn);
   }
 
   performTurn() {
     if (this.isAlive()) {
       this.abilities.forEach(ability => ability.passTurn());
-      if (this._currentTurn.action && !this.isBound()) {
-        const [name, args] = this._currentTurn.action;
+      if (this.currentTurn.action && !this.isBound()) {
+        const [name, args] = this.currentTurn.action;
         this.abilities.get(name).perform(...args);
       }
     }
@@ -144,10 +122,6 @@ export default class Unit {
   }
 
   toString() {
-    return this.name;
-  }
-
-  _nextTurn() {
-    return new Turn(this.abilities);
+    return this.getName();
   }
 }

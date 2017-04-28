@@ -25,8 +25,8 @@ describe('Detonate', () => {
     floor.addUnit(targetUnit, { x: 0, y: 1 });
     floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform();
-    expect(targetUnit.health).toBe(7);
-    expect(otherUnit.health).toBe(11);
+    expect(targetUnit.getHealth()).toBe(7);
+    expect(otherUnit.getHealth()).toBe(11);
   });
 
   it('should subtract 8 from target (left) unit and 4 from surrounding units', () => {
@@ -37,8 +37,8 @@ describe('Detonate', () => {
     floor.addUnit(targetUnit, { x: 1, y: 0 });
     floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform('left');
-    expect(targetUnit.health).toBe(7);
-    expect(otherUnit.health).toBe(11);
+    expect(targetUnit.getHealth()).toBe(7);
+    expect(otherUnit.getHealth()).toBe(11);
   });
 
   it('should detonate an explosive if any unit has one', () => {
@@ -47,7 +47,7 @@ describe('Detonate', () => {
     captive.abilities.set('explode', new Explode(captive));
     floor.addUnit(captive, { x: 1, y: 1 });
     detonate.perform();
-    expect(captive.health).toBe(0);
-    expect(warrior.health).toBe(0);
+    expect(captive.getHealth()).toBe(0);
+    expect(warrior.getHealth()).toBe(0);
   });
 });

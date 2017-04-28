@@ -14,18 +14,18 @@ describe('Rest', () => {
   it('should give 10% of max health back', () => {
     warrior.health = 10;
     rest.perform();
-    expect(warrior.health).toBe(12);
+    expect(warrior.getHealth()).toBe(12);
   });
 
   it('should not add health when at max', () => {
     warrior.health = 20;
     rest.perform();
-    expect(warrior.health).toBe(20);
+    expect(warrior.getHealth()).toBe(20);
   });
 
   it('should not go over max health', () => {
     warrior.health = 19;
     rest.perform();
-    expect(warrior.health).toBe(20);
+    expect(warrior.getHealth()).toBe(20);
   });
 });

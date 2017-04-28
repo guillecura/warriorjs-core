@@ -7,32 +7,36 @@ const COLATERAL_DAMAGE_AMOUNT = 4;
 const SURROUNDINGS = [[1, 1], [1, -1], [2, 0], [0, 0]];
 
 export default class Detonate extends Action {
-  _description = `Detonate a bomb in a given direction (${DEFAULT_DIRECTION} by default) which damages that space and surrounding 4 spaces (including yourself).`;
+  constructor(unit) {
+    super(unit);
+
+    this.description = `Detonate a bomb in a given direction (${DEFAULT_DIRECTION} by default) which damages that space and surrounding 4 spaces (including yourself).`;
+  }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this._verifyDirection(direction);
+    this.verifyDirection(direction);
 
-    if (this._unit.isAlive()) {
-      this._unit.say(`detonates a bomb ${direction} launching a deadly explosion`);
+    if (this.unit.isAlive()) {
+      this.unit.say(`detonates a bomb ${direction} launching a deadly explosion`);
 
-      const targetSpace = this._getSpace(direction, 1, 0);
-      this._bomb(targetSpace, TARGET_DAMAGE_AMOUNT);
+      const targetSpace = this.getSpace(direction, 1, 0);
+      this.bomb(targetSpace, TARGET_DAMAGE_AMOUNT);
 
-      SURROUNDINGS.map(([x, y]) => this._getSpace(direction, x, y)).forEach(surroundingSpace =>
-        this._bomb(surroundingSpace, COLATERAL_DAMAGE_AMOUNT),
+      SURROUNDINGS.map(([x, y]) => this.getSpace(direction, x, y)).forEach(surroundingSpace =>
+        this.bomb(surroundingSpace, COLATERAL_DAMAGE_AMOUNT),
       );
     }
   }
 
-  _bomb(space, damageAmount) {
-    const receiver = space.unit;
+  bomb(space, damageAmount) {
+    const receiver = space.getUnit();
     if (receiver) {
       if (receiver.abilities.has('explode')) {
         receiver.say("caught in bomb's flames which detonates ticking explosive");
 
         receiver.abilities.get('explode').perform();
       } else {
-        this._damage(receiver, damageAmount);
+        this.damage(receiver, damageAmount);
       }
     }
   }

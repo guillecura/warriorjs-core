@@ -96,7 +96,7 @@ describe('Space', () => {
     });
 
     it('should know what unit is on that space', () => {
-      expect(space.unit).toBeInstanceOf(Warrior);
+      expect(space.getUnit()).toBeInstanceOf(Warrior);
     });
   });
 
@@ -126,7 +126,7 @@ describe('Space', () => {
 
     describe('bound', () => {
       beforeEach(() => {
-        space.unit.bind();
+        space.getUnit().bind();
       });
 
       it('should be captive', () => {
@@ -186,11 +186,11 @@ describe('Space', () => {
     });
 
     it('should not be able to access restricted properties', () => {
+      expect(playerObject.floor).toBeUndefined();
       expect(playerObject.location).toBeUndefined();
       expect(playerObject.unit).toBeUndefined();
-      expect(playerObject._floor).toBeUndefined();
-      expect(playerObject._x).toBeUndefined();
-      expect(playerObject._y).toBeUndefined();
+      expect(playerObject.x).toBeUndefined();
+      expect(playerObject.y).toBeUndefined();
     });
   });
 });

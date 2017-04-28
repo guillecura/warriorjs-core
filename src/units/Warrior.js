@@ -1,27 +1,19 @@
 import Unit from './Unit';
 
 export default class Warrior extends Unit {
-  _name = null;
-  _score = 0;
-  _attackPower = 5;
-  _shootPower = 3;
-  _maxHealth = 20;
-  _player = null;
+  constructor() {
+    super();
 
-  get name() {
-    return this._name || 'Warrior';
+    this.name = null;
+    this.score = 0;
+    this.maxHealth = 20;
+    this.attackPower = 5;
+    this.shootPower = 3;
+    this.player = null;
   }
 
-  set name(name) {
-    this._name = name;
-  }
-
-  get score() {
-    return this._score;
-  }
-
-  get player() {
-    return this._player;
+  getName() {
+    return this.name || 'Warrior';
   }
 
   loadPlayer(playerCode) {
@@ -35,7 +27,7 @@ export default class Warrior extends Unit {
           })();
         `,
       );
-      this._player = new Player();
+      this.player = new Player();
     } catch (err) {
       if (err instanceof SyntaxError) {
         throw new Error('Invalid submitted code. Check the syntax and try again.');
@@ -48,7 +40,7 @@ export default class Warrior extends Unit {
   }
 
   performTurn() {
-    if (!this._currentTurn.action) {
+    if (!this.currentTurn.action) {
       this.say('does nothing');
     }
 
@@ -56,7 +48,7 @@ export default class Warrior extends Unit {
   }
 
   earnPoints(points) {
-    this._score += points;
+    this.score += points;
 
     this.say(`earns ${points} points`);
   }
