@@ -30,7 +30,9 @@ export default class Warrior extends Unit {
       this.player = new Player();
     } catch (err) {
       if (err instanceof SyntaxError) {
-        throw new Error('Invalid submitted code. Check the syntax and try again.');
+        throw new Error('Invalid player code. Check the syntax and try again.');
+      } else if (err instanceof ReferenceError) {
+        throw new Error(`Invalid player code: ${err.message}.`);
       }
     }
   }
