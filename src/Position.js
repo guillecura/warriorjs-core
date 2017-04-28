@@ -6,7 +6,21 @@ import {
   SOUTH,
   WEST,
 } from './constants/directions';
+import viewObject from './decorators/viewObject';
 
+const viewObjectShape = {
+  x() {
+    return this.x;
+  },
+  y() {
+    return this.y;
+  },
+  direction() {
+    return this.getDirection();
+  },
+};
+
+@viewObject(viewObjectShape)
 export default class Position {
   constructor(floor, x, y, direction = NORTH) {
     this.floor = floor;

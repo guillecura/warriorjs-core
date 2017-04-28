@@ -5,6 +5,10 @@ import Floor from '../../../src/Floor';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Detonate', () => {
   let detonate;
   let floor;
@@ -19,9 +23,9 @@ describe('Detonate', () => {
 
   it('should subtract 8 from target (forward) unit and 4 from surrounding units', () => {
     const targetUnit = new Unit();
-    targetUnit.health = 15;
+    targetUnit.maxHealth = 15;
     const otherUnit = new Unit();
-    otherUnit.health = 15;
+    otherUnit.maxHealth = 15;
     floor.addUnit(targetUnit, { x: 0, y: 1 });
     floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform();
@@ -31,9 +35,9 @@ describe('Detonate', () => {
 
   it('should subtract 8 from target (left) unit and 4 from surrounding units', () => {
     const targetUnit = new Unit();
-    targetUnit.health = 15;
+    targetUnit.maxHealth = 15;
     const otherUnit = new Unit();
-    otherUnit.health = 15;
+    otherUnit.maxHealth = 15;
     floor.addUnit(targetUnit, { x: 1, y: 0 });
     floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform('left');
@@ -43,7 +47,7 @@ describe('Detonate', () => {
 
   it('should detonate an explosive if any unit has one', () => {
     const captive = new Captive();
-    captive.health = 1;
+    captive.maxHealth = 1;
     captive.abilities.set('explode', new Explode(captive));
     floor.addUnit(captive, { x: 1, y: 1 });
     detonate.perform();

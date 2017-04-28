@@ -1,11 +1,20 @@
+import Position from '../../src/Position';
 import Unit from '../../src/units/Unit';
+
+jest.mock('../../src/Logger', () => ({
+  unit: () => {},
+}));
 
 describe('Unit', () => {
   let unit;
 
   beforeEach(() => {
-    unit = new Unit();
-    unit.position = {};
+    unit = new Unit(0);
+    unit.position = new Position(null, 0, 0, 'north');
+  });
+
+  it('should have an index property set by the constructor', () => {
+    expect(unit.index).toBe(0);
   });
 
   it('should have a max health which defaults to zero', () => {
@@ -37,7 +46,6 @@ describe('Unit', () => {
   describe('when taking damage', () => {
     beforeEach(() => {
       unit.maxHealth = 10;
-      unit.health = 10;
     });
 
     it('should subtract health', () => {
@@ -153,5 +161,21 @@ describe('Unit', () => {
     expect(() => {
       unit.performTurn();
     }).not.toThrow();
+  });
+
+  describe('view object', () => {
+    it('should have only view object properties', () => {
+      expect(unit.toViewObject()).toEqual({
+        index: 0,
+        name: 'Unit',
+        type: 'unit',
+        position: {
+          x: 0,
+          y: 0,
+          direction: 'north',
+        },
+        health: 0,
+      });
+    });
   });
 });

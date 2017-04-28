@@ -1,38 +1,17 @@
-import { FLOOR_CHANGED, PLAY_STARTED, TURN_CHANGED, UNIT_SPOKE } from './constants/eventTypes';
-
-let events = [];
-
-export default class Logger {
-  static playStarted(initialFloor) {
-    events.push({
-      type: PLAY_STARTED,
-      initialFloor,
-    });
-  }
-
-  static turnChanged(turn) {
-    events.push({
-      type: TURN_CHANGED,
-      turn,
-    });
-  }
-
-  static unitSpoke(message, unitType) {
-    events.push({
-      type: UNIT_SPOKE,
+const Logger = {
+  events: [],
+  clear() {
+    Logger.events = [];
+  },
+  turn() {
+    Logger.events.push([]);
+  },
+  unit(unit, message) {
+    Logger.events[Logger.events.length - 1].push({
       message,
-      unitType,
+      unit: unit.toViewObject(),
     });
-  }
+  },
+};
 
-  static floorChanged(floor) {
-    events.push({
-      type: FLOOR_CHANGED,
-      floor,
-    });
-  }
-
-  static clear() {
-    events = [];
-  }
-}
+export default Logger;

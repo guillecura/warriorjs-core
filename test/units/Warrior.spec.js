@@ -1,5 +1,9 @@
 import Warrior from '../../src/units/Warrior';
 
+jest.mock('../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Warrior', () => {
   const warrior = new Warrior();
 

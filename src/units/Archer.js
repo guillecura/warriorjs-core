@@ -2,8 +2,8 @@ import { RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
 import Ranged from './Ranged';
 
 export default class Archer extends Ranged {
-  constructor() {
-    super();
+  constructor(index) {
+    super(index);
 
     this.maxHealth = 7;
     this.shootPower = 3;

@@ -1,5 +1,6 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
+import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 
@@ -15,11 +16,11 @@ export default class Bind extends Action {
 
     const receiver = this.getUnit(direction);
     if (receiver) {
-      this.unit.say(`binds ${direction} and restricts ${receiver}`);
+      Logger.unit(this.unit, `binds ${direction} and restricts ${receiver}`);
 
       receiver.bind();
     } else {
-      this.unit.say(`binds ${direction} and restricts nothing`);
+      Logger.unit(this.unit, `binds ${direction} and restricts nothing`);
     }
   }
 }

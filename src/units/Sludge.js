@@ -2,8 +2,8 @@ import { RELATIVE_DIRECTION_ARRAY } from '../constants/directions';
 import Melee from './Melee';
 
 export default class Sludge extends Melee {
-  constructor() {
-    super();
+  constructor(index) {
+    super(index);
 
     this.maxHealth = 12;
     this.attackPower = 3;

@@ -4,8 +4,8 @@ import Warrior from '../../../src/units/Warrior';
 describe('Health', () => {
   it('should return the amount of health', () => {
     const warrior = new Warrior();
-    const health = new Health(warrior);
     warrior.health = 10;
+    const health = new Health(warrior);
     expect(health.perform()).toBe(10);
   });
 });

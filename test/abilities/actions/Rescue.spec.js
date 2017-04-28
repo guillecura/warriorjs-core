@@ -3,13 +3,16 @@ import Rescue from '../../../src/abilities/actions/Rescue';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Rescue', () => {
   let rescue;
   let warrior;
 
   beforeEach(() => {
     warrior = new Warrior();
-    warrior.say = () => {};
     warrior.earnPoints = jest.fn();
     rescue = new Rescue(warrior);
   });
@@ -17,7 +20,6 @@ describe('Rescue', () => {
   it('should rescue captive', () => {
     const captive = new Captive();
     captive.position = {};
-    captive.say = () => {};
     rescue.getSpace = jest.fn().mockReturnValue({
       isCaptive: jest.fn().mockReturnValue(true),
     });
@@ -30,7 +32,6 @@ describe('Rescue', () => {
   it('should release other unit when bound', () => {
     const unit = new Unit();
     unit.position = {};
-    unit.say = () => {};
     unit.bind();
     rescue.getSpace = jest.fn().mockReturnValue({
       isCaptive: jest.fn().mockReturnValue(true),
@@ -45,7 +46,6 @@ describe('Rescue', () => {
   it('should do nothing to other unit if not bound', () => {
     const unit = new Unit();
     unit.position = {};
-    unit.say = () => {};
     rescue.getSpace = jest.fn().mockReturnValue({
       isCaptive: jest.fn().mockReturnValue(false),
     });

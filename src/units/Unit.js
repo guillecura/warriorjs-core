@@ -5,29 +5,27 @@ import Turn from '../Turn';
 import viewObject from '../decorators/viewObject';
 
 const viewObjectShape = {
+  index() {
+    return this.index;
+  },
   name() {
-    return this.name;
+    return this.getName();
   },
   type() {
-    return this.type;
+    return this.getType();
+  },
+  position() {
+    return this.position;
   },
   health() {
     return this.getHealth();
-  },
-  x() {
-    return this.position.x;
-  },
-  y() {
-    return this.position.y;
-  },
-  facing() {
-    return this.position.direction;
   },
 };
 
 @viewObject(viewObjectShape)
 export default class Unit {
-  constructor() {
+  constructor(index) {
+    this.index = index;
     this.position = null;
     this.maxHealth = 0;
     this.health = null;
@@ -62,15 +60,11 @@ export default class Unit {
   unbind() {
     this.bound = false;
 
-    this.say('released from bonds');
+    Logger.unit(this, 'released from bonds');
   }
 
   bind() {
     this.bound = true;
-  }
-
-  say(message) {
-    Logger.unitSpoke(`${this.name} ${message}`, this.type);
   }
 
   takeDamage(amount) {
@@ -82,12 +76,14 @@ export default class Unit {
       const revisedAmount = this.getHealth() - amount < 0 ? this.getHealth() : amount;
       this.health -= revisedAmount;
 
-      this.say(`takes ${revisedAmount} damage, ${this.getHealth()} health power left`);
+      Logger.unit(this, `takes ${revisedAmount} damage, ${this.getHealth()} health power left`);
 
       if (!this.getHealth()) {
-        this.say('dies');
+        Logger.unit(this, 'dies');
 
         this.position = null;
+
+        Logger.unit(this);
       }
     }
   }
