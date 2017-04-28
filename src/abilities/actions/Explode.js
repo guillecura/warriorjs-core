@@ -1,4 +1,5 @@
 import Action from './Action';
+import Logger from '../../Logger';
 
 export default class Explode extends Action {
   constructor(unit, time) {
@@ -12,7 +13,7 @@ export default class Explode extends Action {
 
   perform() {
     if (this.unit.isAlive()) {
-      this.unit.say('explodes, collapsing the ceiling and killing every unit');
+      Logger.unit(this.unit, 'explodes, collapsing the ceiling and killing every unit');
 
       this.unit.position.floor.getUnits().forEach(unit => unit.takeDamage(Infinity));
     }
@@ -20,7 +21,7 @@ export default class Explode extends Action {
 
   passTurn() {
     if (this.time && this.unit.isAlive()) {
-      this.unit.say('is ticking');
+      Logger.unit(this.unit, 'is ticking');
 
       this.time -= 1;
       if (!this.time) {

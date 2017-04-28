@@ -1,13 +1,16 @@
 import Rest from '../../../src/abilities/actions/Rest';
 import Warrior from '../../../src/units/Warrior';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Rest', () => {
   let rest;
   let warrior;
 
   beforeEach(() => {
     warrior = new Warrior();
-    warrior.say = () => {};
     rest = new Rest(warrior);
   });
 

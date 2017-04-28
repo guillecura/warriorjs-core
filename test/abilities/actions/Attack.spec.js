@@ -1,6 +1,10 @@
 import Attack from '../../../src/abilities/actions/Attack';
 import Unit from '../../../src/units/Unit';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Attack', () => {
   let attack;
   let attacker;
@@ -9,7 +13,6 @@ describe('Attack', () => {
   beforeEach(() => {
     attacker = {
       attackPower: 3,
-      say: () => {},
     };
     attack = new Attack(attacker);
     receiver = new Unit();

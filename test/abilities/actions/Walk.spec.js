@@ -1,5 +1,9 @@
 import Walk from '../../../src/abilities/actions/Walk';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Walk', () => {
   let walk;
   let space;
@@ -15,7 +19,6 @@ describe('Walk', () => {
         move: jest.fn(),
       },
       isAlive: () => true,
-      say: () => {},
     };
     walk = new Walk(unit);
   });

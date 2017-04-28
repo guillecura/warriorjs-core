@@ -1,6 +1,10 @@
 import Position from '../../src/Position';
 import Unit from '../../src/units/Unit';
 
+jest.mock('../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Unit', () => {
   let unit;
 

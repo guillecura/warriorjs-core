@@ -1,5 +1,9 @@
 import Shoot from '../../../src/abilities/actions/Shoot';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Shoot', () => {
   let shoot;
   let shooter;
@@ -7,7 +11,6 @@ describe('Shoot', () => {
   beforeEach(() => {
     shooter = {
       shootPower: 2,
-      say: () => {},
     };
     shoot = new Shoot(shooter);
   });

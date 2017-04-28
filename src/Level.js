@@ -1,5 +1,3 @@
-import { isEqual } from 'lodash';
-
 import LevelLoader from './LevelLoader';
 import Logger from './Logger';
 
@@ -23,32 +21,16 @@ export default class Level {
   play(turns) {
     Logger.clear();
 
-    const initialFloor = this.floor.toViewObject();
-    Logger.playStarted(initialFloor);
-
-    let lastFloor = initialFloor;
-
     // eslint-disable-next-line
     for (let n = 0; n < turns; n++) {
       if (this.passed() || this.failed()) {
         break;
       }
 
-      const turnNumber = n + 1;
-      Logger.turnChanged(turnNumber);
+      Logger.turn();
 
       this.floor.getUnits().forEach(unit => unit.prepareTurn());
-      // eslint-disable-next-line
-      this.floor.getUnits().forEach(unit => {
-        unit.performTurn();
-
-        const floor = this.floor.toViewObject();
-        if (!isEqual(lastFloor, floor)) {
-          Logger.floorChanged(floor);
-        }
-
-        lastFloor = floor;
-      });
+      this.floor.getUnits().forEach(unit => unit.performTurn());
 
       if (this.timeBonus) {
         this.timeBonus -= 1;

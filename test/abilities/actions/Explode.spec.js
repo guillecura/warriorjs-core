@@ -5,6 +5,10 @@ import Explode from '../../../src/abilities/actions/Explode';
 import Floor from '../../../src/Floor';
 import Unit from '../../../src/units/Unit';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Explode', () => {
   let floor;
   let captive;

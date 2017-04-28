@@ -5,6 +5,10 @@ import Floor from '../../../src/Floor';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Detonate', () => {
   let detonate;
   let floor;

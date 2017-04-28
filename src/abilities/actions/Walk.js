@@ -1,5 +1,6 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
+import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 
@@ -13,12 +14,12 @@ export default class Walk extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this.verifyDirection(direction);
     if (this.unit.isAlive()) {
-      this.unit.say(`walks ${direction}`);
-
       if (this.getSpace(direction).isEmpty()) {
         this.unit.position.move(...this.offset(direction));
+
+        Logger.unit(this.unit, `walks ${direction}`);
       } else {
-        this.unit.say(`bumps into ${this.getSpace(direction)}`);
+        Logger.unit(this.unit, `walks ${direction} and bumps into ${this.getSpace(direction)}`);
       }
     }
   }

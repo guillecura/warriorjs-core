@@ -1,5 +1,9 @@
 import Pivot from '../../../src/abilities/actions/Pivot';
 
+jest.mock('../../../src/Logger', () => ({
+  unit: () => {},
+}));
+
 describe('Pivot', () => {
   let pivot;
   let position;
@@ -10,7 +14,6 @@ describe('Pivot', () => {
     };
     pivot = new Pivot({
       position,
-      say: () => {},
     });
   });
 
