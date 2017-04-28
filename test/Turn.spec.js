@@ -58,10 +58,9 @@ describe('Turn', () => {
     });
 
     it('should be able to call actions and senses', () => {
-      expect(() => {
-        playerObject.feel();
-        playerObject.attack();
-      }).not.toThrow();
+      expect(playerObject.feel).toBeDefined();
+      expect(playerObject.attack).toBeDefined();
+      expect(playerObject.walk).toBeDefined();
     });
 
     it('should not be able to access restricted properties', () => {

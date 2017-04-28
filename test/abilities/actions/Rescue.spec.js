@@ -20,10 +20,10 @@ describe('Rescue', () => {
   it('should rescue captive', () => {
     const captive = new Captive();
     captive.position = {};
-    rescue.getSpace = jest.fn().mockReturnValue({
-      isCaptive: jest.fn().mockReturnValue(true),
+    rescue.getSpace = () => ({
+      isCaptive: () => true,
     });
-    rescue.getUnit = jest.fn().mockReturnValue(captive);
+    rescue.getUnit = () => captive;
     rescue.perform();
     expect(captive.position).toBeNull();
     expect(warrior.earnPoints.mock.calls[0][0]).toBe(20);
@@ -33,10 +33,10 @@ describe('Rescue', () => {
     const unit = new Unit();
     unit.position = {};
     unit.bind();
-    rescue.getSpace = jest.fn().mockReturnValue({
-      isCaptive: jest.fn().mockReturnValue(true),
+    rescue.getSpace = () => ({
+      isCaptive: () => true,
     });
-    rescue.getUnit = jest.fn().mockReturnValue(unit);
+    rescue.getUnit = () => unit;
     rescue.perform();
     expect(unit.isBound()).toBe(false);
     expect(unit.position).not.toBeNull();
@@ -46,8 +46,8 @@ describe('Rescue', () => {
   it('should do nothing to other unit if not bound', () => {
     const unit = new Unit();
     unit.position = {};
-    rescue.getSpace = jest.fn().mockReturnValue({
-      isCaptive: jest.fn().mockReturnValue(false),
+    rescue.getSpace = () => ({
+      isCaptive: () => false,
     });
     rescue.perform();
     expect(unit.position).not.toBeNull();

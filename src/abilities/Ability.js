@@ -46,6 +46,6 @@ export default class Ability {
   }
 
   getUnit(direction, forward = 1, right = 0) {
-    return this.getSpace(direction, forward, right).unit;
+    return this.getSpace(direction, forward, right).getUnit();
   }
 }

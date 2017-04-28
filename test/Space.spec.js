@@ -177,12 +177,14 @@ describe('Space', () => {
     });
 
     it('should be able to call informational methods', () => {
-      expect(() => {
-        playerObject.isWall();
-        playerObject.isWarrior();
-        playerObject.isEnemy();
-        playerObject.isEmpty();
-      }).not.toThrow();
+      expect(playerObject.isWall).toBeDefined();
+      expect(playerObject.isWarrior).toBeDefined();
+      expect(playerObject.isPlayer).toBeDefined();
+      expect(playerObject.isEnemy).toBeDefined();
+      expect(playerObject.isCaptive).toBeDefined();
+      expect(playerObject.isTicking).toBeDefined();
+      expect(playerObject.isEmpty).toBeDefined();
+      expect(playerObject.isStairs).toBeDefined();
     });
 
     it('should not be able to access restricted properties', () => {

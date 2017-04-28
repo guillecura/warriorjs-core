@@ -104,4 +104,14 @@ describe('Position', () => {
     position.rotate(1);
     expect(position.getRelativeDirection('north')).toEqual('right');
   });
+
+  describe('view object', () => {
+    it('should have only view object properties', () => {
+      expect(position.toViewObject()).toEqual({
+        x: 1,
+        y: 2,
+        direction: 'north',
+      });
+    });
+  });
 });

@@ -38,7 +38,9 @@ describe('Ability', () => {
   });
 
   it('should fetch unit at given direction with distance', () => {
-    ability.getSpace = jest.fn().mockReturnValue({ unit: 'unit' });
+    ability.getSpace = () => ({
+      getUnit: () => 'unit',
+    });
     expect(ability.getUnit('right', 3, 1)).toEqual('unit');
   });
 

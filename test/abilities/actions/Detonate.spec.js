@@ -1,4 +1,3 @@
-import Captive from '../../../src/units/Captive';
 import Detonate from '../../../src/abilities/actions/Detonate';
 import Explode from '../../../src/abilities/actions/Explode';
 import Floor from '../../../src/Floor';
@@ -46,12 +45,12 @@ describe('Detonate', () => {
   });
 
   it('should detonate an explosive if any unit has one', () => {
-    const captive = new Captive();
-    captive.maxHealth = 1;
-    captive.abilities.set('explode', new Explode(captive));
-    floor.addUnit(captive, { x: 1, y: 1 });
+    const unit = new Unit();
+    unit.maxHealth = 1;
+    unit.abilities.set('explode', new Explode(unit));
+    floor.addUnit(unit, { x: 1, y: 1 });
     detonate.perform();
-    expect(captive.getHealth()).toBe(0);
+    expect(unit.getHealth()).toBe(0);
     expect(warrior.getHealth()).toBe(0);
   });
 });

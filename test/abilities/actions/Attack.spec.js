@@ -18,7 +18,7 @@ describe('Attack', () => {
     receiver = new Unit();
     receiver.position = {};
     receiver.maxHealth = 5;
-    attack.getUnit = jest.fn().mockReturnValue(receiver);
+    attack.getUnit = () => receiver;
   });
 
   it('should subtract attack power amount from health', () => {
@@ -45,7 +45,7 @@ describe('Attack', () => {
   });
 
   it('should do nothing if no recipient', () => {
-    attack.getUnit = jest.fn().mockReturnValue(null);
+    attack.getUnit = () => undefined;
     expect(() => {
       attack.perform();
     }).not.toThrow();

@@ -15,7 +15,7 @@ export default class Explode extends Action {
     if (this.unit.isAlive()) {
       Logger.unit(this.unit, 'explodes, collapsing the ceiling and killing every unit');
 
-      this.unit.position.floor.getUnits().forEach(unit => unit.takeDamage(Infinity));
+      this.unit.position.floor.getUnits().forEach(unit => unit.takeDamage(Number.MAX_SAFE_INTEGER));
     }
   }
 

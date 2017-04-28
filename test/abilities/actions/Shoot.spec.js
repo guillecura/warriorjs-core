@@ -24,14 +24,14 @@ describe('Shoot', () => {
       isAlive: () => true,
       takeDamage: jest.fn(),
     };
-    shoot.getUnits = jest.fn().mockReturnValue([receiver, other]);
+    shoot.getUnits = () => [receiver, other];
     shoot.perform();
     expect(receiver.takeDamage.mock.calls[0][0]).toBe(2);
     expect(other.takeDamage.mock.calls.length).toBe(0);
   });
 
   it('should shoot and do nothing if no units in the way', () => {
-    shoot.getUnits = jest.fn().mockReturnValue([]);
+    shoot.getUnits = () => [];
     expect(() => {
       shoot.perform();
     }).not.toThrow();

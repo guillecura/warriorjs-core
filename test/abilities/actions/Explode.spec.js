@@ -1,6 +1,5 @@
 import { times } from 'lodash';
 
-import Captive from '../../../src/units/Captive';
 import Explode from '../../../src/abilities/actions/Explode';
 import Floor from '../../../src/Floor';
 import Unit from '../../../src/units/Unit';
@@ -10,32 +9,29 @@ jest.mock('../../../src/Logger', () => ({
 }));
 
 describe('Explode', () => {
-  let floor;
-  let captive;
   let explode;
+  let floor;
+  let unit;
 
   beforeEach(() => {
     floor = new Floor(2, 3);
-    captive = new Captive();
-    floor.addUnit(captive, { x: 0, y: 0 });
-    explode = new Explode(captive, 3);
+    unit = new Unit();
+    floor.addUnit(unit, { x: 0, y: 0 });
+    explode = new Explode(unit, 3);
   });
 
   it('should explode when bomb time reaches zero', () => {
-    captive.maxHealth = 10;
+    unit.maxHealth = 1;
     times(2, () => explode.passTurn());
-    expect(captive.getHealth()).toBe(10);
+    expect(unit.getHealth()).toBe(1);
     explode.passTurn();
-    expect(captive.getHealth()).toBe(0);
+    expect(unit.getHealth()).toBe(0);
   });
 
   it('should kill every unit on the floor', () => {
-    const unit = new Unit();
-    unit.maxHealth = 101;
     floor.addUnit(unit, { x: 0, y: 1 });
-    captive.maxHealth = 10;
+    unit.maxHealth = Number.MAX_SAFE_INTEGER;
     explode.perform();
-    expect(captive.getHealth()).toBe(0);
     expect(unit.getHealth()).toBe(0);
   });
 });

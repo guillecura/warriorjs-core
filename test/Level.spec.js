@@ -41,7 +41,7 @@ describe('Level', () => {
       const unit = new Unit();
       unit.performTurn = jest.fn();
       floor.addUnit(unit, { x: 0, y: 0 });
-      level.passed = jest.fn().mockReturnValue(true);
+      level.passed = () => true;
       level.play(2);
       expect(unit.performTurn.mock.calls.length).toBe(0);
     });

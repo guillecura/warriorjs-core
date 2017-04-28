@@ -16,13 +16,13 @@ describe('Bind', () => {
 
   it('should bind receiver', () => {
     const receiver = new Unit();
-    bind.getUnit = jest.fn().mockReturnValue(receiver);
+    bind.getUnit = () => receiver;
     bind.perform();
     expect(receiver.isBound()).toBe(true);
   });
 
   it('should do nothing if no recipient', () => {
-    bind.getUnit = jest.fn().mockReturnValue(null);
+    bind.getUnit = () => undefined;
     expect(() => {
       bind.perform();
     }).not.toThrow();
