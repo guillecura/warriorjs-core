@@ -2,34 +2,7 @@ import { uniqBy } from 'lodash';
 
 import Position from './Position';
 import Space from './Space';
-import viewObject from './decorators/viewObject';
 
-const viewObjectShape = {
-  size: {
-    width() {
-      return this.width;
-    },
-    height() {
-      return this.height;
-    },
-  },
-  stairs: {
-    x() {
-      return this.stairsLocation[0];
-    },
-    y() {
-      return this.stairsLocation[1];
-    },
-  },
-  warrior() {
-    return this.warrior;
-  },
-  units() {
-    return this.otherUnits;
-  },
-};
-
-@viewObject(viewObjectShape)
 export default class Floor {
   constructor(width, height) {
     this.width = width;
