@@ -15,10 +15,12 @@ export default class Rescue extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this.verifyDirection(direction);
 
+    const state = this.getStateWithDirection('rescuing', direction);
+
     if (this.getSpace(direction).isCaptive()) {
       const recipient = this.getUnit(direction);
 
-      Logger.unit(this.unit, `unbinds ${direction} and rescues ${recipient}`);
+      Logger.unit(this.unit, state, `unbinds ${direction} and rescues ${recipient}`);
 
       recipient.unbind();
       if (recipient.getType() === 'captive') {
@@ -29,7 +31,7 @@ export default class Rescue extends Action {
         this.unit.earnPoints(RESCUING_BONUS);
       }
     } else {
-      Logger.unit(this.unit, `unbinds ${direction} and rescues nothing`);
+      Logger.unit(this.unit, state, `unbinds ${direction} and rescues nothing`);
     }
   }
 }

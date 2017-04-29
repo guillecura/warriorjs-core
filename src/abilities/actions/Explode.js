@@ -13,7 +13,11 @@ export default class Explode extends Action {
 
   perform() {
     if (this.unit.isAlive()) {
-      Logger.unit(this.unit, 'explodes, collapsing the ceiling and killing every unit');
+      Logger.unit(
+        this.unit,
+        'exploding',
+        'explodes, collapsing the ceiling and killing every unit',
+      );
 
       this.unit.position.floor.getUnits().forEach(unit => unit.takeDamage(Number.MAX_SAFE_INTEGER));
     }
@@ -21,7 +25,7 @@ export default class Explode extends Action {
 
   passTurn() {
     if (this.time && this.unit.isAlive()) {
-      Logger.unit(this.unit, 'is ticking');
+      Logger.unit(this.unit, null, 'is ticking');
 
       this.time -= 1;
       if (!this.time) {

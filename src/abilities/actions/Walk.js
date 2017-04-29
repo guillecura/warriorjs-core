@@ -13,13 +13,20 @@ export default class Walk extends Action {
 
   perform(direction = DEFAULT_DIRECTION) {
     this.verifyDirection(direction);
+
+    const state = this.getStateWithDirection('walking', direction);
+
     if (this.unit.isAlive()) {
       if (this.getSpace(direction).isEmpty()) {
         this.unit.position.move(...this.offset(direction));
 
-        Logger.unit(this.unit, `walks ${direction}`);
+        Logger.unit(this.unit, state, `walks ${direction}`);
       } else {
-        Logger.unit(this.unit, `walks ${direction} and bumps into ${this.getSpace(direction)}`);
+        Logger.unit(
+          this.unit,
+          state,
+          `walks ${direction} and bumps into ${this.getSpace(direction)}`,
+        );
       }
     }
   }

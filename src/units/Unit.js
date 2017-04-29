@@ -60,7 +60,7 @@ export default class Unit {
   unbind() {
     this.bound = false;
 
-    Logger.unit(this, 'released from bonds');
+    Logger.unit(this, 'beingUnbound', 'released from bonds');
   }
 
   bind() {
@@ -76,10 +76,14 @@ export default class Unit {
       const revisedAmount = this.getHealth() - amount < 0 ? this.getHealth() : amount;
       this.health -= revisedAmount;
 
-      Logger.unit(this, `takes ${revisedAmount} damage, ${this.getHealth()} health power left`);
+      Logger.unit(
+        this,
+        'takingDamage',
+        `takes ${revisedAmount} damage, ${this.getHealth()} health power left`,
+      );
 
       if (!this.getHealth()) {
-        Logger.unit(this, 'dies');
+        Logger.unit(this, 'dying', 'dies');
 
         this.position = null;
 

@@ -21,10 +21,11 @@ export default class Rest extends Action {
 
       Logger.unit(
         this.unit,
+        'resting',
         `receives ${revisedAmount} health from resting, up to ${this.unit.getHealth()} health`,
       );
     } else {
-      Logger.unit(this.unit, 'is already fit as a fiddle');
+      Logger.unit(this.unit, 'resting', 'is already fit as a fiddle');
     }
   }
 }

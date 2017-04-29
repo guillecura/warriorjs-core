@@ -4,11 +4,14 @@ const Logger = {
     Logger.events = [];
   },
   turn() {
-    Logger.events.push([]);
+    const turnEvents = [];
+    Logger.events.push(turnEvents);
   },
-  unit(unit, message) {
-    Logger.events[Logger.events.length - 1].push({
+  unit(unit, state, message) {
+    const turnEvents = Logger.events[Logger.events.length - 1];
+    turnEvents.push({
       message,
+      state,
       unit: unit.toViewObject(),
     });
   },
