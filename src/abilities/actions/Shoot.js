@@ -21,13 +21,15 @@ export default class Shoot extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this.verifyDirection(direction);
 
+    const state = this.getStateWithDirection('shooting', direction);
+
     const receiver = this.getUnits(direction, range(1, ATTACK_RANGE + 1))[0];
     if (receiver) {
-      Logger.unit(this.unit, `shoots ${direction} and hits ${receiver}`);
+      Logger.unit(this.unit, state, `shoots ${direction} and hits ${receiver}`);
 
       this.damage(receiver, this.unit.shootPower);
     } else {
-      Logger.unit(this.unit, `shoots ${direction} and hits nothing`);
+      Logger.unit(this.unit, state, `shoots ${direction} and hits nothing`);
     }
   }
 }

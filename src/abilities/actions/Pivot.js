@@ -16,6 +16,8 @@ export default class Pivot extends Action {
 
     this.unit.position.rotate(RELATIVE_DIRECTION_ARRAY.indexOf(direction));
 
-    Logger.unit(this.unit, `pivots ${direction}`);
+    const state = this.getStateWithDirection('pivoting', direction);
+
+    Logger.unit(this.unit, state, `pivots ${direction}`);
   }
 }

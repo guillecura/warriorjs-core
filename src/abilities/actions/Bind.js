@@ -14,13 +14,15 @@ export default class Bind extends Action {
   perform(direction = DEFAULT_DIRECTION) {
     this.verifyDirection(direction);
 
+    const state = this.getStateWithDirection('binding', direction);
+
     const receiver = this.getUnit(direction);
     if (receiver) {
-      Logger.unit(this.unit, `binds ${direction} and restricts ${receiver}`);
+      Logger.unit(this.unit, state, `binds ${direction} and restricts ${receiver}`);
 
       receiver.bind();
     } else {
-      Logger.unit(this.unit, `binds ${direction} and restricts nothing`);
+      Logger.unit(this.unit, state, `binds ${direction} and restricts nothing`);
     }
   }
 }

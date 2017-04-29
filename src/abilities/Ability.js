@@ -1,3 +1,5 @@
+import { startCase } from 'lodash';
+
 import { BACKWARD, FORWARD, LEFT, RELATIVE_DIRECTION_ARRAY, RIGHT } from '../constants/directions';
 
 export default class Ability {
@@ -23,6 +25,11 @@ export default class Ability {
       ).join(', ');
       throw new Error(`Unknown direction '${direction}'. Should be one of: ${validDirections}.`);
     }
+  }
+
+  // eslint-disable-next-line
+  getStateWithDirection(state, direction) {
+    return `${state}${startCase(direction)}`;
   }
 
   // eslint-disable-next-line
