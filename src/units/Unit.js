@@ -33,6 +33,7 @@ export default class Unit {
     this.shootPower = 0;
     this.bound = false;
     this.abilities = new Map();
+    this.effects = new Map();
     this.currentTurn = null;
   }
 
@@ -47,6 +48,18 @@ export default class Unit {
   getHealth() {
     this.health = this.health === null ? this.maxHealth : this.health;
     return this.health;
+  }
+
+  addAbility(ability) {
+    this.abilities.set(ability.getName(), ability);
+  }
+
+  addEffect(effect) {
+    this.effects.set(effect.getName(), effect);
+  }
+
+  removeEffect(effect) {
+    this.effects.delete(effect.getName());
   }
 
   isAlive() {

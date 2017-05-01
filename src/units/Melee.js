@@ -6,8 +6,8 @@ export default class Melee extends Unit {
   constructor(index) {
     super(index);
 
-    this.abilities.set('attack', new Attack(this));
-    this.abilities.set('feel', new Feel(this));
+    this.addAbility(new Attack(this));
+    this.addAbility(new Feel(this));
   }
 
   // eslint-disable-next-line

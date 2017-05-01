@@ -1,10 +1,14 @@
-import { startCase } from 'lodash';
+import { camelCase, startCase } from 'lodash';
 
 import { BACKWARD, FORWARD, LEFT, RELATIVE_DIRECTION_ARRAY, RIGHT } from '../constants/directions';
 
 export default class Ability {
   constructor(unit) {
     this.unit = unit;
+  }
+
+  getName() {
+    return camelCase(this.constructor.name);
   }
 
   // eslint-disable-next-line

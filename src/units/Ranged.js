@@ -6,8 +6,8 @@ export default class Ranged extends Unit {
   constructor(index) {
     super(index);
 
-    this.abilities.set('shoot', new Shoot(this));
-    this.abilities.set('look', new Look(this));
+    this.addAbility(new Shoot(this));
+    this.addAbility(new Look(this));
   }
 
   // eslint-disable-next-line

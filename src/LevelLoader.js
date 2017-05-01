@@ -50,6 +50,8 @@ const ABILITIES = {
   walk: Walk,
 };
 
+const EFFECTS = {};
+
 export default class LevelLoader {
   constructor(level) {
     this.level = level;
@@ -66,8 +68,8 @@ export default class LevelLoader {
       throw new Error('One unit in the level must be a warrior.');
     }
 
-    units.forEach(({ type, position, abilities }, index) => {
-      const unit = this.placeUnit(index, type, position, abilities);
+    units.forEach(({ type, position, abilities, effects }, index) => {
+      const unit = this.placeUnit(index, type, position, abilities, effects);
       if (type === 'warrior') {
         unit.name = warriorName;
         this.level.warrior = unit;
@@ -83,7 +85,7 @@ export default class LevelLoader {
     this.level.floor.placeStairs(x, y);
   }
 
-  placeUnit(index, type, position, abilities = []) {
+  placeUnit(index, type, position, abilities = [], effects = []) {
     if (!(type in UNITS)) {
       throw new Error(`Unknown unit '${type}'.`);
     }
@@ -95,7 +97,15 @@ export default class LevelLoader {
         throw new Error(`Unknown ability '${name}'.`);
       }
 
-      unit.abilities.set(name, new ABILITIES[name](unit, ...args));
+      unit.addAbility(new ABILITIES[name](unit, ...args));
+    });
+
+    effects.forEach(({ name, args }) => {
+      if (!(name in EFFECTS)) {
+        throw new Error(`Unknown effect '${name}'.`);
+      }
+
+      unit.addEffect(new EFFECTS[name](unit, ...args));
     });
 
     this.level.floor.addUnit(unit, position);

@@ -84,10 +84,11 @@ describe('Unit', () => {
     it('should not perform action', () => {
       unit.position = null;
       const walk = {
+        getName: () => 'walk',
         passTurn: () => {},
         perform: jest.fn(),
       };
-      unit.abilities.set('walk', walk);
+      unit.addAbility(walk);
       const turn = {
         action: ['walk', ['backward']],
       };
@@ -117,9 +118,10 @@ describe('Unit', () => {
 
   it('should call passTurn on abilities when calling perform on turn', () => {
     const walk = {
+      getName: () => 'walk',
       passTurn: jest.fn(),
     };
-    unit.abilities.set('walk', walk);
+    unit.addAbility(walk);
     unit.prepareTurn();
     unit.performTurn();
     expect(walk.passTurn.mock.calls.length).toBe(1);
@@ -127,10 +129,11 @@ describe('Unit', () => {
 
   it('should perform action when calling perform on turn', () => {
     const walk = {
+      getName: () => 'walk',
       passTurn: () => {},
       perform: jest.fn(),
     };
-    unit.abilities.set('walk', walk);
+    unit.addAbility(walk);
     const turn = {
       action: ['walk', ['backward']],
     };
@@ -143,10 +146,11 @@ describe('Unit', () => {
   it('should not perform action when dead', () => {
     unit.position = null;
     const walk = {
+      getName: () => 'walk',
       passTurn: () => {},
       perform: jest.fn(),
     };
-    unit.abilities.set('walk', walk);
+    unit.addAbility(walk);
     const turn = {
       action: ['walk', ['backward']],
     };
