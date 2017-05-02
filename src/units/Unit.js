@@ -121,7 +121,7 @@ export default class Unit {
 
   performTurn() {
     if (this.isAlive()) {
-      this.abilities.forEach(ability => ability.passTurn());
+      this.effects.forEach(effect => effect.passTurn());
       if (this.currentTurn.action && !this.isBound()) {
         const [name, args] = this.currentTurn.action;
         this.abilities.get(name).perform(...args);

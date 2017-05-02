@@ -85,7 +85,6 @@ describe('Unit', () => {
       unit.position = null;
       const walk = {
         getName: () => 'walk',
-        passTurn: () => {},
         perform: jest.fn(),
       };
       unit.addAbility(walk);
@@ -116,21 +115,20 @@ describe('Unit', () => {
     expect(unit.playTurn.mock.calls[0][0]).toEqual('nextTurn');
   });
 
-  it('should call passTurn on abilities when calling perform on turn', () => {
-    const walk = {
-      getName: () => 'walk',
+  it('should call passTurn on effects when calling perform on turn', () => {
+    const ticking = {
+      getName: () => 'ticking',
       passTurn: jest.fn(),
     };
-    unit.addAbility(walk);
+    unit.addEffect(ticking);
     unit.prepareTurn();
     unit.performTurn();
-    expect(walk.passTurn.mock.calls.length).toBe(1);
+    expect(ticking.passTurn.mock.calls.length).toBe(1);
   });
 
   it('should perform action when calling perform on turn', () => {
     const walk = {
       getName: () => 'walk',
-      passTurn: () => {},
       perform: jest.fn(),
     };
     unit.addAbility(walk);
@@ -147,7 +145,6 @@ describe('Unit', () => {
     unit.position = null;
     const walk = {
       getName: () => 'walk',
-      passTurn: () => {},
       perform: jest.fn(),
     };
     unit.addAbility(walk);

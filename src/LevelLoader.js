@@ -6,7 +6,6 @@ import Detonate from './abilities/actions/Detonate';
 import DirectionOf from './abilities/senses/DirectionOf';
 import DirectionOfStairs from './abilities/senses/DirectionOfStairs';
 import DistanceOf from './abilities/senses/DistanceOf';
-import Explode from './abilities/actions/Explode';
 import Feel from './abilities/senses/Feel';
 import Floor from './Floor';
 import Health from './abilities/senses/Health';
@@ -18,6 +17,7 @@ import Rest from './abilities/actions/Rest';
 import Shoot from './abilities/actions/Shoot';
 import Sludge from './units/Sludge';
 import ThickSludge from './units/ThickSludge';
+import Ticking from './effects/Ticking';
 import Walk from './abilities/actions/Walk';
 import Warrior from './units/Warrior';
 import Wizard from './units/Wizard';
@@ -38,7 +38,6 @@ const ABILITIES = {
   directionOf: DirectionOf,
   directionOfStairs: DirectionOfStairs,
   distanceOf: DistanceOf,
-  explode: Explode,
   feel: Feel,
   health: Health,
   listen: Listen,
@@ -50,7 +49,9 @@ const ABILITIES = {
   walk: Walk,
 };
 
-const EFFECTS = {};
+const EFFECTS = {
+  ticking: Ticking,
+};
 
 export default class LevelLoader {
   constructor(level) {

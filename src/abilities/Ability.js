@@ -12,11 +12,6 @@ export default class Ability {
   }
 
   // eslint-disable-next-line
-  passTurn() {
-    // Callback which is triggered every turn
-  }
-
-  // eslint-disable-next-line
   perform() {
     // To be overriden by subclass
   }

@@ -1,7 +1,7 @@
 import Captive from '../src/units/Captive';
-import Explode from '../src/abilities/actions/Explode';
 import Floor from '../src/Floor';
 import Sludge from '../src/units/Sludge';
+import Ticking from '../src/effects/Ticking';
 import Warrior from '../src/units/Warrior';
 
 describe('Space', () => {
@@ -158,7 +158,7 @@ describe('Space', () => {
     });
 
     it('should be ticking if captive has time bomb', () => {
-      captive.addAbility('explode', new Explode(captive));
+      captive.addEffect(new Ticking(captive));
       expect(space.isTicking()).toBe(true);
     });
 

@@ -42,7 +42,7 @@ export default class Space {
 
   isTicking() {
     const unit = this.getUnit();
-    return !!unit && unit.abilities.has('explode');
+    return !!unit && unit.effects.has('ticking');
   }
 
   isEmpty() {
