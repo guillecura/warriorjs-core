@@ -18,7 +18,7 @@ describe('Bind', () => {
     const receiver = new Unit();
     bind.getUnit = () => receiver;
     bind.perform();
-    expect(receiver.isBound()).toBe(true);
+    expect(receiver.effects.keys()).toContain('bound');
   });
 
   it('should do nothing if no recipient', () => {

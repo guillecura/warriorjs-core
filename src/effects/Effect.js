@@ -14,7 +14,7 @@ export default class Effect {
     if (this.time) {
       this.time -= 1;
       if (!this.time) {
-        this.unit.removeEffect(this);
+        this.unit.removeEffect(this.getName());
       }
     }
 

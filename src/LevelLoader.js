@@ -1,6 +1,7 @@
 import Archer from './units/Archer';
 import Attack from './abilities/actions/Attack';
 import Bind from './abilities/actions/Bind';
+import Bound from './effects/Bound';
 import Captive from './units/Captive';
 import Detonate from './abilities/actions/Detonate';
 import DirectionOf from './abilities/senses/DirectionOf';
@@ -50,6 +51,7 @@ const ABILITIES = {
 };
 
 const EFFECTS = {
+  bound: Bound,
   ticking: Ticking,
 };
 

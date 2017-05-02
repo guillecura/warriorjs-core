@@ -1,5 +1,6 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
+import Bound from '../../effects/Bound';
 import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
@@ -20,7 +21,7 @@ export default class Bind extends Action {
     if (receiver) {
       Logger.unit(this.unit, state, `binds ${direction} and restricts ${receiver}`);
 
-      receiver.bind();
+      receiver.addEffect(new Bound());
     } else {
       Logger.unit(this.unit, state, `binds ${direction} and restricts nothing`);
     }

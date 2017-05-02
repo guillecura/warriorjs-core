@@ -32,12 +32,12 @@ export default class Space {
   }
 
   isEnemy() {
-    return !!this.getUnit() && !this.isPlayer() && !this.isCaptive();
+    return !!this.getUnit() && !this.isPlayer() && !this.isBound();
   }
 
-  isCaptive() {
+  isBound() {
     const unit = this.getUnit();
-    return !!unit && unit.isBound();
+    return !!unit && unit.effects.has('bound');
   }
 
   isTicking() {

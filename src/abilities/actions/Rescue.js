@@ -17,12 +17,12 @@ export default class Rescue extends Action {
 
     const state = this.getStateWithDirection('rescuing', direction);
 
-    if (this.getSpace(direction).isCaptive()) {
+    if (this.getSpace(direction).isBound()) {
       const recipient = this.getUnit(direction);
 
       Logger.unit(this.unit, state, `unbinds ${direction} and rescues ${recipient}`);
 
-      recipient.unbind();
+      recipient.removeEffect('bound');
       if (recipient.getType() === 'captive') {
         recipient.position = null;
 
