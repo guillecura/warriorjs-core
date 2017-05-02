@@ -1,3 +1,4 @@
+import Bound from '../../../src/effects/Bound';
 import Captive from '../../../src/units/Captive';
 import Rescue from '../../../src/abilities/actions/Rescue';
 import Unit from '../../../src/units/Unit';
@@ -21,7 +22,7 @@ describe('Rescue', () => {
     const captive = new Captive();
     captive.position = {};
     rescue.getSpace = () => ({
-      isCaptive: () => true,
+      isBound: () => true,
     });
     rescue.getUnit = () => captive;
     rescue.perform();
@@ -32,13 +33,13 @@ describe('Rescue', () => {
   it('should release other unit when bound', () => {
     const unit = new Unit();
     unit.position = {};
-    unit.bind();
+    unit.addEffect(new Bound());
     rescue.getSpace = () => ({
-      isCaptive: () => true,
+      isBound: () => true,
     });
     rescue.getUnit = () => unit;
     rescue.perform();
-    expect(unit.isBound()).toBe(false);
+    expect(unit.effects.keys()).not.toContain('bound');
     expect(unit.position).not.toBeNull();
     expect(warrior.earnPoints.mock.calls.length).toBe(0);
   });
@@ -47,7 +48,7 @@ describe('Rescue', () => {
     const unit = new Unit();
     unit.position = {};
     rescue.getSpace = () => ({
-      isCaptive: () => false,
+      isBound: () => false,
     });
     rescue.perform();
     expect(unit.position).not.toBeNull();

@@ -1,4 +1,4 @@
-import { startCase } from 'lodash';
+import { camelCase, startCase } from 'lodash';
 
 import { BACKWARD, FORWARD, LEFT, RELATIVE_DIRECTION_ARRAY, RIGHT } from '../constants/directions';
 
@@ -7,9 +7,8 @@ export default class Ability {
     this.unit = unit;
   }
 
-  // eslint-disable-next-line
-  passTurn() {
-    // Callback which is triggered every turn
+  getName() {
+    return camelCase(this.constructor.name);
   }
 
   // eslint-disable-next-line

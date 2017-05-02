@@ -31,8 +31,8 @@ export default class Unit {
     this.health = null;
     this.attackPower = 0;
     this.shootPower = 0;
-    this.bound = false;
     this.abilities = new Map();
+    this.effects = new Map();
     this.currentTurn = null;
   }
 
@@ -49,27 +49,25 @@ export default class Unit {
     return this.health;
   }
 
+  addAbility(ability) {
+    this.abilities.set(ability.getName(), ability);
+  }
+
+  addEffect(effect) {
+    this.effects.set(effect.getName(), effect);
+  }
+
+  removeEffect(name) {
+    this.effects.delete(name);
+  }
+
   isAlive() {
     return this.position !== null;
   }
 
-  isBound() {
-    return this.bound;
-  }
-
-  unbind() {
-    this.bound = false;
-
-    Logger.unit(this, 'beingUnbound', 'released from bonds');
-  }
-
-  bind() {
-    this.bound = true;
-  }
-
   takeDamage(amount) {
-    if (this.isBound()) {
-      this.unbind();
+    if (this.effects.has('bound')) {
+      this.removeEffect('bound');
     }
 
     if (this.getHealth()) {
@@ -108,8 +106,8 @@ export default class Unit {
 
   performTurn() {
     if (this.isAlive()) {
-      this.abilities.forEach(ability => ability.passTurn());
-      if (this.currentTurn.action && !this.isBound()) {
+      this.effects.forEach(effect => effect.passTurn());
+      if (this.currentTurn.action && !this.effects.has('bound')) {
         const [name, args] = this.currentTurn.action;
         this.abilities.get(name).perform(...args);
       }

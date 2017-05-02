@@ -34,10 +34,10 @@ export default class Detonate extends Action {
   bomb(space, damageAmount) {
     const receiver = space.getUnit();
     if (receiver) {
-      if (receiver.abilities.has('explode')) {
+      if (receiver.effects.has('ticking')) {
         Logger.unit(receiver, null, "caught in bomb's flames which detonates ticking explosive");
 
-        receiver.abilities.get('explode').perform();
+        receiver.effects.get('ticking').explode();
       } else {
         this.damage(receiver, damageAmount);
       }

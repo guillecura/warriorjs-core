@@ -1,7 +1,8 @@
+import Bound from '../src/effects/Bound';
 import Captive from '../src/units/Captive';
-import Explode from '../src/abilities/actions/Explode';
 import Floor from '../src/Floor';
 import Sludge from '../src/units/Sludge';
+import Ticking from '../src/effects/Ticking';
 import Warrior from '../src/units/Warrior';
 
 describe('Space', () => {
@@ -38,8 +39,8 @@ describe('Space', () => {
       expect(space.isStairs()).toBe(false);
     });
 
-    it('should not be captive', () => {
-      expect(space.isCaptive()).toBe(false);
+    it('should not be bound', () => {
+      expect(space.isBound()).toBe(false);
     });
 
     it('should not be ticking', () => {
@@ -126,11 +127,11 @@ describe('Space', () => {
 
     describe('bound', () => {
       beforeEach(() => {
-        space.getUnit().bind();
+        space.getUnit().addEffect(new Bound());
       });
 
-      it('should be captive', () => {
-        expect(space.isCaptive()).toBe(true);
+      it('should be bound', () => {
+        expect(space.isBound()).toBe(true);
       });
 
       it('should not look like enemy', () => {
@@ -149,8 +150,8 @@ describe('Space', () => {
       space = floor.getSpaceAt(0, 0);
     });
 
-    it('should be captive', () => {
-      expect(space.isCaptive()).toBe(true);
+    it('should be bound', () => {
+      expect(space.isBound()).toBe(true);
     });
 
     it('should not be enemy', () => {
@@ -158,7 +159,7 @@ describe('Space', () => {
     });
 
     it('should be ticking if captive has time bomb', () => {
-      captive.abilities.set('explode', new Explode(captive));
+      captive.addEffect(new Ticking(captive));
       expect(space.isTicking()).toBe(true);
     });
 
@@ -181,7 +182,7 @@ describe('Space', () => {
       expect(playerObject.isWarrior).toBeDefined();
       expect(playerObject.isPlayer).toBeDefined();
       expect(playerObject.isEnemy).toBeDefined();
-      expect(playerObject.isCaptive).toBeDefined();
+      expect(playerObject.isBound).toBeDefined();
       expect(playerObject.isTicking).toBeDefined();
       expect(playerObject.isEmpty).toBeDefined();
       expect(playerObject.isStairs).toBeDefined();

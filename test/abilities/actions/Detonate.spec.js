@@ -1,6 +1,6 @@
 import Detonate from '../../../src/abilities/actions/Detonate';
-import Explode from '../../../src/abilities/actions/Explode';
 import Floor from '../../../src/Floor';
+import Ticking from '../../../src/effects/Ticking';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
 
@@ -47,7 +47,7 @@ describe('Detonate', () => {
   it('should detonate an explosive if any unit has one', () => {
     const unit = new Unit();
     unit.maxHealth = 1;
-    unit.abilities.set('explode', new Explode(unit));
+    unit.addEffect(new Ticking(unit));
     floor.addUnit(unit, { x: 1, y: 1 });
     detonate.perform();
     expect(unit.getHealth()).toBe(0);

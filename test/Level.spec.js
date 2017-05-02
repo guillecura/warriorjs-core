@@ -15,7 +15,7 @@ describe('Level', () => {
     level.warrior = { score: () => {} };
   });
 
-  it('should default time bonus to zero', () => {
+  it('should have a time bonus which defaults to zero', () => {
     expect(level.timeBonus).toBe(0);
   });
 

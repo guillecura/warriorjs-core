@@ -1,3 +1,4 @@
+import Bound from '../effects/Bound';
 import Unit from './Unit';
 
 export default class Captive extends Unit {
@@ -6,6 +7,6 @@ export default class Captive extends Unit {
 
     this.maxHealth = 1;
 
-    this.bind();
+    this.addEffect(new Bound());
   }
 }
