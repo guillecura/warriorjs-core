@@ -1,6 +1,5 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
-import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 const RESCUING_BONUS = 20;
@@ -13,25 +12,22 @@ export default class Rescue extends Action {
   }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this.verifyDirection(direction);
+    if (this.unit.position.getRelativeSpace(direction).isBound()) {
+      const recipient = this.unit.position.getRelativeSpace(direction).getUnit();
 
-    const state = this.getStateWithDirection('rescuing', direction);
+      this.unit.say(`unbinds ${direction} and rescues ${recipient}`);
 
-    if (this.getSpace(direction).isBound()) {
-      const recipient = this.getUnit(direction);
-
-      Logger.unit(this.unit, state, `unbinds ${direction} and rescues ${recipient}`);
-
-      recipient.removeEffect('bound');
+      recipient.unbind();
       if (recipient.getType() === 'captive') {
         recipient.position = null;
 
-        Logger.unit(recipient);
+        // TODO: Find a better way of logging the unit disappearance
+        recipient.say();
 
         this.unit.earnPoints(RESCUING_BONUS);
       }
     } else {
-      Logger.unit(this.unit, state, `unbinds ${direction} and rescues nothing`);
+      this.unit.say(`unbinds ${direction} and rescues nothing`);
     }
   }
 }

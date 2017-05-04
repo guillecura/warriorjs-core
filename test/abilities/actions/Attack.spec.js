@@ -1,24 +1,25 @@
 import Attack from '../../../src/abilities/actions/Attack';
 import Unit from '../../../src/units/Unit';
 
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
-
 describe('Attack', () => {
   let attack;
   let attacker;
   let receiver;
 
   beforeEach(() => {
-    attacker = {
-      attackPower: 3,
-    };
+    attacker = new Unit();
+    attacker.attackPower = 3;
+    attacker.say = () => {};
     attack = new Attack(attacker);
     receiver = new Unit();
     receiver.position = {};
     receiver.maxHealth = 5;
-    attack.getUnit = () => receiver;
+    receiver.say = () => {};
+    attacker.position = {
+      getRelativeSpace: () => ({
+        getUnit: () => receiver,
+      }),
+    };
   });
 
   it('should subtract attack power amount from health', () => {

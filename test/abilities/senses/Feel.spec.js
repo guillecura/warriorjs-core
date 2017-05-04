@@ -11,6 +11,6 @@ describe('Feel', () => {
     };
     const feel = new Feel(unit);
     feel.perform('forward');
-    expect(unit.position.getRelativeSpace.mock.calls[0]).toEqual([1, -0]);
+    expect(unit.position.getRelativeSpace.mock.calls[0]).toEqual(['forward']);
   });
 });

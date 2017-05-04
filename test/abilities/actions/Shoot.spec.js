@@ -1,27 +1,26 @@
 import Shoot from '../../../src/abilities/actions/Shoot';
-
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
+import Unit from '../../../src/units/Unit';
 
 describe('Shoot', () => {
   let shoot;
   let shooter;
 
   beforeEach(() => {
-    shooter = {
-      shootPower: 2,
-    };
+    shooter = new Unit();
+    shooter.shootPower = 2;
+    shooter.say = () => {};
     shoot = new Shoot(shooter);
   });
 
   it('should shoot only first unit', () => {
     const receiver = {
       isAlive: () => true,
+      say: () => {},
       takeDamage: jest.fn(),
     };
     const other = {
       isAlive: () => true,
+      say: () => {},
       takeDamage: jest.fn(),
     };
     shoot.getUnits = () => [receiver, other];

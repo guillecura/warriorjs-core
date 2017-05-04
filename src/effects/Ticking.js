@@ -1,5 +1,4 @@
 import Effect from './Effect';
-import Logger from '../Logger';
 
 export default class Ticking extends Effect {
   constructor(unit, time) {
@@ -9,7 +8,7 @@ export default class Ticking extends Effect {
   }
 
   activate() {
-    Logger.unit(this.unit, 'is ticking');
+    this.unit.say('is ticking');
 
     if (!this.time) {
       this.explode();
@@ -17,7 +16,7 @@ export default class Ticking extends Effect {
   }
 
   explode() {
-    Logger.unit(this.unit, 'explodes, collapsing the ceiling and killing every unit');
+    this.unit.say('explodes, collapsing the ceiling and killing every unit');
 
     const units = this.unit.position.floor.getUnits();
     units.forEach(unit => unit.takeDamage(Number.MAX_SAFE_INTEGER));

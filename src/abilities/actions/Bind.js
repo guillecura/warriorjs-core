@@ -1,7 +1,5 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
-import Bound from '../../effects/Bound';
-import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 
@@ -13,17 +11,13 @@ export default class Bind extends Action {
   }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this.verifyDirection(direction);
-
-    const state = this.getStateWithDirection('binding', direction);
-
-    const receiver = this.getUnit(direction);
+    const receiver = this.unit.position.getRelativeSpace(direction).getUnit();
     if (receiver) {
-      Logger.unit(this.unit, state, `binds ${direction} and restricts ${receiver}`);
+      this.unit.say(`binds ${direction} and restricts ${receiver}`);
 
-      receiver.addEffect(new Bound());
+      receiver.bind();
     } else {
-      Logger.unit(this.unit, state, `binds ${direction} and restricts nothing`);
+      this.unit.say(`binds ${direction} and restricts nothing`);
     }
   }
 }

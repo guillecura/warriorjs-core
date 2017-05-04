@@ -1,5 +1,4 @@
 import Action from './Action';
-import Logger from '../../Logger';
 
 const HEALTH_GAIN = 0.1;
 
@@ -12,20 +11,12 @@ export default class Rest extends Action {
 
   perform() {
     if (this.unit.getHealth() < this.unit.maxHealth) {
+      this.unit.say('rests');
+
       const amount = Math.round(this.unit.maxHealth * HEALTH_GAIN);
-      const revisedAmount = this.unit.getHealth() + amount > this.unit.maxHealth
-        ? this.unit.maxHealth - this.unit.getHealth()
-        : amount;
-
-      this.unit.health += revisedAmount;
-
-      Logger.unit(
-        this.unit,
-        'resting',
-        `receives ${revisedAmount} health from resting, up to ${this.unit.getHealth()} health`,
-      );
+      this.unit.heal(amount);
     } else {
-      Logger.unit(this.unit, 'resting', 'is already fit as a fiddle');
+      this.unit.say('is already fit as a fiddle');
     }
   }
 }

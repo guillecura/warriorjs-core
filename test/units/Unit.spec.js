@@ -1,10 +1,5 @@
-import Bound from '../../src/effects/Bound';
 import Position from '../../src/Position';
 import Unit from '../../src/units/Unit';
-
-jest.mock('../../src/Logger', () => ({
-  unit: () => {},
-}));
 
 describe('Unit', () => {
   let unit;
@@ -12,6 +7,7 @@ describe('Unit', () => {
   beforeEach(() => {
     unit = new Unit(0);
     unit.position = new Position(null, 0, 0, 'north');
+    unit.say = () => {};
   });
 
   it('should have an index property set by the constructor', () => {
@@ -44,6 +40,23 @@ describe('Unit', () => {
     expect(unit.isAlive()).toBe(false);
   });
 
+  describe('when healing', () => {
+    beforeEach(() => {
+      unit.maxHealth = 10;
+    });
+
+    it('should not go over max health', () => {
+      unit.health = 9;
+      unit.heal(2);
+      expect(unit.getHealth()).toBe(10);
+    });
+
+    it('should not add health when at max', () => {
+      unit.heal(1);
+      expect(unit.getHealth()).toBe(10);
+    });
+  });
+
   describe('when taking damage', () => {
     beforeEach(() => {
       unit.maxHealth = 10;
@@ -65,10 +78,42 @@ describe('Unit', () => {
     });
 
     it('should be released from bonds', () => {
-      unit.addEffect(new Bound());
-      expect(unit.effects.keys()).toContain('bound');
+      unit.bind();
+      expect(unit.isBound()).toBe(true);
       unit.takeDamage(2);
-      expect(unit.effects.keys()).not.toContain('bound');
+      expect(unit.isBound()).toBe(false);
+    });
+  });
+
+  it('should be bound after calling bind', () => {
+    unit.bind();
+    expect(unit.isBound()).toBe(true);
+  });
+
+  describe('when bound', () => {
+    beforeEach(() => {
+      unit.bind();
+    });
+
+    it('should not perform action', () => {
+      unit.position = null;
+      const walk = {
+        getName: () => 'walk',
+        perform: jest.fn(),
+      };
+      unit.addAbility(walk);
+      const turn = {
+        action: ['walk', ['backward']],
+      };
+      unit.getNextTurn = jest.fn().mockReturnValue(turn);
+      unit.prepareTurn();
+      unit.performTurn();
+      expect(walk.perform.mock.calls.length).toBe(0);
+    });
+
+    it('should be released from bonds when calling unbind', () => {
+      unit.unbind();
+      expect(unit.isBound()).toBe(false);
     });
   });
 
@@ -110,22 +155,6 @@ describe('Unit', () => {
     expect(walk.perform.mock.calls[0][0]).toEqual('backward');
   });
 
-  it('should not perform action when bound', () => {
-    unit.addEffect(new Bound());
-    const walk = {
-      getName: () => 'walk',
-      perform: jest.fn(),
-    };
-    unit.addAbility(walk);
-    const turn = {
-      action: ['walk', []],
-    };
-    unit.getNextTurn = jest.fn().mockReturnValue(turn);
-    unit.prepareTurn();
-    unit.performTurn();
-    expect(walk.perform.mock.calls.length).toBe(0);
-  });
-
   it('should not perform action when dead', () => {
     unit.position = null;
     const walk = {
@@ -134,7 +163,7 @@ describe('Unit', () => {
     };
     unit.addAbility(walk);
     const turn = {
-      action: ['walk', []],
+      action: ['walk', ['backward']],
     };
     unit.getNextTurn = jest.fn().mockReturnValue(turn);
     unit.prepareTurn();

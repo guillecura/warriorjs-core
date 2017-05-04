@@ -31,6 +31,7 @@ export default class Unit {
     this.health = null;
     this.attackPower = 0;
     this.shootPower = 0;
+    this.bound = false;
     this.abilities = new Map();
     this.effects = new Map();
     this.currentTurn = null;
@@ -57,36 +58,67 @@ export default class Unit {
     this.effects.set(effect.getName(), effect);
   }
 
-  removeEffect(name) {
-    this.effects.delete(name);
+  removeEffect(effect) {
+    this.effects.delete(effect.getName());
   }
 
   isAlive() {
     return this.position !== null;
   }
 
+  isBound() {
+    return this.bound;
+  }
+
+  unbind() {
+    this.bound = false;
+
+    this.say('released from bonds');
+  }
+
+  bind() {
+    this.bound = true;
+  }
+
+  say(message) {
+    Logger.unit(this, message);
+  }
+
+  heal(amount) {
+    const revisedAmount = this.getHealth() + amount > this.maxHealth
+      ? this.maxHealth - this.getHealth()
+      : amount;
+    this.health += revisedAmount;
+
+    this.say(`receives ${revisedAmount} health, up to ${this.getHealth()} health`);
+  }
+
   takeDamage(amount) {
-    if (this.effects.has('bound')) {
-      this.removeEffect('bound');
+    if (this.isBound()) {
+      this.unbind();
     }
 
     if (this.getHealth()) {
       const revisedAmount = this.getHealth() - amount < 0 ? this.getHealth() : amount;
       this.health -= revisedAmount;
 
-      Logger.unit(
-        this,
-        'takingDamage',
-        `takes ${revisedAmount} damage, ${this.getHealth()} health power left`,
-      );
+      this.say(`takes ${revisedAmount} damage, ${this.getHealth()} health power left`);
 
       if (!this.getHealth()) {
-        Logger.unit(this, 'dying', 'dies');
+        this.say('dies');
 
         this.position = null;
 
-        Logger.unit(this);
+        // TODO: Find a better way of logging the unit disappearance
+        this.say();
       }
+    }
+  }
+
+  damage(receiver, amount) {
+    receiver.takeDamage(amount);
+    if (!receiver.isAlive()) {
+      this.earnPoints(receiver.maxHealth);
     }
   }
 
@@ -107,7 +139,7 @@ export default class Unit {
   performTurn() {
     if (this.isAlive()) {
       this.effects.forEach(effect => effect.passTurn());
-      if (this.currentTurn.action && !this.effects.has('bound')) {
+      if (this.currentTurn.action && !this.isBound()) {
         const [name, args] = this.currentTurn.action;
         this.abilities.get(name).perform(...args);
       }

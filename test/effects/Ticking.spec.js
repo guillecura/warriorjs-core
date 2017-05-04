@@ -4,10 +4,6 @@ import Ticking from '../../src/effects/Ticking';
 import Floor from '../../src/Floor';
 import Unit from '../../src/units/Unit';
 
-jest.mock('../../src/Logger', () => ({
-  unit: () => {},
-}));
-
 describe('Ticking', () => {
   let ticking;
   let floor;
@@ -16,6 +12,7 @@ describe('Ticking', () => {
   beforeEach(() => {
     floor = new Floor(2, 3);
     unit = new Unit();
+    unit.say = () => {};
     floor.addUnit(unit, { x: 0, y: 0 });
     ticking = new Ticking(unit, 3);
   });

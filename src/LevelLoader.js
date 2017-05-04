@@ -31,7 +31,6 @@ const ABILITIES = {
 };
 
 const EFFECTS = {
-  bound: Effects.Bound,
   ticking: Effects.Ticking,
 };
 

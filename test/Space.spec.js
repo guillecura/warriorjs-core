@@ -1,4 +1,3 @@
-import Bound from '../src/effects/Bound';
 import Captive from '../src/units/Captive';
 import Floor from '../src/Floor';
 import Sludge from '../src/units/Sludge';
@@ -127,7 +126,7 @@ describe('Space', () => {
 
     describe('bound', () => {
       beforeEach(() => {
-        space.getUnit().addEffect(new Bound());
+        space.getUnit().bind();
       });
 
       it('should be bound', () => {

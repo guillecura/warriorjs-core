@@ -1,4 +1,3 @@
-import Logger from '../Logger';
 import Unit from './Unit';
 
 export default class Warrior extends Unit {
@@ -44,7 +43,7 @@ export default class Warrior extends Unit {
 
   performTurn() {
     if (!this.currentTurn.action) {
-      Logger.unit(this, 'doingNothing', 'does nothing');
+      this.say('does nothing');
     }
 
     super.performTurn();
@@ -53,6 +52,6 @@ export default class Warrior extends Unit {
   earnPoints(points) {
     this.score += points;
 
-    Logger.unit(this, 'earningPoints', `earns ${points} points`);
+    this.say(`earns ${points} points`);
   }
 }

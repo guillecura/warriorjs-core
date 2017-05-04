@@ -1,13 +1,20 @@
 import Feel from '../src/abilities/senses/Feel';
 import Turn from '../src/Turn';
+import Unit from '../src/units/Unit';
 
 describe('Turn', () => {
   let feel;
   let turn;
+  let unit;
 
   beforeEach(() => {
-    feel = new Feel({});
-    feel.getSpace = () => ({ toPlayerObject: () => {} });
+    unit = new Unit();
+    unit.position = {
+      getRelativeSpace: () => ({
+        toPlayerObject: () => {},
+      }),
+    };
+    feel = new Feel(unit);
     const abilities = new Map([['feel', feel], ['attack', null], ['walk', null]]);
     turn = new Turn(abilities);
   });

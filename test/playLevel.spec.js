@@ -148,41 +148,6 @@ describe('play level', () => {
     }).toThrow("Unknown ability 'foo'.");
   });
 
-  it('should throw an error with invalid effect', () => {
-    const levelConfig = {
-      timeBonus: 15,
-      floor: {
-        size: {
-          width: 8,
-          height: 1,
-        },
-        stairs: {
-          x: 7,
-          y: 0,
-        },
-        units: [
-          {
-            type: 'warrior',
-            position: {
-              x: 0,
-              y: 0,
-              direction: 'east',
-            },
-            effects: [
-              {
-                name: 'foo',
-                args: [],
-              },
-            ],
-          },
-        ],
-      },
-    };
-    expect(() => {
-      playLevel(levelConfig);
-    }).toThrow("Unknown effect 'foo'.");
-  });
-
   describe('with a valid level config', () => {
     const levelConfig = {
       timeBonus: 15,

@@ -8,6 +8,6 @@ describe('Captive', () => {
   });
 
   it('should be bound by default', () => {
-    expect(captive.effects.keys()).toContain('bound');
+    expect(captive.isBound()).toBe(true);
   });
 });

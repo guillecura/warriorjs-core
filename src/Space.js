@@ -37,7 +37,7 @@ export default class Space {
 
   isBound() {
     const unit = this.getUnit();
-    return !!unit && unit.effects.has('bound');
+    return !!unit && unit.isBound();
   }
 
   isTicking() {

@@ -1,12 +1,7 @@
-import Bound from '../../../src/effects/Bound';
 import Captive from '../../../src/units/Captive';
 import Rescue from '../../../src/abilities/actions/Rescue';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
-
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
 
 describe('Rescue', () => {
   let rescue;
@@ -14,6 +9,7 @@ describe('Rescue', () => {
 
   beforeEach(() => {
     warrior = new Warrior();
+    warrior.say = () => {};
     warrior.earnPoints = jest.fn();
     rescue = new Rescue(warrior);
   });
@@ -21,10 +17,13 @@ describe('Rescue', () => {
   it('should rescue captive', () => {
     const captive = new Captive();
     captive.position = {};
-    rescue.getSpace = () => ({
-      isBound: () => true,
-    });
-    rescue.getUnit = () => captive;
+    captive.say = () => {};
+    warrior.position = {
+      getRelativeSpace: () => ({
+        getUnit: () => captive,
+        isBound: () => true,
+      }),
+    };
     rescue.perform();
     expect(captive.position).toBeNull();
     expect(warrior.earnPoints.mock.calls[0][0]).toBe(20);
@@ -33,23 +32,29 @@ describe('Rescue', () => {
   it('should release other unit when bound', () => {
     const unit = new Unit();
     unit.position = {};
-    unit.addEffect(new Bound());
-    rescue.getSpace = () => ({
-      isBound: () => true,
-    });
-    rescue.getUnit = () => unit;
+    unit.say = () => {};
+    unit.bind();
+    warrior.position = {
+      getRelativeSpace: () => ({
+        getUnit: () => unit,
+        isBound: () => true,
+      }),
+    };
     rescue.perform();
-    expect(unit.effects.keys()).not.toContain('bound');
+    expect(unit.isBound()).toBe(false);
     expect(unit.position).not.toBeNull();
     expect(warrior.earnPoints.mock.calls.length).toBe(0);
   });
 
   it('should do nothing to other unit if not bound', () => {
+    warrior.position = {
+      getRelativeSpace: () => ({
+        isBound: () => false,
+      }),
+    };
     const unit = new Unit();
     unit.position = {};
-    rescue.getSpace = () => ({
-      isBound: () => false,
-    });
+    unit.say = () => {};
     rescue.perform();
     expect(unit.position).not.toBeNull();
     expect(warrior.earnPoints.mock.calls.length).toBe(0);

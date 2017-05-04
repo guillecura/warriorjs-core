@@ -1,33 +1,14 @@
 import Rest from '../../../src/abilities/actions/Rest';
-import Warrior from '../../../src/units/Warrior';
-
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
+import Unit from '../../../src/units/Unit';
 
 describe('Rest', () => {
-  let rest;
-  let warrior;
-
-  beforeEach(() => {
-    warrior = new Warrior();
-    rest = new Rest(warrior);
-  });
-
   it('should give 10% of max health back', () => {
-    warrior.health = 10;
+    const unit = new Unit();
+    unit.maxHealth = 10;
+    unit.health = 3;
+    unit.say = () => {};
+    const rest = new Rest(unit);
     rest.perform();
-    expect(warrior.getHealth()).toBe(12);
-  });
-
-  it('should not go over max health', () => {
-    warrior.health = 19;
-    rest.perform();
-    expect(warrior.getHealth()).toBe(20);
-  });
-
-  it('should not add health when at max', () => {
-    rest.perform();
-    expect(warrior.getHealth()).toBe(20);
+    expect(unit.getHealth()).toBe(4);
   });
 });

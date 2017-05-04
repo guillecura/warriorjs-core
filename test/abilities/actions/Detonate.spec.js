@@ -4,10 +4,6 @@ import Ticking from '../../../src/effects/Ticking';
 import Unit from '../../../src/units/Unit';
 import Warrior from '../../../src/units/Warrior';
 
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
-
 describe('Detonate', () => {
   let detonate;
   let floor;
@@ -16,6 +12,7 @@ describe('Detonate', () => {
   beforeEach(() => {
     floor = new Floor(2, 3);
     warrior = new Warrior();
+    warrior.say = () => {};
     floor.addUnit(warrior, { x: 0, y: 0, direction: 'south' });
     detonate = new Detonate(warrior);
   });
@@ -23,8 +20,10 @@ describe('Detonate', () => {
   it('should subtract 8 from target (forward) unit and 4 from surrounding units', () => {
     const targetUnit = new Unit();
     targetUnit.maxHealth = 15;
+    targetUnit.say = () => {};
     const otherUnit = new Unit();
     otherUnit.maxHealth = 15;
+    otherUnit.say = () => {};
     floor.addUnit(targetUnit, { x: 0, y: 1 });
     floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform();
@@ -35,8 +34,10 @@ describe('Detonate', () => {
   it('should subtract 8 from target (left) unit and 4 from surrounding units', () => {
     const targetUnit = new Unit();
     targetUnit.maxHealth = 15;
+    targetUnit.say = () => {};
     const otherUnit = new Unit();
     otherUnit.maxHealth = 15;
+    otherUnit.say = () => {};
     floor.addUnit(targetUnit, { x: 1, y: 0 });
     floor.addUnit(otherUnit, { x: 1, y: 1 });
     detonate.perform('left');
@@ -47,6 +48,7 @@ describe('Detonate', () => {
   it('should detonate an explosive if any unit has one', () => {
     const unit = new Unit();
     unit.maxHealth = 1;
+    unit.say = () => {};
     unit.addEffect(new Ticking(unit));
     floor.addUnit(unit, { x: 1, y: 1 });
     detonate.perform();

@@ -1,28 +1,33 @@
 import Bind from '../../../src/abilities/actions/Bind';
 import Unit from '../../../src/units/Unit';
 
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
-
 describe('Bind', () => {
   let bind;
   let captor;
 
   beforeEach(() => {
-    captor = {};
+    captor = new Unit();
+    captor.say = () => {};
     bind = new Bind(captor);
   });
 
   it('should bind receiver', () => {
     const receiver = new Unit();
-    bind.getUnit = () => receiver;
+    captor.position = {
+      getRelativeSpace: () => ({
+        getUnit: () => receiver,
+      }),
+    };
     bind.perform();
-    expect(receiver.effects.keys()).toContain('bound');
+    expect(receiver.isBound()).toBe(true);
   });
 
   it('should do nothing if no recipient', () => {
-    bind.getUnit = () => undefined;
+    captor.position = {
+      getRelativeSpace: () => ({
+        getUnit: () => undefined,
+      }),
+    };
     expect(() => {
       bind.perform();
     }).not.toThrow();

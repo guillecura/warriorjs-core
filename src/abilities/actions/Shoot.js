@@ -2,7 +2,6 @@ import { range } from 'lodash';
 
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
-import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 const ATTACK_RANGE = 3;
@@ -15,21 +14,19 @@ export default class Shoot extends Action {
   }
 
   getUnits(direction, offsets) {
-    return offsets.map(offset => this.getUnit(direction, offset)).filter(unit => unit);
+    return offsets
+      .map(offset => this.unit.position.getRelativeSpace(direction, offset).getUnit())
+      .filter(unit => unit);
   }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this.verifyDirection(direction);
-
-    const state = this.getStateWithDirection('shooting', direction);
-
     const receiver = this.getUnits(direction, range(1, ATTACK_RANGE + 1))[0];
     if (receiver) {
-      Logger.unit(this.unit, state, `shoots ${direction} and hits ${receiver}`);
+      this.unit.say(`shoots ${direction} and hits ${receiver}`);
 
-      this.damage(receiver, this.unit.shootPower);
+      this.unit.damage(receiver, this.unit.shootPower);
     } else {
-      Logger.unit(this.unit, state, `shoots ${direction} and hits nothing`);
+      this.unit.say(`shoots ${direction} and hits nothing`);
     }
   }
 }

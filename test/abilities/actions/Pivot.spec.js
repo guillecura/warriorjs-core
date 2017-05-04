@@ -1,9 +1,5 @@
 import Pivot from '../../../src/abilities/actions/Pivot';
 
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
-
 describe('Pivot', () => {
   let pivot;
   let position;
@@ -14,16 +10,17 @@ describe('Pivot', () => {
     };
     pivot = new Pivot({
       position,
+      say: () => {},
     });
   });
 
   it('should flip around when not passing arguments', () => {
     pivot.perform();
-    expect(position.rotate.mock.calls[0][0]).toBe(2);
+    expect(position.rotate.mock.calls[0][0]).toBe('backward');
   });
 
   it('should rotate right when pivoting right', () => {
     pivot.perform('right');
-    expect(position.rotate.mock.calls[0][0]).toBe(1);
+    expect(position.rotate.mock.calls[0][0]).toBe('right');
   });
 });

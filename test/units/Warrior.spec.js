@@ -1,11 +1,8 @@
 import Warrior from '../../src/units/Warrior';
 
-jest.mock('../../src/Logger', () => ({
-  unit: () => {},
-}));
-
 describe('Warrior', () => {
   const warrior = new Warrior();
+  warrior.say = () => {};
 
   it('should have an attack power of 5', () => {
     expect(warrior.attackPower).toBe(5);

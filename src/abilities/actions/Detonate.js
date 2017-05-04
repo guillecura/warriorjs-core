@@ -1,6 +1,5 @@
 import { FORWARD } from '../../constants/directions';
 import Action from './Action';
-import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 const TARGET_DAMAGE_AMOUNT = 8;
@@ -15,19 +14,15 @@ export default class Detonate extends Action {
   }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this.verifyDirection(direction);
-
-    const state = this.getStateWithDirection('detonating', direction);
-
     if (this.unit.isAlive()) {
-      Logger.unit(this.unit, state, `detonates a bomb ${direction} launching a deadly explosion`);
+      this.unit.say(`detonates a bomb ${direction} launching a deadly explosion`);
 
-      const targetSpace = this.getSpace(direction, 1, 0);
+      const targetSpace = this.unit.position.getRelativeSpace(direction, 1, 0);
       this.bomb(targetSpace, TARGET_DAMAGE_AMOUNT);
 
-      SURROUNDINGS.map(([x, y]) => this.getSpace(direction, x, y)).forEach(surroundingSpace =>
-        this.bomb(surroundingSpace, COLATERAL_DAMAGE_AMOUNT),
-      );
+      SURROUNDINGS.map(([x, y]) =>
+        this.unit.position.getRelativeSpace(direction, x, y),
+      ).forEach(surroundingSpace => this.bomb(surroundingSpace, COLATERAL_DAMAGE_AMOUNT));
     }
   }
 
@@ -35,11 +30,11 @@ export default class Detonate extends Action {
     const receiver = space.getUnit();
     if (receiver) {
       if (receiver.effects.has('ticking')) {
-        Logger.unit(receiver, null, "caught in bomb's flames which detonates ticking explosive");
+        this.unit.say("caught in bomb's flames which detonates ticking explosive");
 
         receiver.effects.get('ticking').explode();
       } else {
-        this.damage(receiver, damageAmount);
+        this.unit.damage(receiver, damageAmount);
       }
     }
   }

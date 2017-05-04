@@ -1,8 +1,12 @@
 import {
+  BACKWARD,
   DIRECTION_ARRAY,
   EAST,
+  FORWARD,
+  LEFT,
   NORTH,
   RELATIVE_DIRECTION_ARRAY,
+  RIGHT,
   SOUTH,
   WEST,
 } from './constants/directions';
@@ -16,7 +20,7 @@ const viewObjectShape = {
     return this.y;
   },
   direction() {
-    return this.getDirection();
+    return this.direction;
   },
 };
 
@@ -26,37 +30,21 @@ export default class Position {
     this.floor = floor;
     this.x = x;
     this.y = y;
-    this.directionIndex = DIRECTION_ARRAY.indexOf(direction);
+    this.direction = direction;
   }
 
   getSpace() {
     return this.floor.getSpaceAt(this.x, this.y);
   }
 
-  getDirection() {
-    return DIRECTION_ARRAY[this.directionIndex];
-  }
-
   isAt(x, y) {
     return this.x === x && this.y === y;
   }
 
-  move(forward, right = 0) {
-    [this.x, this.y] = this.translateOffset(forward, right);
-  }
-
-  rotate(amount) {
-    this.directionIndex += amount;
-    while (this.directionIndex > 3) {
-      this.directionIndex -= 4;
-    }
-    while (this.directionIndex < 0) {
-      this.directionIndex += 4;
-    }
-  }
-
-  getRelativeSpace(forward, right = 0) {
-    const [x, y] = this.translateOffset(forward, right);
+  getRelativeSpace(relativeDirection, forward = 1, right = 0) {
+    Position.verifyDirection(relativeDirection);
+    const offset = Position.offset(relativeDirection, forward, right);
+    const [x, y] = this.translateOffset(...offset);
     return this.floor.getSpaceAt(x, y);
   }
 
@@ -72,20 +60,28 @@ export default class Position {
   getDirectionOf(space) {
     const [x, y] = space.getLocation();
     if (Math.abs(this.x - x) > Math.abs(this.y - y)) {
-      return x > this.x ? EAST : WEST;
+      if (x > this.x) {
+        return EAST;
+      }
+
+      return WEST;
     }
 
-    return y > this.y ? SOUTH : NORTH;
+    if (y > this.y) {
+      return SOUTH;
+    }
+
+    return NORTH;
   }
 
   getRelativeDirection(direction) {
-    let offset = DIRECTION_ARRAY.indexOf(direction) - this.directionIndex;
-    while (offset > 3) {
+    let offset = DIRECTION_ARRAY.indexOf(direction) - DIRECTION_ARRAY.indexOf(this.direction);
+    if (offset > 3) {
       offset -= 4;
-    }
-    while (offset < 0) {
+    } else if (offset < 0) {
       offset += 4;
     }
+
     return RELATIVE_DIRECTION_ARRAY[offset];
   }
 
@@ -98,8 +94,7 @@ export default class Position {
   }
 
   translateOffset(forward, right) {
-    const direction = this.getDirection();
-    switch (direction) {
+    switch (this.direction) {
       case NORTH:
         return [this.x + right, this.y - forward];
       case EAST:
@@ -109,7 +104,52 @@ export default class Position {
       case WEST:
         return [this.x - forward, this.y - right];
       default:
-        throw new Error(`Unknown direction '${direction}'`);
+        throw new Error(`Unknown direction '${this.direction}'`);
+    }
+  }
+
+  move(relativeDirection, forward = 1, right = 0) {
+    Position.verifyDirection(relativeDirection);
+    const offset = Position.offset(relativeDirection, forward, right);
+    [this.x, this.y] = this.translateOffset(...offset);
+  }
+
+  rotate(relativeDirection) {
+    Position.verifyDirection(relativeDirection);
+    let offset =
+      DIRECTION_ARRAY.indexOf(this.direction) + RELATIVE_DIRECTION_ARRAY.indexOf(relativeDirection);
+    if (offset > 3) {
+      offset -= 4;
+    } else if (offset < 0) {
+      offset += 4;
+    }
+
+    this.direction = DIRECTION_ARRAY[offset];
+  }
+
+  static offset(relativeDirection, forward = 1, right = 0) {
+    switch (relativeDirection) {
+      case FORWARD:
+        return [forward, -right];
+      case RIGHT:
+        return [right, forward];
+      case BACKWARD:
+        return [-forward, right];
+      case LEFT:
+        return [-right, -forward];
+      default:
+        throw new Error(`Unknown relative direction '${relativeDirection}'.`);
+    }
+  }
+
+  static verifyDirection(relativeDirection) {
+    if (!RELATIVE_DIRECTION_ARRAY.includes(relativeDirection)) {
+      const validDirections = RELATIVE_DIRECTION_ARRAY.map(
+        validDirection => `'${validDirection}'`,
+      ).join(', ');
+      throw new Error(
+        `Unknown direction '${relativeDirection}'. Should be one of: ${validDirections}.`,
+      );
     }
   }
 }

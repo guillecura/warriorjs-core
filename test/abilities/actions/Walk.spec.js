@@ -1,9 +1,5 @@
 import Walk from '../../../src/abilities/actions/Walk';
 
-jest.mock('../../../src/Logger', () => ({
-  unit: () => {},
-}));
-
 describe('Walk', () => {
   let walk;
   let space;
@@ -19,18 +15,19 @@ describe('Walk', () => {
         move: jest.fn(),
       },
       isAlive: () => true,
+      say: () => {},
     };
     walk = new Walk(unit);
   });
 
   it('should move forward when calling perform', () => {
     walk.perform();
-    expect(unit.position.move.mock.calls[0]).toEqual([1, -0]);
+    expect(unit.position.move.mock.calls[0]).toEqual(['forward']);
   });
 
   it('should move right if that is the direction', () => {
     walk.perform('right');
-    expect(unit.position.move.mock.calls[0]).toEqual([0, 1]);
+    expect(unit.position.move.mock.calls[0]).toEqual(['right']);
   });
 
   it('should not move if something is in the way', () => {

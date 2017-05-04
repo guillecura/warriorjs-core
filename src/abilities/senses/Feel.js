@@ -11,8 +11,6 @@ export default class Feel extends Sense {
   }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this.verifyDirection(direction);
-
-    return this.getSpace(direction).toPlayerObject();
+    return this.unit.position.getRelativeSpace(direction).toPlayerObject();
   }
 }

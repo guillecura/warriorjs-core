@@ -7,11 +7,10 @@ const Logger = {
     const turnEvents = [];
     Logger.events.push(turnEvents);
   },
-  unit(unit, state, message) {
+  unit(unit, message) {
     const turnEvents = Logger.events[Logger.events.length - 1];
     turnEvents.push({
       message,
-      state,
       unit: unit.toViewObject(),
     });
   },

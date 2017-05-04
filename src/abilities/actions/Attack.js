@@ -1,6 +1,5 @@
 import { BACKWARD, FORWARD } from '../../constants/directions';
 import Action from './Action';
-import Logger from '../../Logger';
 
 const DEFAULT_DIRECTION = FORWARD;
 
@@ -12,21 +11,17 @@ export default class Attack extends Action {
   }
 
   perform(direction = DEFAULT_DIRECTION) {
-    this.verifyDirection(direction);
-
-    const state = this.getStateWithDirection('attacking', direction);
-
-    const receiver = this.getUnit(direction);
+    const receiver = this.unit.position.getRelativeSpace(direction).getUnit();
     if (receiver) {
-      Logger.unit(this.unit, state, `attacks ${direction} and hits ${receiver}`);
+      this.unit.say(`attacks ${direction} and hits ${receiver}`);
 
       const power = direction === BACKWARD
         ? Math.ceil(this.unit.attackPower / 2.0)
         : this.unit.attackPower;
 
-      this.damage(receiver, power);
+      this.unit.damage(receiver, power);
     } else {
-      Logger.unit(this.unit, state, `attacks ${direction} and hits nothing`);
+      this.unit.say(`attacks ${direction} and hits nothing`);
     }
   }
 }
