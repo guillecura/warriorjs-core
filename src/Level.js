@@ -1,21 +1,27 @@
-import LevelLoader from './LevelLoader';
 import Logger from './Logger';
 
 export default class Level {
-  constructor() {
-    this.warrior = null;
+  constructor(description, tip, clue, timeBonus) {
+    this.description = description;
+    this.tip = tip;
+    this.clue = clue;
+    this.timeBonus = timeBonus;
     this.floor = null;
-    this.timeBonus = 0;
+    this.warrior = null;
   }
 
   getClearBonus() {
-    return !this.floor.getOtherUnits().length
+    return this.floor.getOtherUnits().length === 0
       ? Math.round((this.warrior.score + this.timeBonus) * 0.2)
       : 0;
   }
 
-  loadPlayer(playerCode) {
-    this.warrior.loadPlayer(playerCode);
+  passed() {
+    return this.floor.getStairsSpace().isWarrior();
+  }
+
+  failed() {
+    return !this.floor.getUnits().includes(this.warrior);
   }
 
   play(turns) {
@@ -32,33 +38,19 @@ export default class Level {
       this.floor.getUnits().forEach(unit => unit.prepareTurn());
       this.floor.getUnits().forEach(unit => unit.performTurn());
 
-      if (this.timeBonus) {
+      if (this.timeBonus > 0) {
         this.timeBonus -= 1;
       }
     }
 
     return {
+      events: Logger.events,
       passed: this.passed(),
       score: {
         warrior: this.warrior.score,
         timeBonus: this.timeBonus,
         clearBonus: this.getClearBonus(),
       },
-      events: Logger.events,
     };
-  }
-
-  passed() {
-    return this.floor.getStairsSpace().isWarrior();
-  }
-
-  failed() {
-    return !this.floor.getUnits().includes(this.warrior);
-  }
-
-  static load(levelConfig) {
-    const level = new Level();
-    new LevelLoader(level).load(levelConfig);
-    return level;
   }
 }

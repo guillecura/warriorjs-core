@@ -1,6 +1,6 @@
 import Floor from '../src/Floor';
 import Position from '../src/Position';
-import Unit from '../src/units/Unit';
+import Unit from '../src/Unit';
 
 describe('Position', () => {
   let unit;
@@ -8,8 +8,16 @@ describe('Position', () => {
   let position;
 
   beforeEach(() => {
+    const size = {
+      height: 6,
+      width: 5,
+    };
+    const stairs = {
+      x: 0,
+      y: 0,
+    };
+    floor = new Floor(size, stairs);
     unit = new Unit();
-    floor = new Floor(6, 5);
     floor.addUnit(unit, { x: 1, y: 2, direction: 'north' });
     position = unit.position;
   });
@@ -39,39 +47,51 @@ describe('Position', () => {
 
   it('should get relative space in front', () => {
     floor.addUnit(new Unit(), { x: 1, y: 1 });
-    expect(position.getRelativeSpace('forward', 1).isEmpty()).toBe(false);
+    expect(position.getRelativeSpace('forward').isEmpty()).toBe(false);
   });
 
-  it('should get relative object in front when rotated', () => {
+  it('should get relative space in front two spaces yonder', () => {
+    floor.addUnit(new Unit(), { x: 1, y: 0 });
+    expect(position.getRelativeSpace('forward', 2).isEmpty()).toBe(false);
+  });
+
+  it('should get relative space in front when rotated', () => {
     floor.addUnit(new Unit(), { x: 2, y: 2 });
     position.rotate('right');
-    expect(position.getRelativeSpace('forward', 1).isEmpty()).toBe(false);
+    expect(position.getRelativeSpace('forward').isEmpty()).toBe(false);
   });
 
-  it('should get relative object diagonally', () => {
+  it('should get relative space diagonally', () => {
     floor.addUnit(new Unit(), { x: 0, y: 1 });
     expect(position.getRelativeSpace('forward', 1, 1).isEmpty()).toBe(false);
   });
 
-  it('should get relative object diagonally when rotated', () => {
+  it('should get relative space diagonally when rotated', () => {
     floor.addUnit(new Unit(), { x: 0, y: 1 });
     position.rotate('backward');
     expect(position.getRelativeSpace('forward', -1, -1).isEmpty()).toBe(false);
   });
 
   it('should return distance of given space', () => {
-    expect(position.getDistanceOf(floor.getSpaceAt(5, 3))).toEqual(5);
-    expect(position.getDistanceOf(floor.getSpaceAt(4, 2))).toEqual(3);
+    expect(position.getDistanceOf(floor.getSpaceAt(5, 3))).toBe(5);
+    expect(position.getDistanceOf(floor.getSpaceAt(4, 2))).toBe(3);
   });
 
   it('should return distance from stairs in both directions', () => {
-    floor.placeStairs(0, 3);
-    expect(position.getDistanceFromStairs()).toBe(2);
+    expect(position.getDistanceFromStairs()).toBe(3);
   });
 
   it('should return distance from stairs as zero when on stairs', () => {
-    floor.placeStairs(1, 2);
+    position.x = 0;
+    position.y = 0;
     expect(position.getDistanceFromStairs()).toBe(0);
+  });
+
+  it('should return direction of given space', () => {
+    expect(position.getDirectionOf(floor.getSpaceAt(1, 1))).toEqual('north');
+    expect(position.getDirectionOf(floor.getSpaceAt(2, 2))).toEqual('east');
+    expect(position.getDirectionOf(floor.getSpaceAt(1, 3))).toEqual('south');
+    expect(position.getDirectionOf(floor.getSpaceAt(0, 2))).toEqual('west');
   });
 
   it('should return relative direction of given space', () => {
@@ -81,7 +101,6 @@ describe('Position', () => {
   });
 
   it('should return relative direction of stairs', () => {
-    floor.placeStairs(0, 0);
     expect(position.getRelativeDirectionOfStairs()).toEqual('forward');
   });
 
@@ -117,17 +136,7 @@ describe('Position', () => {
     expect(() => {
       Position.verifyDirection('foo');
     }).toThrow(
-      "Unknown direction 'foo'. Should be one of: 'forward', 'right', 'backward', 'left'.",
+      "Unknown direction: 'foo'. Should be one of: 'forward', 'right', 'backward', 'left'.",
     );
-  });
-
-  describe('view object', () => {
-    it('should have only view object properties', () => {
-      expect(position.toViewObject()).toEqual({
-        x: 1,
-        y: 2,
-        direction: 'north',
-      });
-    });
   });
 });

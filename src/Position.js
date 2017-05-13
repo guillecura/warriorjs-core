@@ -1,44 +1,20 @@
-import {
-  BACKWARD,
-  DIRECTION_ARRAY,
-  EAST,
-  FORWARD,
-  LEFT,
-  NORTH,
-  RELATIVE_DIRECTION_ARRAY,
-  RIGHT,
-  SOUTH,
-  WEST,
-} from './constants/directions';
-import viewObject from './decorators/viewObject';
+const DIRECTIONS = ['north', 'east', 'south', 'west'];
+const RELATIVE_DIRECTIONS = ['forward', 'right', 'backward', 'left'];
 
-const viewObjectShape = {
-  x() {
-    return this.x;
-  },
-  y() {
-    return this.y;
-  },
-  direction() {
-    return this.direction;
-  },
-};
-
-@viewObject(viewObjectShape)
 export default class Position {
-  constructor(floor, x, y, direction = NORTH) {
+  constructor(floor, x, y, direction = 'north') {
     this.floor = floor;
     this.x = x;
     this.y = y;
     this.direction = direction;
   }
 
-  getSpace() {
-    return this.floor.getSpaceAt(this.x, this.y);
-  }
-
   isAt(x, y) {
     return this.x === x && this.y === y;
+  }
+
+  getSpace() {
+    return this.floor.getSpaceAt(this.x, this.y);
   }
 
   getRelativeSpace(relativeDirection, forward = 1, right = 0) {
@@ -49,8 +25,8 @@ export default class Position {
   }
 
   getDistanceOf(space) {
-    const [x, y] = space.getLocation();
-    return Math.abs(this.x - x) + Math.abs(this.y - y);
+    const [spaceX, spaceY] = space.getLocation();
+    return Math.abs(this.x - spaceX) + Math.abs(this.y - spaceY);
   }
 
   getDistanceFromStairs() {
@@ -58,31 +34,27 @@ export default class Position {
   }
 
   getDirectionOf(space) {
-    const [x, y] = space.getLocation();
-    if (Math.abs(this.x - x) > Math.abs(this.y - y)) {
-      if (x > this.x) {
-        return EAST;
+    const [spaceX, spaceY] = space.getLocation();
+    if (Math.abs(this.x - spaceX) > Math.abs(this.y - spaceY)) {
+      if (spaceX > this.x) {
+        return 'east';
       }
 
-      return WEST;
+      return 'west';
     }
 
-    if (y > this.y) {
-      return SOUTH;
+    if (spaceY > this.y) {
+      return 'south';
     }
 
-    return NORTH;
+    return 'north';
   }
 
   getRelativeDirection(direction) {
-    let offset = DIRECTION_ARRAY.indexOf(direction) - DIRECTION_ARRAY.indexOf(this.direction);
-    if (offset > 3) {
-      offset -= 4;
-    } else if (offset < 0) {
-      offset += 4;
-    }
-
-    return RELATIVE_DIRECTION_ARRAY[offset];
+    const offset =
+      (DIRECTIONS.length + (DIRECTIONS.indexOf(direction) - DIRECTIONS.indexOf(this.direction))) %
+      DIRECTIONS.length;
+    return RELATIVE_DIRECTIONS[offset];
   }
 
   getRelativeDirectionOf(space) {
@@ -94,18 +66,15 @@ export default class Position {
   }
 
   translateOffset(forward, right) {
-    switch (this.direction) {
-      case NORTH:
-        return [this.x + right, this.y - forward];
-      case EAST:
-        return [this.x + forward, this.y + right];
-      case SOUTH:
-        return [this.x - right, this.y + forward];
-      case WEST:
-        return [this.x - forward, this.y - right];
-      default:
-        throw new Error(`Unknown direction '${this.direction}'`);
+    if (this.direction === 'north') {
+      return [this.x + right, this.y - forward];
+    } else if (this.direction === 'east') {
+      return [this.x + forward, this.y + right];
+    } else if (this.direction === 'south') {
+      return [this.x - right, this.y + forward];
     }
+
+    return [this.x - forward, this.y - right];
   }
 
   move(relativeDirection, forward = 1, right = 0) {
@@ -116,39 +85,29 @@ export default class Position {
 
   rotate(relativeDirection) {
     Position.verifyDirection(relativeDirection);
-    let offset =
-      DIRECTION_ARRAY.indexOf(this.direction) + RELATIVE_DIRECTION_ARRAY.indexOf(relativeDirection);
-    if (offset > 3) {
-      offset -= 4;
-    } else if (offset < 0) {
-      offset += 4;
-    }
-
-    this.direction = DIRECTION_ARRAY[offset];
+    const offset =
+      (DIRECTIONS.indexOf(this.direction) + RELATIVE_DIRECTIONS.indexOf(relativeDirection)) %
+      DIRECTIONS.length;
+    this.direction = DIRECTIONS[offset];
   }
 
   static offset(relativeDirection, forward = 1, right = 0) {
-    switch (relativeDirection) {
-      case FORWARD:
-        return [forward, -right];
-      case RIGHT:
-        return [right, forward];
-      case BACKWARD:
-        return [-forward, right];
-      case LEFT:
-        return [-right, -forward];
-      default:
-        throw new Error(`Unknown relative direction '${relativeDirection}'.`);
+    if (relativeDirection === 'forward') {
+      return [forward, -right];
+    } else if (relativeDirection === 'right') {
+      return [right, forward];
+    } else if (relativeDirection === 'backward') {
+      return [-forward, right];
     }
+
+    return [-right, -forward];
   }
 
   static verifyDirection(relativeDirection) {
-    if (!RELATIVE_DIRECTION_ARRAY.includes(relativeDirection)) {
-      const validDirections = RELATIVE_DIRECTION_ARRAY.map(
-        validDirection => `'${validDirection}'`,
-      ).join(', ');
+    if (!RELATIVE_DIRECTIONS.includes(relativeDirection)) {
+      const validDirections = RELATIVE_DIRECTIONS.map(direction => `'${direction}'`).join(', ');
       throw new Error(
-        `Unknown direction '${relativeDirection}'. Should be one of: ${validDirections}.`,
+        `Unknown direction: '${relativeDirection}'. Should be one of: ${validDirections}.`,
       );
     }
   }

@@ -1,29 +1,35 @@
 import Floor from '../src/Floor';
 import Level from '../src/Level';
-import Unit from '../src/units/Unit';
-import Warrior from '../src/units/Warrior';
+import Unit from '../src/Unit';
 
 describe('Level', () => {
   let floor;
   let level;
 
   beforeEach(() => {
-    floor = new Floor(0, 0);
+    const size = {
+      height: 1,
+      width: 2,
+    };
+    const stairs = {
+      x: 1,
+      y: 0,
+    };
+    floor = new Floor(size, stairs);
     level = new Level();
     level.floor = floor;
-    level.failed = jest.fn().mockReturnValue(false);
-    level.warrior = { score: () => {} };
-  });
-
-  it('should have a time bonus which defaults to zero', () => {
-    expect(level.timeBonus).toBe(0);
+    level.warrior = new Unit('Warrior');
+    floor.addUnit(level.warrior, { x: 0, y: 0, direction: 'east' });
   });
 
   it('should consider passed when warrior is on stairs', () => {
-    level.warrior = new Warrior();
-    floor.addUnit(level.warrior, { x: 0, y: 0, direction: 'north' });
-    floor.placeStairs(0, 0);
+    level.warrior.position.move('forward');
     expect(level.passed()).toBe(true);
+  });
+
+  it('should consider failed when warrior is dead', () => {
+    level.warrior.position = null;
+    expect(level.failed()).toBe(true);
   });
 
   describe('playing', () => {

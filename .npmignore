@@ -2,7 +2,7 @@
 src
 
 # Tests directory
-__tests__
+test
 
 # Travis config
 .travis.yml

@@ -1,9 +1,7 @@
-import Feel from '../src/abilities/senses/Feel';
 import Turn from '../src/Turn';
-import Unit from '../src/units/Unit';
+import Unit from '../src/Unit';
 
 describe('Turn', () => {
-  let feel;
   let turn;
   let unit;
 
@@ -14,14 +12,27 @@ describe('Turn', () => {
         toPlayerObject: () => {},
       }),
     };
-    feel = new Feel(unit);
-    const abilities = new Map([['feel', feel], ['attack', null], ['walk', null]]);
+    const abilities = new Map([
+      [
+        'feel',
+        {
+          type: 'sense',
+          perform: () => {},
+        },
+      ],
+      [
+        'walk',
+        {
+          type: 'action',
+          perform: () => {},
+        },
+      ],
+    ]);
     turn = new Turn(abilities);
   });
 
   it('should define a function for each ability passed to the constructor', () => {
     expect(turn).toHaveProperty('feel');
-    expect(turn).toHaveProperty('attack');
     expect(turn).toHaveProperty('walk');
   });
 
@@ -43,7 +54,7 @@ describe('Turn', () => {
     it('should not be able to call multiple actions per turn', () => {
       turn.walk();
       expect(() => {
-        turn.attack();
+        turn.walk();
       }).toThrow('Only one action can be performed per turn.');
     });
   });
@@ -54,27 +65,6 @@ describe('Turn', () => {
       expect(() => {
         turn.feel('backward');
       }).not.toThrow();
-    });
-  });
-
-  describe('player object', () => {
-    let playerObject;
-
-    beforeEach(() => {
-      playerObject = turn.toPlayerObject();
-    });
-
-    it('should be able to call actions and senses', () => {
-      expect(playerObject.feel).toBeDefined();
-      expect(playerObject.attack).toBeDefined();
-      expect(playerObject.walk).toBeDefined();
-    });
-
-    it('should not be able to access restricted properties', () => {
-      expect(playerObject.addAction).toBeUndefined();
-      expect(playerObject.addSense).toBeUndefined();
-      expect(playerObject.action).toBeUndefined();
-      expect(playerObject.senses).toBeUndefined();
     });
   });
 });

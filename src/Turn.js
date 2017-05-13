@@ -1,19 +1,13 @@
-import Sense from './abilities/senses/Sense';
-import playerObject from './decorators/playerObject';
-
-const propertyBlacklist = ['action', 'addAction', 'addSense', 'constructor', 'senses'];
-
-@playerObject(propertyBlacklist)
 export default class Turn {
   constructor(abilities) {
     this.action = null;
     this.senses = new Map();
 
     abilities.forEach((ability, name) => {
-      if (ability instanceof Sense) {
-        this.addSense(name, ability);
-      } else {
+      if (ability.type === 'action') {
         this.addAction(name);
+      } else {
+        this.addSense(name, ability);
       }
     });
   }
