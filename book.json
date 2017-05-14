@@ -1,0 +1,4 @@
+{
+  "title": "WarriorJS",
+  "plugins": ["prism", "-highlight"]
+}
