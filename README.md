@@ -1,4 +1,4 @@
-# ![WarriorJS Core](https://cdn.rawgit.com/warriorjs/warriorjs-core/master/warriorjs-logo.svg)
+# <p align="center"><a href="#"><img src="https://rawgit.com/warriorjs/warriorjs-core/master/logo/logo.svg" height="280px"></a></p>
 
 WarriorJS is a game that will put your JavaScript skills to the test.
 
