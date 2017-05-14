@@ -1,3 +1,4 @@
-import playLevel from './playLevel';
+import loadTower from './loadTower';
 
-export default playLevel;
+// eslint-disable-next-line
+export { loadTower };

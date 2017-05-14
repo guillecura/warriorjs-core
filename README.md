@@ -1,109 +1,29 @@
 # ![WarriorJS Core](https://cdn.rawgit.com/warriorjs/warriorjs-core/master/warriorjs-logo.svg)
 
+WarriorJS is a game that will put your JavaScript skills to the test.
+
+You play as a warrior climbing a tall tower to `[insert something motivating here]` at the top level. On each floor, you must write JavaScript to instruct the warrior to battle enemies, rescue captives or do whatever it is necessary to reach the stairs alive.
+
+WarriorJS Core extracts the mechanics of the original game, allowing you to build and share your own WarriorJS universes (with custom units, abilities and levels).
+
 [![Build Status](https://img.shields.io/travis/warriorjs/warriorjs-core/master.svg?style=flat-square)](https://travis-ci.org/warriorjs/warriorjs-core)
 [![Codecov](https://img.shields.io/codecov/c/github/warriorjs/warriorjs-core.svg?style=flat-square)](https://codecov.io/gh/warriorjs/warriorjs-core)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-## Installation
+### Inspiration
+
+The original [warriorjs](https://github.com/olistic/warriorjs) is a ported version of [ruby-warrior](https://github.com/ryanb/ruby-warrior), developed with the intention of teaching JavaScript (and the *at-the-time* new ES2015 features) in a different way.
+
+### Installation
 
 ```bash
-$ npm install --save warriorjs-core
+$ yarn add warriorjs-core
 ```
 
-## API Reference
+### Documentation
 
-The WarriorJS Core API exposes a single function:
+*Coming soon.*
 
-### `playLevel(levelConfig, warriorName, playerCode, [maxTurns])`
+### License
 
-Plays a WarriorJS level using the player's code.
-
-#### Arguments
-
-1. `levelConfig` *(Object)*: The configuration of the level, with the following members:
-    * `timeBonus` *(Number)*: Amount of turns the player has to complete the level obtaining bonus points.
-    * `floor` *(Object)*: The floor of the level, with the following members:
-        * `size` *(Object)*: The size of the floor.
-        * `stairs` *(Object)*: The position of the stairs.
-        * `units` *(Array)*: The units in the level.
-2. `warriorName` *(String)*: The name of the warrior.
-3. `playerCode` *(String)*: The code written by the player.
-4. `[maxTurns]` *(Number)*: The maximum number of turns that will be played.
-
-#### Returns
-
-*(Object)* An object containing the play result with the following members:
-* `passed` *(Boolean)*: Whether the level was passed or not.
-* `score` *(Object)*:
-    * `warrior` *(Number)*: The points earned by the warrior by killing units and rescuing captives.
-    * `timeBonus` *(Number)*: A bonus for completing the level in less than a specified amount of turns.
-    * `clearBonus` *(Number)*: A bonus for defeating all enemies and rescuing all captives.
-* `events` *(Array)*: The sequence of events that took place during the play.
-
-#### Example
-
-```javascript
-import playLevel from 'warriorjs-core';
-
-const levelConfig = {
-  timeBonus: 15,
-  floor: {
-    size: {
-      width: 8,
-      height: 1,
-    },
-    stairs: {
-      x: 7,
-      y: 0,
-    },
-    units: [
-      {
-        type: 'warrior',
-        position: {
-          x: 0,
-          y: 0,
-          direction: 'east',
-        },
-        abilities: [
-          {
-            name: 'walk',
-            args: [],
-          },
-          {
-            name: 'attack',
-            args: [],
-          },
-          {
-            name: 'feel',
-            args: [],
-          },
-        ],
-      },
-      {
-        type: 'sludge',
-        position: {
-          x: 4,
-          y: 0,
-          direction: 'west',
-        },
-      },
-    ],
-  },
-};
-
-const warriorName = 'Spartacus';
-
-const playerCode = `
-  class Player {
-    playTurn(warrior) {
-      if (warrior.feel().isEnemy()) {
-        warrior.attack();
-      } else {
-        warrior.walk();
-      }
-    }
-  }
-`;
-
-const { passed, score, events } = playLevel(levelConfig, warriorName, playerCode);
-```
+MIT

@@ -1,18 +1,42 @@
-import Bound from '../src/effects/Bound';
-import Captive from '../src/units/Captive';
 import Floor from '../src/Floor';
-import Sludge from '../src/units/Sludge';
-import Ticking from '../src/effects/Ticking';
-import Warrior from '../src/units/Warrior';
+import Unit from '../src/Unit';
 
 describe('Space', () => {
   let floor;
 
   beforeEach(() => {
-    floor = new Floor(2, 3);
+    const size = {
+      height: 2,
+      width: 3,
+    };
+    const stairs = {
+      x: 0,
+      y: 2,
+    };
+    floor = new Floor(size, stairs);
   });
 
-  describe('with empty space', () => {
+  describe('out of bounds', () => {
+    let space;
+
+    beforeEach(() => {
+      space = floor.getSpaceAt(-1, 1);
+    });
+
+    it('should not be empty', () => {
+      expect(space.isEmpty()).toBe(false);
+    });
+
+    it('should be wall', () => {
+      expect(space.isWall()).toBe(true);
+    });
+
+    it('should have name "wall"', () => {
+      expect(space.toString()).toEqual('wall');
+    });
+  });
+
+  describe('with nothing on it', () => {
     let space;
 
     beforeEach(() => {
@@ -43,32 +67,24 @@ describe('Space', () => {
       expect(space.isBound()).toBe(false);
     });
 
-    it('should not be ticking', () => {
-      expect(space.isTicking()).toBe(false);
-    });
-
     it('should have name "nothing"', () => {
       expect(space.toString()).toEqual('nothing');
     });
   });
 
-  describe('out of bounds', () => {
+  describe('with stairs', () => {
     let space;
 
     beforeEach(() => {
-      space = floor.getSpaceAt(-1, 1);
+      space = floor.getSpaceAt(0, 2);
+    });
+
+    it('should be stairs', () => {
+      expect(space.isStairs()).toBe(true);
     });
 
     it('should not be empty', () => {
       expect(space.isEmpty()).toBe(false);
-    });
-
-    it('should be wall', () => {
-      expect(space.isWall()).toBe(true);
-    });
-
-    it('should have name "wall"', () => {
-      expect(space.toString()).toEqual('wall');
     });
   });
 
@@ -76,7 +92,7 @@ describe('Space', () => {
     let space;
 
     beforeEach(() => {
-      floor.addUnit(new Warrior(), { x: 0, y: 0 });
+      floor.addUnit(new Unit('Warrior'), { x: 0, y: 0 });
       space = floor.getSpaceAt(0, 0);
     });
 
@@ -95,17 +111,13 @@ describe('Space', () => {
     it('should not be empty', () => {
       expect(space.isEmpty()).toBe(false);
     });
-
-    it('should know what unit is on that space', () => {
-      expect(space.getUnit()).toBeInstanceOf(Warrior);
-    });
   });
 
   describe('with enemy', () => {
     let space;
 
     beforeEach(() => {
-      floor.addUnit(new Sludge(), { x: 0, y: 0 });
+      floor.addUnit(new Unit('Sludge'), { x: 0, y: 0 });
       space = floor.getSpaceAt(0, 0);
     });
 
@@ -127,7 +139,7 @@ describe('Space', () => {
 
     describe('bound', () => {
       beforeEach(() => {
-        space.getUnit().addEffect(new Bound());
+        space.getUnit().bind();
       });
 
       it('should be bound', () => {
@@ -140,13 +152,13 @@ describe('Space', () => {
     });
   });
 
-  describe('with captive', () => {
-    let captive;
+  describe('with bound unit', () => {
     let space;
 
     beforeEach(() => {
-      captive = new Captive();
-      floor.addUnit(captive, { x: 0, y: 0 });
+      const unit = new Unit();
+      unit.bind();
+      floor.addUnit(unit, { x: 0, y: 0 });
       space = floor.getSpaceAt(0, 0);
     });
 
@@ -157,43 +169,25 @@ describe('Space', () => {
     it('should not be enemy', () => {
       expect(space.isEnemy()).toBe(false);
     });
-
-    it('should be ticking if captive has time bomb', () => {
-      captive.addEffect(new Ticking(captive));
-      expect(space.isTicking()).toBe(true);
-    });
-
-    it('should not be ticking if captive does not have time bomb', () => {
-      expect(space.isTicking()).toBe(false);
-    });
   });
 
-  describe('player object', () => {
+  describe('with unit with effect', () => {
     let space;
-    let playerObject;
+    let unit;
 
     beforeEach(() => {
+      unit = new Unit();
+      floor.addUnit(unit, { x: 0, y: 0 });
       space = floor.getSpaceAt(0, 0);
-      playerObject = space.toPlayerObject();
     });
 
-    it('should be able to call informational methods', () => {
-      expect(playerObject.isWall).toBeDefined();
-      expect(playerObject.isWarrior).toBeDefined();
-      expect(playerObject.isPlayer).toBeDefined();
-      expect(playerObject.isEnemy).toBeDefined();
-      expect(playerObject.isBound).toBeDefined();
-      expect(playerObject.isTicking).toBeDefined();
-      expect(playerObject.isEmpty).toBeDefined();
-      expect(playerObject.isStairs).toBeDefined();
+    it('should be ticking if unit has ticking effect', () => {
+      unit.addEffect('ticking');
+      expect(space.is('ticking')).toBe(true);
     });
 
-    it('should not be able to access restricted properties', () => {
-      expect(playerObject.floor).toBeUndefined();
-      expect(playerObject.location).toBeUndefined();
-      expect(playerObject.unit).toBeUndefined();
-      expect(playerObject.x).toBeUndefined();
-      expect(playerObject.y).toBeUndefined();
+    it('should not be ticking if unit does not have ticking effect', () => {
+      expect(space.is('ticking')).toBe(false);
     });
   });
 });

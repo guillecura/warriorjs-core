@@ -1,8 +1,3 @@
-import playerObject from './decorators/playerObject';
-
-const propertyBlacklist = ['constructor', 'floor', 'location', 'unit', 'toString', 'x', 'y'];
-
-@playerObject(propertyBlacklist)
 export default class Space {
   constructor(floor, x, y) {
     this.floor = floor;
@@ -22,29 +17,6 @@ export default class Space {
     return this.floor.isOutOfBounds(...this.getLocation());
   }
 
-  isWarrior() {
-    const unit = this.getUnit();
-    return !!unit && unit.getType() === 'warrior';
-  }
-
-  isPlayer() {
-    return this.isWarrior();
-  }
-
-  isEnemy() {
-    return !!this.getUnit() && !this.isPlayer() && !this.isBound();
-  }
-
-  isBound() {
-    const unit = this.getUnit();
-    return !!unit && unit.effects.has('bound');
-  }
-
-  isTicking() {
-    const unit = this.getUnit();
-    return !!unit && unit.effects.has('ticking');
-  }
-
   isEmpty() {
     return !this.getUnit() && !this.isWall();
   }
@@ -53,6 +25,29 @@ export default class Space {
     const [stairsX, stairsY] = this.floor.stairsLocation;
     const [x, y] = this.getLocation();
     return stairsX === x && stairsY === y;
+  }
+
+  isWarrior() {
+    const unit = this.getUnit();
+    return !!unit && unit.type === 'Warrior';
+  }
+
+  isPlayer() {
+    return this.isWarrior();
+  }
+
+  isBound() {
+    const unit = this.getUnit();
+    return !!unit && unit.isBound();
+  }
+
+  isEnemy() {
+    return !!this.getUnit() && !this.isPlayer() && !this.isBound();
+  }
+
+  is(effect) {
+    const unit = this.getUnit();
+    return !!unit && unit.effects.has(effect);
   }
 
   toString() {
