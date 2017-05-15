@@ -1,0 +1,648 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>API Reference · WarriorJS</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="loadTower.html" />
+    
+    
+    <link rel="prev" href="../concepts/Effects.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">The Game</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../../game/Objective.html">
+            
+                <a href="../../game/Objective.html">
+            
+                    
+                    Objective
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../../game/ThePlayerClass.html">
+            
+                <a href="../../game/ThePlayerClass.html">
+            
+                    
+                    The Player Class
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../../game/Playing.html">
+            
+                <a href="../../game/Playing.html">
+            
+                    
+                    Playing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../../game/Scoring.html">
+            
+                <a href="../../game/Scoring.html">
+            
+                    
+                    Scoring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Core</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../concepts/">
+            
+                <a href="../concepts/">
+            
+                    
+                    Concepts
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="../concepts/Towers.html">
+            
+                <a href="../concepts/Towers.html">
+            
+                    
+                    Towers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2" data-path="../concepts/Levels.html">
+            
+                <a href="../concepts/Levels.html">
+            
+                    
+                    Levels
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3" data-path="../concepts/units/">
+            
+                <a href="../concepts/units/">
+            
+                    
+                    Units
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.3.1" data-path="../concepts/units/Warrior.html">
+            
+                <a href="../concepts/units/Warrior.html">
+            
+                    
+                    Warrior
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.4" data-path="../concepts/Abilities.html">
+            
+                <a href="../concepts/Abilities.html">
+            
+                    
+                    Abilities
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.5" data-path="../concepts/Effects.html">
+            
+                <a href="../concepts/Effects.html">
+            
+                    
+                    Effects
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="3.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    API Reference
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="loadTower.html">
+            
+                <a href="loadTower.html">
+            
+                    
+                    loadTower
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="Tower.html">
+            
+                <a href="Tower.html">
+            
+                    
+                    Tower
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.3" data-path="Unit.html">
+            
+                <a href="Unit.html">
+            
+                    
+                    Unit
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.4" data-path="Position.html">
+            
+                <a href="Position.html">
+            
+                    
+                    Position
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.5" data-path="Floor.html">
+            
+                <a href="Floor.html">
+            
+                    
+                    Floor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.6" data-path="Space.html">
+            
+                <a href="Space.html">
+            
+                    
+                    Space
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Build Your Own Tower</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../../build/GettingStarted.html">
+            
+                <a href="../../build/GettingStarted.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../../build/Ability.html">
+            
+                <a href="../../build/Ability.html">
+            
+                    
+                    Ability
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../../build/Effect.html">
+            
+                <a href="../../build/Effect.html">
+            
+                    
+                    Effect
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="../../build/Unit.html">
+            
+                <a href="../../build/Unit.html">
+            
+                    
+                    Unit
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.5" data-path="../../build/Level.html">
+            
+                <a href="../../build/Level.html">
+            
+                    
+                    Level
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.6" data-path="../../build/Tower.html">
+            
+                <a href="../../build/Tower.html">
+            
+                    
+                    Tower
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >API Reference</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="api-reference">API Reference</h1>
+<p>This section documents the complete WarriorJS Core API.</p>
+<h3 id="top-level-exports">Top-Level Exports</h3>
+<ul>
+<li><a href="loadTower.html">loadTower(tower)</a></li>
+</ul>
+<h3 id="tower-api">Tower API</h3>
+<ul>
+<li><a href="Tower.html">Tower</a><ul>
+<li><a href="Tower.html#runLevel">runLevel()</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="unit-api">Unit API</h3>
+<ul>
+<li><a href="Unit.html">Unit</a><ul>
+<li><a href="Unit.html#type">type</a></li>
+<li><a href="Unit.html#maxHealth">maxHealth</a></li>
+<li><a href="Unit.html#health">health</a></li>
+<li><a href="Unit.html#position">position</a></li>
+<li><a href="Unit.html#isAlive">isAlive()</a></li>
+<li><a href="Unit.html#isBound">isBound()</a></li>
+<li><a href="Unit.html#unbind">unbind()</a></li>
+<li><a href="Unit.html#bind">bind()</a></li>
+<li><a href="Unit.html#say">say(message)</a></li>
+<li><a href="Unit.html#earnPoints">earnPoints(points)</a></li>
+<li><a href="Unit.html#heal">heal(amount)</a></li>
+<li><a href="Unit.html#takeDamage">takeDamage(amount)</a></li>
+<li><a href="Unit.html#damage">damage(receiver, amount)</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="position-api">Position API</h3>
+<ul>
+<li><a href="Position.html">Position</a><ul>
+<li><a href="Position.html#getRelativeSpace">getRelativeSpace(relativeDirection, forward = 1, right = 0)</a></li>
+<li><a href="Position.html#move">move(relativeDirection, forward = 1, right = 0)</a></li>
+<li><a href="Position.html#rotate">rotate(relativeDirection)</a></li>
+<li><a href="Position.html#getDistanceOf">getDistanceOf(space)</a></li>
+<li><a href="Position.html#getDistanceFromStairs">getDistanceFromStairs()</a></li>
+<li><a href="Position.html#getRelativeDirectionOf">getRelativeDirectionOf(space)</a></li>
+<li><a href="Position.html#getRelativeDirectionOfStairs">getRelativeDirectionOfStairs()</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="floor-api">Floor API</h3>
+<ul>
+<li><a href="Floor.html">Floor</a><ul>
+<li><a href="Floor.html#getStairsSpace">getStairsSpace()</a></li>
+<li><a href="Floor.html#getUnits">getUnits()</a></li>
+<li><a href="Floor.html#getOtherUnits">getOtherUnits()</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="space-api">Space API</h3>
+<ul>
+<li><a href="Space.html">Space</a><ul>
+<li><a href="Space.html#isWall">isWall()</a></li>
+<li><a href="Space.html#isEmpty">isEmpty()</a></li>
+<li><a href="Space.html#isStairs">isStairs()</a></li>
+<li><a href="Space.html#isWarrior">isWarrior()</a></li>
+<li><a href="Space.html#isPlayer">isPlayer()</a></li>
+<li><a href="Space.html#isEnemy">isEnemy()</a></li>
+<li><a href="Space.html#isBound">isBound()</a></li>
+<li><a href="Space.html#">is(effect)</a></li>
+</ul>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../concepts/Effects.html" class="navigation navigation-prev " aria-label="Previous page: Effects">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="loadTower.html" class="navigation navigation-next " aria-label="Next page: loadTower">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"API Reference","level":"3.2","depth":1,"next":{"title":"loadTower","level":"3.2.1","depth":2,"path":"docs/core/api/loadTower.md","ref":"docs/core/api/loadTower.md","articles":[]},"previous":{"title":"Effects","level":"3.1.5","depth":2,"path":"docs/core/concepts/Effects.md","ref":"docs/core/concepts/Effects.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"WarriorJS","gitbook":"*"},"file":{"path":"docs/core/api/README.md","mtime":"2017-05-15T03:59:14.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-15T04:00:03.415Z"},"basePath":"../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

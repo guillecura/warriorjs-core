@@ -1,0 +1,8 @@
+# Source directory
+src
+
+# Tests directory
+test
+
+# Travis config
+.travis.yml
